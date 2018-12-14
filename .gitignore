@@ -23,4 +23,3 @@
 .idea/*
 
 docker/data/*
-!docker/data/.gitkeep

@@ -20,6 +20,7 @@ endif
 	$(SUDO) $(HOSTESS_BIN) apply ./hosts.json
 
 install :
+	mkdir -p docker/data
 	composer install
 	make hosts
 
