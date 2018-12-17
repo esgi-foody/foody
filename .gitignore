@@ -20,6 +20,6 @@
 ###< symfony/web-server-bundle ###
 
 
-.idea/*
-
-docker/data/*
+.idea/
+.DS_Store
+*~
