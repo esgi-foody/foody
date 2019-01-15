@@ -23,6 +23,18 @@ class Comment
      */
     private $data;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commentator;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +48,30 @@ class Comment
     public function setData(string $data): self
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function getCommentator(): ?User
+    {
+        return $this->commentator;
+    }
+
+    public function setCommentator(?User $commentator): self
+    {
+        $this->commentator = $commentator;
 
         return $this;
     }

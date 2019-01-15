@@ -39,6 +39,42 @@ class Recipe
     private $fat;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeStep", mappedBy="recipe")
+     */
+    private $recipeSteps;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="recipe")
+     */
+    private $ingredients;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userRecipe;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="recipe")
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recipe")
+     */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pathCoverImg;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="recipe")
+     */
+    private $categories;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="recipe")
      */
     private $images;
@@ -53,8 +89,18 @@ class Recipe
      */
     private $recipeFavorite;
 
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $time;
+
     public function __construct()
     {
+        $this->recipeSteps = new ArrayCollection();
+        $this->ingredients = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->recipeFavorite = new ArrayCollection();
     }
@@ -113,6 +159,22 @@ class Recipe
     }
 
     /**
+     * @return Collection|RecipeStep[]
+     */
+    public function getRecipeSteps(): Collection
+    {
+        return $this->recipeSteps;
+    }
+
+    public function addRecipeStep(RecipeStep $recipeStep): self
+    {
+        if (!$this->recipeSteps->contains($recipeStep)) {
+            $this->recipeSteps[] = $recipeStep;
+            $recipeStep->setRecipe($this);
+        }
+    }
+
+    /**
      * @return Collection|Image[]
      */
     public function getImages(): Collection
@@ -130,6 +192,17 @@ class Recipe
         return $this;
     }
 
+    public function removeRecipeStep(RecipeStep $recipeStep): self
+    {
+        if ($this->recipeSteps->contains($recipeStep)) {
+            $this->recipeSteps->removeElement($recipeStep);
+            // set the owning side to null (unless already changed)
+            if ($recipeStep->getRecipe() === $this) {
+                $recipeStep->setRecipe(null);
+            }
+        }
+    }
+
     public function removeImage(Image $image): self
     {
         if ($this->images->contains($image)) {
@@ -141,6 +214,78 @@ class Recipe
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Ingredient[]
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function addIngredient(Ingredient $ingredient): self
+    {
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients[] = $ingredient;
+            $ingredient->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): self
+    {
+        if ($this->ingredients->contains($ingredient)) {
+            $this->ingredients->removeElement($ingredient);
+            // set the owning side to null (unless already changed)
+            if ($ingredient->getRecipe() === $this) {
+                $ingredient->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUserRecipe(): ?User
+    {
+        return $this->userRecipe;
+    }
+
+    public function setUserRecipe(?User $userRecipe): self
+    {
+        $this->userRecipe = $userRecipe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getRecipe() === $this) {
+                $like->setRecipe(null);
+            }
+        }
     }
 
     public function getRecipe(): ?RecipeRepost
@@ -161,6 +306,22 @@ class Recipe
     }
 
     /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRecipe($this);
+        }
+    }
+
+    /**
      * @return Collection|Favorite[]
      */
     public function getRecipeFavorite(): Collection
@@ -174,8 +335,18 @@ class Recipe
             $this->recipeFavorite[] = $recipeFavorite;
             $recipeFavorite->setRecipe($this);
         }
-
         return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
+            }
+        }
     }
 
     public function removeRecipeFavorite(Favorite $recipeFavorite): self
@@ -190,4 +361,57 @@ class Recipe
 
         return $this;
     }
+
+    public function getPathCoverImg(): ?string
+    {
+        return $this->pathCoverImg;
+    }
+
+    public function setPathCoverImg(string $pathCoverImg): self
+    {
+        $this->pathCoverImg = $pathCoverImg;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            $category->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(\DateTimeInterface $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+    
 }
