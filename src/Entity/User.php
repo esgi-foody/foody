@@ -67,10 +67,28 @@ class User implements UserInterface
      */
     private $followers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="report")
+     */
+    private $reports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporterUser")
+     */
+    private $recipeReposts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Favorite", mappedBy="userFavorite")
+     */
+    private $userFavorite;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->reports = new ArrayCollection();
+        $this->recipeReposts = new ArrayCollection();
+        $this->userFavorite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,6 +252,99 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($follower->getFollower() === $this) {
                 $follower->setFollower(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setReport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
+            // set the owning side to null (unless already changed)
+            if ($report->getReport() === $this) {
+                $report->setReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RecipeRepost[]
+     */
+    public function getRecipeReposts(): Collection
+    {
+        return $this->recipeReposts;
+    }
+
+    public function addRecipeRepost(RecipeRepost $recipeRepost): self
+    {
+        if (!$this->recipeReposts->contains($recipeRepost)) {
+            $this->recipeReposts[] = $recipeRepost;
+            $recipeRepost->setReporterUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeRepost(RecipeRepost $recipeRepost): self
+    {
+        if ($this->recipeReposts->contains($recipeRepost)) {
+            $this->recipeReposts->removeElement($recipeRepost);
+            // set the owning side to null (unless already changed)
+            if ($recipeRepost->getReporterUser() === $this) {
+                $recipeRepost->setReporterUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getUserFavorite(): Collection
+    {
+        return $this->userFavorite;
+    }
+
+    public function addUserFavorite(Favorite $userFavorite): self
+    {
+        if (!$this->userFavorite->contains($userFavorite)) {
+            $this->userFavorite[] = $userFavorite;
+            $userFavorite->setUserFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavorite(Favorite $userFavorite): self
+    {
+        if ($this->userFavorite->contains($userFavorite)) {
+            $this->userFavorite->removeElement($userFavorite);
+            // set the owning side to null (unless already changed)
+            if ($userFavorite->getUserFavorite() === $this) {
+                $userFavorite->setUserFavorite(null);
             }
         }
 

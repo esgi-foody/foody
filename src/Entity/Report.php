@@ -38,6 +38,18 @@ class Report
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $reportedUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $report;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +99,30 @@ class Report
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getReportedUser(): ?User
+    {
+        return $this->reportedUser;
+    }
+
+    public function setReportedUser(?User $reportedUser): self
+    {
+        $this->reportedUser = $reportedUser;
+
+        return $this;
+    }
+
+    public function getReport(): ?User
+    {
+        return $this->report;
+    }
+
+    public function setReport(?User $report): self
+    {
+        $this->report = $report;
 
         return $this;
     }

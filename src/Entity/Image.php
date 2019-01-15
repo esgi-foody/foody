@@ -28,6 +28,12 @@ class Image
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,18 @@ class Image
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }

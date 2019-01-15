@@ -17,8 +17,44 @@ class Favorite
      */
     private $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userFavorite")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userFavorite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeFavorite")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserFavorite(): ?User
+    {
+        return $this->userFavorite;
+    }
+
+    public function setUserFavorite(?User $userFavorite): self
+    {
+        $this->userFavorite = $userFavorite;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
+
+        return $this;
     }
 }
