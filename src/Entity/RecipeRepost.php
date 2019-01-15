@@ -19,10 +19,10 @@ class RecipeRepost
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reporterUser")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reporter")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $reporterUser;
+    private $reporter;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipe")
@@ -35,14 +35,14 @@ class RecipeRepost
         return $this->id;
     }
 
-    public function getReporterUser(): ?User
+    public function getReporter(): ?User
     {
-        return $this->reporterUser;
+        return $this->reporter;
     }
 
-    public function setReporterUser(?User $reporterUser): self
+    public function setReporter(?User $reporter): self
     {
-        $this->reporterUser = $reporterUser;
+        $this->reporter = $reporter;
 
         return $this;
     }

@@ -353,8 +353,10 @@ class User implements UserInterface
     {
         if (!$this->likes->contains($like)) {
             $this->likes[] = $like;
-            $like->setLikerUser($this);
+            $like->setLiker($this);
         }
+
+        return $this;
     }
 
     /**
@@ -369,7 +371,7 @@ class User implements UserInterface
     {
         if (!$this->recipeReposts->contains($recipeRepost)) {
             $this->recipeReposts[] = $recipeRepost;
-            $recipeRepost->setReporterUser($this);
+            $recipeRepost->setReporter($this);
         }
 
         return $this;
@@ -380,8 +382,8 @@ class User implements UserInterface
         if ($this->likes->contains($like)) {
             $this->likes->removeElement($like);
             // set the owning side to null (unless already changed)
-            if ($like->getLikerUser() === $this) {
-                $like->setLikerUser(null);
+            if ($like->getLiker() === $this) {
+                $like->setLiker(null);
             }
         }
     }
@@ -391,8 +393,8 @@ class User implements UserInterface
         if ($this->recipeReposts->contains($recipeRepost)) {
             $this->recipeReposts->removeElement($recipeRepost);
             // set the owning side to null (unless already changed)
-            if ($recipeRepost->getReporterUser() === $this) {
-                $recipeRepost->setReporterUser(null);
+            if ($recipeRepost->getReporter() === $this) {
+                $recipeRepost->setReporter(null);
 
             }
         }

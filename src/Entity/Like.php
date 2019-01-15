@@ -28,7 +28,7 @@ class Like
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $likerUser;
+    private $liker;
 
     public function getId(): ?int
     {
@@ -47,14 +47,14 @@ class Like
         return $this;
     }
 
-    public function getLikerUser(): ?User
+    public function getLiker(): ?User
     {
-        return $this->likerUser;
+        return $this->liker;
     }
 
-    public function setLikerUser(?User $likerUser): self
+    public function setLiker(?User $liker): self
     {
-        $this->likerUser = $likerUser;
+        $this->liker = $liker;
 
         return $this;
     }

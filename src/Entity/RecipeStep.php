@@ -39,11 +39,11 @@ class RecipeStep
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="recipeStep")
      */
-    private $image;
+    private $images;
 
     public function __construct()
     {
-        $this->image = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,15 +90,15 @@ class RecipeStep
     /**
      * @return Collection|Image[]
      */
-    public function getImage(): Collection
+    public function getImages(): Collection
     {
-        return $this->image;
+        return $this->images;
     }
 
     public function addImage(Image $image): self
     {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
             $image->setRecipeStep($this);
         }
 
@@ -107,8 +107,8 @@ class RecipeStep
 
     public function removeImage(Image $image): self
     {
-        if ($this->image->contains($image)) {
-            $this->image->removeElement($image);
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
             // set the owning side to null (unless already changed)
             if ($image->getRecipeStep() === $this) {
                 $image->setRecipeStep(null);

@@ -42,7 +42,7 @@ class Notification
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $reciver;
+    private $receiver;
 
     public function getId(): ?int
     {
@@ -97,14 +97,14 @@ class Notification
         return $this;
     }
 
-    public function getReciver(): ?User
+    public function getReceiver(): ?User
     {
-        return $this->reciver;
+        return $this->receiver;
     }
 
-    public function setReciver(?User $reciver): self
+    public function setReceiver(?User $receiver): self
     {
-        $this->reciver = $reciver;
+        $this->receiver = $receiver;
 
         return $this;
     }
