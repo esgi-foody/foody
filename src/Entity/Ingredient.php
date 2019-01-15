@@ -41,6 +41,12 @@ class Ingredient
      */
     private $fat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="ingredients")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +108,18 @@ class Ingredient
     public function setFat(int $fat): self
     {
         $this->fat = $fat;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }

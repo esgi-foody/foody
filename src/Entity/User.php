@@ -67,10 +67,28 @@ class User implements UserInterface
      */
     private $followers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe")
+     */
+    private $recipes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="likerUser")
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="commentator")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,6 +252,99 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($follower->getFollower() === $this) {
                 $follower->setFollower(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recipe[]
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipe $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes[] = $recipe;
+            $recipe->setUserRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipe $recipe): self
+    {
+        if ($this->recipes->contains($recipe)) {
+            $this->recipes->removeElement($recipe);
+            // set the owning side to null (unless already changed)
+            if ($recipe->getUserRecipe() === $this) {
+                $recipe->setUserRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setLikerUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getLikerUser() === $this) {
+                $like->setLikerUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCommentator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentator() === $this) {
+                $comment->setCommentator(null);
             }
         }
 
