@@ -74,6 +74,25 @@ class Recipe
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="recipe")
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\RecipeRepost", mappedBy="recipe", cascade={"persist", "remove"})
+     */
+    private $recipe;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Favorite", mappedBy="recipe")
+     */
+    private $recipeFavorite;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $time;
 
     public function __construct()
     {
@@ -82,6 +101,8 @@ class Recipe
         $this->likes = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->recipeFavorite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,6 +172,22 @@ class Recipe
             $this->recipeSteps[] = $recipeStep;
             $recipeStep->setRecipe($this);
         }
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setRecipe($this);
+        }
 
         return $this;
     }
@@ -162,6 +199,17 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($recipeStep->getRecipe() === $this) {
                 $recipeStep->setRecipe(null);
+            }
+        }
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getRecipe() === $this) {
+                $image->setRecipe(null);
             }
         }
 
@@ -238,6 +286,21 @@ class Recipe
                 $like->setRecipe(null);
             }
         }
+    }
+
+    public function getRecipe(): ?RecipeRepost
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(RecipeRepost $recipe): self
+    {
+        $this->recipe = $recipe;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $recipe->getRecipe()) {
+            $recipe->setRecipe($this);
+        }
 
         return $this;
     }
@@ -256,7 +319,22 @@ class Recipe
             $this->comments[] = $comment;
             $comment->setRecipe($this);
         }
+    }
 
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getRecipeFavorite(): Collection
+    {
+        return $this->recipeFavorite;
+    }
+
+    public function addRecipeFavorite(Favorite $recipeFavorite): self
+    {
+        if (!$this->recipeFavorite->contains($recipeFavorite)) {
+            $this->recipeFavorite[] = $recipeFavorite;
+            $recipeFavorite->setRecipe($this);
+        }
         return $this;
     }
 
@@ -267,6 +345,17 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($comment->getRecipe() === $this) {
                 $comment->setRecipe(null);
+            }
+        }
+    }
+
+    public function removeRecipeFavorite(Favorite $recipeFavorite): self
+    {
+        if ($this->recipeFavorite->contains($recipeFavorite)) {
+            $this->recipeFavorite->removeElement($recipeFavorite);
+            // set the owning side to null (unless already changed)
+            if ($recipeFavorite->getRecipe() === $this) {
+                $recipeFavorite->setRecipe(null);
             }
         }
 
@@ -313,4 +402,16 @@ class Recipe
         return $this;
     }
 
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(\DateTimeInterface $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+    
 }

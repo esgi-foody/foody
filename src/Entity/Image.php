@@ -33,6 +33,12 @@ class Image
      */
     private $recipeStep;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +68,7 @@ class Image
         return $this;
     }
 
+
     public function getRecipeStep(): ?RecipeStep
     {
         return $this->recipeStep;
@@ -70,6 +77,16 @@ class Image
     public function setRecipeStep(?RecipeStep $recipeStep): self
     {
         $this->recipeStep = $recipeStep;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): self
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }
