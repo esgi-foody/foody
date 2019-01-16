@@ -3,9 +3,11 @@ import 'bootstrap/scss/bootstrap.scss';
 import '../css/app.css';
 
 // JS
+import $ from 'jquery';
 import 'bootstrap';
 import feather from 'feather-icons';
 
+global.$ = global.jQuery = $;
 feather.replace();
 
 // Images
