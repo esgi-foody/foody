@@ -19,6 +19,11 @@ class Recipe
     private $id;
 
     /**
+     * @ORM\Column(type="string",  length=255, nullable=false)
+     */
+    private $title;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $calory;
@@ -113,6 +118,18 @@ class Recipe
     public function getCalory(): ?int
     {
         return $this->calory;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTitle(): ?int
+    {
+        return $this->title;
     }
 
     public function setCalory(int $calory): self

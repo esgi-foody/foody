@@ -21,6 +21,12 @@ class RecipeStep
     private $id;
 
     /**
+     * @ORM\Column(type="string",  length=255, nullable=true)
+     */
+    private $title;
+
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $stepNumber;
@@ -49,6 +55,18 @@ class RecipeStep
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTitle(): ?int
+    {
+        return $this->title;
     }
 
     public function getStepNumber(): ?int
