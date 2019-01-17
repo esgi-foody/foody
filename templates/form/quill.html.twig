@@ -1,0 +1,16 @@
+{% block quill_widget %}
+    <input name={{ data }} type="hidden">
+    <div id="editor"></div>
+
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+        const form = document.querySelector('form');
+        form.onsubmit = () => {
+            const text = document.querySelector('input[name="{{ data }}"]');
+            text.value = JSON.stringify(quill.root.innerHTML);
+        };
+    </script>
+{% endblock %}
