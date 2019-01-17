@@ -6,10 +6,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_account")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"email"}), message="Cet email est déjà utiliser")
+ * @UniqueEntity(fields={"username"}), message="Ce nom d'utilisateur est déjà utiliser")
  */
 class User implements UserInterface
 {
@@ -22,7 +27,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $username;
 
@@ -33,6 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $password;
 
@@ -40,6 +46,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThanOrEqual("today")
      */
     private $dateOfBirth;
 
@@ -49,7 +56,7 @@ class User implements UserInterface
     private $pathImg;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
