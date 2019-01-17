@@ -21,7 +21,6 @@ security:
                 check_path: app_front_security_login
                 login_path: app_front_security_login
                 csrf_token_generator: security.csrf.token_manager
-                default_target_path: app_front_default_home
                 provider: app_user_provider
 
             logout:

@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_account")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -457,6 +458,22 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAtValue() : self {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setUpdatedAtValue() : self {
+        $this->updatedAt = new \DateTime();
         return $this;
     }
 }
