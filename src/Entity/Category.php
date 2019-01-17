@@ -28,6 +28,11 @@ class Category
      */
     private $recipes;
 
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $hexaColor;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -73,6 +78,18 @@ class Category
         if ($this->recipes->contains($recipe)) {
             $this->recipes->removeElement($recipe);
         }
+
+        return $this;
+    }
+
+    public function getHexaColor(): ?string
+    {
+        return $this->hexaColor;
+    }
+
+    public function setHexaColor(string $hexaColor): self
+    {
+        $this->hexaColor = $hexaColor;
 
         return $this;
     }
