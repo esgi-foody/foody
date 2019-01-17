@@ -23,6 +23,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(AuthenticationUtils $helper): Response
+    {
+        return $this->render('front/Security/admin.html.twig', [
+            'error' => $helper->getLastAuthenticationError(),
+        ]);
+    }
+
+    /**
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $helper): Response
