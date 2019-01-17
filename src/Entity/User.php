@@ -98,6 +98,11 @@ class User implements UserInterface
      */
     private $userFavorite;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $biography;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();
@@ -474,6 +479,18 @@ class User implements UserInterface
      */
     public function setUpdatedAtValue() : self {
         $this->updatedAt = new \DateTime();
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
+
         return $this;
     }
 }
