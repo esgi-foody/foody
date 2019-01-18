@@ -50,7 +50,7 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Confirner le mot de passe'),
+                'second_options' => array('label' => 'Confirmer le mot de passe'),
             ))
             ->add('S\'inscrire', SubmitType::class, [
                 'attr' => [
