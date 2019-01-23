@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+    <h1>Recherche</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn"><i data-feather="search"></i></button>
+    {{ form_end(form) }}
+    {% if data is not empty %}
+        {{ data.query }}
+    {% endif %}
+{% endblock %}
