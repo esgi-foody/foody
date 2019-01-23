@@ -111,9 +111,9 @@ class User implements UserInterface
     private $biography;
 
     /**
-     * @ORM\Column(type="integer", options={"default" = 0}))
+     * @ORM\Column(type="integer", options={"default":0})
      */
-    private $status;
+    private $status=0;
 
     public function __construct()
     {
@@ -517,4 +517,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }
