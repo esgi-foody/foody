@@ -4,13 +4,14 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-//use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Ingredient;
+use App\Entity\User;
 use Faker;
 
-class RecipeFixtures extends Fixture //implements DependentFixtureInterface
+class RecipeFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -49,7 +50,7 @@ class RecipeFixtures extends Fixture //implements DependentFixtureInterface
                 $recipeStep->setStepNumber($y);
                 $recipeStep->setContent($faker->paragraph($nbSentences = 4, $variableNbSentences = true));
                 $recipeStep->setRecipe($recipe);
-                $recipeStep->addImage($faker->placeholder());
+                //$recipeStep->addImage($faker->placeholder());
                 array_push($arrStep,$recipeStep);
 
                 $manager->persist($recipeStep);
@@ -57,15 +58,15 @@ class RecipeFixtures extends Fixture //implements DependentFixtureInterface
 
             $recipe->getRecipeSteps($arrStep);
 
-            $recipe->getLikes([]);
+
+            $date = date_create_from_format('H:i:s',$faker->time());
+            $recipe->setTime($date);
             $recipe->getComments([]);
-            $recipe->getCalory();
-            $recipe->getImages([]);
+            $recipe->setPathCoverImg($faker->imageUrl($width = 640, $height = 480));
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED
-            $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(User::class)->find(rand(1,20));
+            $user = $manager->getRepository(User::class)->find(rand(1,20));
             $recipe->setUserRecipe($user);
 
 
@@ -80,9 +81,9 @@ class RecipeFixtures extends Fixture //implements DependentFixtureInterface
      *
      * @return array
      */
-//    public function getDependencies()
-//    {
-//        // TODO: Implement getDependencies() method.
-//        return [RecipeStepFixtures::class,IngredientFixtures::class];
-//    }
+    public function getDependencies()
+    {
+        // TODO: Implement getDependencies() method.
+        return [UserFixtures::class];
+    }
 }
