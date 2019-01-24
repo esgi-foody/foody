@@ -25,8 +25,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setTitle($faker->foodName());
 
             //INGREDIENTS
-            $x = rand(3,10);
-            for ($y = 0; $y < $x; $y++){
+            for ($y = 0; $y < rand(3,10); $y++){
                 $arrIngr=[];
                 $ingredient = new Ingredient();
                 $ingredient->setName($faker->ingredient);
@@ -42,13 +41,13 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->getIngredients($arrIngr);
 
             //RECIPE_STEPS
-            $x = rand(3,10);
-            for ($y = 0; $y < $x; $y++){
+
+            for ($y = 0; $y < rand(3,10); $y++){
                 $arrStep=[];
                 $recipeStep = new RecipeStep();
-                $recipeStep->setTitle($faker->sentence($nbWords = 5, $variableNbWords = true));
+                $recipeStep->setTitle($faker->sentence( 5,  true));
                 $recipeStep->setStepNumber($y);
-                $recipeStep->setContent($faker->paragraph($nbSentences = 4, $variableNbSentences = true));
+                $recipeStep->setContent($faker->paragraph( 4,  true));
                 $recipeStep->setRecipe($recipe);
                 //$recipeStep->addImage($faker->placeholder());
                 array_push($arrStep,$recipeStep);
@@ -62,7 +61,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $date = date_create_from_format('H:i:s',$faker->time());
             $recipe->setTime($date);
             $recipe->getComments([]);
-            $recipe->setPathCoverImg($faker->imageUrl($width = 640, $height = 480));
+            $recipe->setPathCoverImg($faker->imageUrl( 640, 480));
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED
