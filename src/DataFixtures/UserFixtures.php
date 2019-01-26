@@ -19,8 +19,9 @@ class UserFixtures extends Fixture
             $user->setPseudo($faker->userName);
             $user->setPassword($faker->password);
             $user->setDateOfBirth($faker->dateTime);
-            $user->setPathImg($faker->imageUrl($width = 640, $height = 480));
+            $user->setPathImg($faker->imageUrl(640, 480));
             $user->setEmail($faker->email);
+            $user->setStatus(rand(0,1));
             $user->setRoles(['ROLE_USER']);
             $manager->persist($user);
 
