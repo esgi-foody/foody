@@ -110,6 +110,11 @@ class User implements UserInterface
      */
     private $biography;
 
+    /**
+     * @ORM\Column(type="integer", options={"default":0})
+     */
+    private $status=0;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();
@@ -500,4 +505,17 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }
