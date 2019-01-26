@@ -8,7 +8,9 @@
         {{ form_widget(form) }}
         <button class="btn"><i data-feather="search"></i></button>
     {{ form_end(form) }}
-    {% if data is not empty %}
-        {{ data.query }}
+    {% if users is not empty %}
+        {% for user in users %}
+            <p>{{ user.username }}</p>
+        {% endfor %}
     {% endif %}
 {% endblock %}
