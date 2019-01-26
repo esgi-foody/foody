@@ -4,42 +4,17 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; list-style: none;}
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-    <div class="col-sm-6 mx-auto    ">
-        {% for recipe in recipes %}
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">{{ recipe.title }}</h5>
-                    {% for categories in recipe %}
-                    <button type="button" class="btn btn-outline-primary">{{ recipe[category.name] }}</button>
-                    {% endfor %}
-                </div>
-                <div class="card-body">
-                    <h6 class="text-danger">{{ recipe.userRecipe.pseudo }}</h6>
-                    <p class="text-secondary">@{{ recipe.userRecipe.username }}</p>
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
 
-                </div>
-
-                <div class="card-footer">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <a href=""><i data-feather="message-circle"></i><p>5</p></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href=""><i data-feather="repeat"></i><p>3</p></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href=""><i data-feather="heart"></i><p>9</p></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'src/Controller/FeedController.php'|file_link(0) }}">src/Controller/FeedController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'templates/feed/index.html.twig'|file_link(0) }}">templates/feed/index.html.twig</a></code></li>
+    </ul>
+</div>
 {% endblock %}
