@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Validator\Constraints\Length;
 
 class CategoryType extends AbstractType
@@ -17,24 +18,17 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Prise de masse'
+                    'placeholder' => 'Asian'
                 ],
                 'constraints' => [
                     new Length(['min' => 3, 'max' => 30])
                 ],
                 'label' => 'Nom de la catégorie'
             ])
-            ->add('hexaColor', TextType::class, [
+            ->add('hexaColor', ColorType::class, [
                 'required' => true,
-                'constraints' => [
-                    new Length(['min' => 4, 'max' => 7])
-                ],
-                'label' => 'Code hexadécimal de la couleur',
-                'attr' => [
-                    'placeholder' => '#FFFFFF'
-                ]
-            ])
-        ;
+                'label' => 'Couleur de la catégorie'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
