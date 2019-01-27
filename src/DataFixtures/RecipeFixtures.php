@@ -63,7 +63,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->addCategory($category);
             $recipe->getRecipeSteps($arrStep);
             $recipe->getComments([]);
-            $recipe->setPathCoverImg($faker->imageUrl( 640, 480));
+            $recipe->setPathCoverImg($faker->imageUrl( 640, 480 , 'food'));
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED
