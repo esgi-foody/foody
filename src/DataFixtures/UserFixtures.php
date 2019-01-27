@@ -15,8 +15,8 @@ class UserFixtures extends Fixture
 
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
-            $user->setUsername($faker->firstName . " " . $faker->lastName);
-            $user->setPseudo($faker->userName);
+            $user->setUsername($faker->userName);
+            $user->setPseudo($faker->firstName . " " . $faker->lastName);
             $user->setPassword($faker->password);
             $user->setDateOfBirth($faker->dateTime);
             $user->setPathImg($faker->imageUrl(640, 480));
