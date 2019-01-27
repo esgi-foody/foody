@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -20,6 +21,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         $faker->addProvider(new \Bezhanov\Faker\Provider\Placeholder($faker));
         $faker->addProvider(new \Bezhanov\Faker\Provider\Food($faker));
 
+        //RECIPE
         for ($i = 0; $i < 20; $i++) {
             $recipe = new Recipe();
             $recipe->setTitle($faker->foodName());
@@ -41,7 +43,6 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->getIngredients($arrIngr);
 
             //RECIPE_STEPS
-
             for ($y = 0; $y < rand(3,10); $y++){
                 $arrStep=[];
                 $recipeStep = new RecipeStep();
@@ -55,11 +56,12 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 $manager->persist($recipeStep);
             }
 
-            $recipe->getRecipeSteps($arrStep);
-
-
             $date = date_create_from_format('H:i:s',$faker->time());
+
             $recipe->setTime($date);
+            $category = $manager->getRepository(Category::class)->find(rand(1,20));
+            $recipe->addCategory($category);
+            $recipe->getRecipeSteps($arrStep);
             $recipe->getComments([]);
             $recipe->setPathCoverImg($faker->imageUrl( 640, 480));
             $recipe->getRecipeFavorite([]);
@@ -68,7 +70,6 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $user = $manager->getRepository(User::class)->find(rand(1,20));
             $recipe->setUserRecipe($user);
 
-
             $manager->persist($recipe);
             $manager->flush();
         }
@@ -76,13 +77,12 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
 
     /**
      * This method must return an array of fixtures classes
-     * on which the implementing class depends on
+     * on which the implementing class depends on user
      *
      * @return array
      */
     public function getDependencies()
     {
-        // TODO: Implement getDependencies() method.
         return [UserFixtures::class];
     }
 }
