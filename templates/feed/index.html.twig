@@ -8,11 +8,22 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <ul>
+    <div class="col-sm-6 mx-auto    ">
         {% for recipe in recipes %}
-            <li>{{ recipe.title }}</li>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-footer">
+                    <a href=""><i data-feather="message-circle"></i></a>
+                    <a href=""><i data-feather="repeat"></i></a>
+                    <a href=""><i data-feather="heart"></i></a>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-</div>
+    </div>
+
+
 {% endblock %}
