@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe index{% endblock %}
+
+{% block body %}
+    <h1>Recipe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Calories</th>
+                <th>Protéines</th>
+                <th>Glucides</th>
+                <th>Lipides</th>
+                <th>Temps</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recipe in recipes %}
+            <tr>
+                <td>{{ recipe.id }}</td>
+                <td>{{ recipe.title }}</td>
+                <td>{{ recipe.calory }}</td>
+                <td>{{ recipe.protein }}</td>
+                <td>{{ recipe.carbohydrate }}</td>
+                <td>{{ recipe.fat }}</td>
+                <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
+                <td>
+                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir</a>
+                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucune recette trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('recipe_new') }}">Ajouter</a>
+{% endblock %}

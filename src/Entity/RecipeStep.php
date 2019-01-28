@@ -5,14 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\TimestampableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeStepRepository")
  */
 class RecipeStep
 {
-    use TimestampableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -37,8 +35,8 @@ class RecipeStep
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeSteps")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeSteps",cascade={"persist"})
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
     private $recipe;
 
@@ -46,6 +44,7 @@ class RecipeStep
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="recipeStep")
      */
     private $images;
+
 
     public function __construct()
     {
@@ -64,7 +63,7 @@ class RecipeStep
         return $this;
     }
 
-    public function getTitle(): ?int
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -100,6 +99,7 @@ class RecipeStep
 
     public function setRecipe(?Recipe $recipe): self
     {
+
         $this->recipe = $recipe;
 
         return $this;
@@ -135,4 +135,6 @@ class RecipeStep
 
         return $this;
     }
+
+
 }

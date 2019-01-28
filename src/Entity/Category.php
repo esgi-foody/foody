@@ -24,7 +24,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Recipe", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Recipe", inversedBy="categories", mappedBy="categories")
      */
     private $recipes;
 

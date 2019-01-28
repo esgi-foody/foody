@@ -1,6 +1,7 @@
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/
+/public/uploads/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -25,4 +26,5 @@ yarn-error.log
 .idea/
 .DS_Store
 *~
-
+composer.lock
+package-lock.json
