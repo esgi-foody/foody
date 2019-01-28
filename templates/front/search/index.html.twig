@@ -8,9 +8,40 @@
         {{ form_widget(form) }}
         <button class="btn"><i data-feather="search"></i></button>
     {{ form_end(form) }}
+    <div class="d-flex flex-row justify-content-around">
     {% if users is not empty %}
-        {% for user in users %}
-            <p>{{ user.username }}</p>
-        {% endfor %}
+        <div class="d-flex flex-column">
+            <h1 class="text-center">Users</h1>
+            <br>
+            {% for user in users %}
+                <div class="card align-self-center" style="width: 20rem;">
+                    <a href="/profile/{{ user.username }}">
+                        <img class="card-img-top" src="{{ user.pathImg }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@{{ user.username }}</h5>
+                        </div>
+                    </a>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
     {% endif %}
+    {% if recipes is not empty %}
+        <div class="d-flex flex-column">
+            <h1 class="text-center">Recipes</h1>
+            <br>
+           {% for recipe in recipes %}
+                <div class="card align-self-center" style="width: 20rem;">
+                    <a href="/recipe/{{ recipe.id }}">
+                        <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.title }}</h5>
+                        </div>
+                    </a>
+                </div>
+               <br>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
 {% endblock %}

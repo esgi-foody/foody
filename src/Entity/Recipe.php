@@ -127,7 +127,7 @@ class Recipe
         return $this;
     }
 
-    public function getTitle(): ?int
+    public function getTitle(): ?string
     {
         return $this->title;
     }

@@ -36,15 +36,34 @@ class RecipeRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Recipe
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function findByTitle($query)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('r.title LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function findByCategory($query, $category)
+    {
+        $articleIds = [1,2,3,4,5];
+
+        $qb = $this->createQueryBuilder('r');
+
+        return $qb->addSelect('r')
+            ->innerJoin('r.categories', 'c')
+            ->add('where', $qb->expr()->in('c', $articleIds))
+            ->getQuery()
+            ->getResult();
+    }
 }

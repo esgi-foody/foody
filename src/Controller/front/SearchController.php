@@ -3,6 +3,7 @@
 namespace App\Controller\front;
 
 use App\Entity\Category;
+use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,14 +21,14 @@ class SearchController extends AbstractController
     /**
      * @Route("/", name="search_index", methods={"GET", "POST"})
      */
-    public function index(Request $request, UserRepository $userRepository)
+    public function index(Request $request, UserRepository $userRepository, RecipeRepository $recipeRepository)
     {
         $form = $this->createFormBuilder(null)
             ->add('query', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])
-            ->add('categories', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'label'        => false,
                 'class'        => Category::class,
                 'choice_label' => 'name',
@@ -36,18 +37,32 @@ class SearchController extends AbstractController
             ])
             ->getForm()
         ;
+
         $users = null;
+        $recipes = null;
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $users = $data['query'] ? $userRepository->findByUsername($data['query']) : null;
+//            $users = $data['query'] && $data['category']->isEmpty() ? $userRepository->findByUsername($data['query']) : null;
+//            $recipes = $data['query'] ? $recipeRepository->findByTitle($data['query']) : null;
+            switch ($data['category']->isEmpty()) {
+                case true && $data['query']:
+                    $users = $userRepository->findByUsername($data['query']);
+                    $recipes = $recipeRepository->findByTitle($data['query']);
+                    break;
+                case false && $data['query']:
+                    $recipes = $recipeRepository->findByCategory($data['query'], $data['category']);
+                    dump($recipes);die();
+                    break;
+            }
         }
 
         return $this->render('front/search/index.html.twig', [
             'form' => $form->createView(),
-            'users' => $users
+            'users' => $users,
+            'recipes' => $recipes
         ]);
     }
 }

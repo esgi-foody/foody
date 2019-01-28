@@ -36,11 +36,15 @@ class UserRepository extends ServiceEntityRepository
     }
     */
 
-    public function findByUsername($value)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function findByUsername($query)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.username LIKE :val')
-            ->setParameter('val', '%' . $value . '%')
+            ->where('u.username LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
             ->getQuery()
             ->getResult()
         ;
