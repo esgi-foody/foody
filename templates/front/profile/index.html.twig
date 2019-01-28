@@ -16,9 +16,9 @@
             <th>Biography</th>
             <td>{{ user.biography }}</td>
         </tr>
-        <button type="button" class="btn btn-primary">{{  }}</button>
         </tbody>
     </table>
+    <a class="btn btn-primary" href="{{ user.username  }}/follow">{{ (true) ? 'Follow' : 'Unfollow' }}</a>
 
     {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
