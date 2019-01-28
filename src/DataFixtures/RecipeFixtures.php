@@ -22,7 +22,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         $faker->addProvider(new \Bezhanov\Faker\Provider\Food($faker));
 
         //RECIPE
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $recipe = new Recipe();
             $recipe->setTitle($faker->foodName());
 
