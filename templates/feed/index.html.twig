@@ -14,12 +14,28 @@
                 <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ recipe.title }}</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    {% for categories in recipe %}
+                    <button type="button" class="btn btn-outline-primary">{{ recipe[category.name] }}</button>
+                    {% endfor %}
                 </div>
+                <div class="card-body">
+                    <h6 class="text-danger">{{ recipe.userRecipe.pseudo }}</h6>
+                    <p class="text-secondary">@{{ recipe.userRecipe.username }}</p>
+
+                </div>
+
                 <div class="card-footer">
-                    <a href=""><i data-feather="message-circle"></i></a>
-                    <a href=""><i data-feather="repeat"></i></a>
-                    <a href=""><i data-feather="heart"></i></a>
+                    <ul class="nav justify-content-center">
+                        <li class="nav-item">
+                            <a href=""><i data-feather="message-circle"></i><p>5</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=""><i data-feather="repeat"></i><p>3</p></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=""><i data-feather="heart"></i><p>9</p></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         {% endfor %}
