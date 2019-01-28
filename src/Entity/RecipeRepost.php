@@ -25,7 +25,7 @@ class RecipeRepost
     private $reporter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipe")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeRepost")
      * @ORM\JoinColumn(nullable=false)
      */
     private $recipe;

@@ -6,18 +6,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="/search">Explorer</a>
             </li>
-    {% if(is_granted('IS_AUTHENTICATED_FULLY')) %}
+        {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Déconnexion</a>
             </li>
-    {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a>
+            </li>
+        {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="/login">Connexion</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/register">Inscription</a>
             </li>
-    {% endif %}
+        {% endif %}
         </ul>
     </div>
 </nav>

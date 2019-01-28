@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
@@ -44,12 +45,12 @@ class Recipe
     private $fat;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeStep", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeStep", mappedBy="recipe",cascade={"persist"},orphanRemoval=true, fetch="EAGER")
      */
     private $recipeSteps;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="recipe",cascade={"persist"},orphanRemoval=true, fetch="EAGER")
      */
     private $ingredients;
 
@@ -71,11 +72,16 @@ class Recipe
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Image(
+     *     detectCorrupted = true,
+     *     corruptedMessage = "Votre image est corrompu. Veuillez ressayez.")
+     * @Assert\File( maxSize="10M")
      */
     private $pathCoverImg;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="recipe")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="recipes", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinTable(name="category_recipe")
      */
     private $categories;
 
@@ -87,7 +93,7 @@ class Recipe
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\RecipeRepost", mappedBy="recipe", cascade={"persist", "remove"})
      */
-    private $recipe;
+    private $recipeRepost;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Favorite", mappedBy="recipe")
@@ -189,6 +195,14 @@ class Recipe
             $this->recipeSteps[] = $recipeStep;
             $recipeStep->setRecipe($this);
         }
+
+        return $this;
+    }
+
+    public function setRecipeSteps(ArrayCollection $recipeSteps): self
+    {
+        $this->recipeSteps = $recipeSteps;
+        return $this;
     }
 
     /**
@@ -379,12 +393,12 @@ class Recipe
         return $this;
     }
 
-    public function getPathCoverImg(): ?string
+    public function getPathCoverImg()
     {
         return $this->pathCoverImg;
     }
 
-    public function setPathCoverImg(string $pathCoverImg): self
+    public function setPathCoverImg($pathCoverImg): self
     {
         $this->pathCoverImg = $pathCoverImg;
 
