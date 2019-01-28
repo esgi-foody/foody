@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
             $user->setPseudo($faker->firstName . " " . $faker->lastName);
             $user->setPassword($faker->password);
             $user->setDateOfBirth($faker->dateTime);
-            $user->setPathImg($faker->imageUrl(640, 480));
+            $user->setPathImg($faker->imageUrl( 480, 480 , 'people'));
             $user->setEmail($faker->email);
             $user->setStatus(rand(0,1));
             $user->setRoles(['ROLE_USER']);
