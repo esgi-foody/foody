@@ -35,8 +35,8 @@ class RecipeStep
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeSteps")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeSteps",cascade={"persist"})
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
     private $recipe;
 
@@ -63,7 +63,7 @@ class RecipeStep
         return $this;
     }
 
-    public function getTitle(): ?int
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -99,6 +99,7 @@ class RecipeStep
 
     public function setRecipe(?Recipe $recipe): self
     {
+
         $this->recipe = $recipe;
 
         return $this;
@@ -134,4 +135,6 @@ class RecipeStep
 
         return $this;
     }
+
+
 }

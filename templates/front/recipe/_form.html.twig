@@ -1,0 +1,62 @@
+
+{{ form_start(form) }}
+{{ form_row(form.title) }}
+<h3>Ingredients</h3>
+<ul id="ingredients" data-index="{{ form.ingredients|length }}" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
+    <button type="button" id="addIngredient">+   Ingredient</button>
+    {% for ingredient in form.ingredients %}
+        <li>{{ form_row(ingredient) }}<button type="button" class="remove">Supprimer</button></li>
+    {% endfor %}
+</ul>
+<h3>Etapes</h3>
+
+<ul id="recipeSteps" data-index="{{ form.recipeSteps|length }}" data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
+    <button type="button" id="addStep">+   Etapes</button>
+    {% for recipeStep in form.recipeSteps %}
+        <li>{{ form_row(recipeStep) }}<button type="button" class="remove">Supprimer</button></li>
+    {% endfor %}
+</ul>
+    {{ form_widget(form) }}
+
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    $( "#addStep" ).click(function() {
+        addPrototypeForm($('#recipeSteps'));
+    });
+
+    $( "#addIngredient" ).click(function() {
+        addPrototypeForm($('#ingredients'));
+    });
+    $(document).on('click', '.remove', function() {
+        $(this).parent().remove();
+    });
+
+    function addPrototypeForm(collectionHolder) {
+        let liNode = $('<li></li>');
+        let prototype = collectionHolder.data('prototype');
+        let index = collectionHolder.data('index') ;
+        let newForm = prototype.replace(/__name__/g, index);
+        let removeLink  = $('<button class="remove">Supprimer</button>');
+
+
+        newForm = newForm.replace(/label__/g, '');
+        collectionHolder.data('index', index + 1);
+
+        liNode.append(newForm);
+        liNode.append(removeLink);
+
+        removeLink.on('click', function(e) {
+            e.preventDefault();
+
+            liNode.remove();
+        });
+        collectionHolder.append(liNode);
+
+    }
+</script>
