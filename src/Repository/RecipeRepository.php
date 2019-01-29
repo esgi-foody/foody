@@ -52,18 +52,31 @@ class RecipeRepository extends ServiceEntityRepository
 
     /**
      * @param $query
-     * @return mixed
+     * @param $categories
+     * @return array
      */
-    public function findByCategory($query, $category)
+    public function findByCategory($query, $categories)
     {
-        $articleIds = [1,2,3,4,5];
+        $results = [];
+        $recipes = [];
 
-        $qb = $this->createQueryBuilder('r');
+        foreach ($categories as $category) {
+            $qb = $this->createQueryBuilder('r');
+            $recipes[] = $qb->addSelect('r')
+                ->innerJoin('r.categories', 'c')
+                ->where('r.title LIKE :query')
+                ->andWhere('c.id = :id')
+                ->setParameters([ 'query' => '%' . $query . '%', 'id' => $category->getId() ])
+                ->getQuery()
+                ->getResult();
+        }
 
-        return $qb->addSelect('r')
-            ->innerJoin('r.categories', 'c')
-            ->add('where', $qb->expr()->in('c', $articleIds))
-            ->getQuery()
-            ->getResult();
+        foreach ($recipes as $recipe) {
+            foreach ($recipe as $value) {
+                $results[] = $value;
+            }
+        }
+
+        return $results;
     }
 }

@@ -40,13 +40,12 @@ class SearchController extends AbstractController
 
         $users = null;
         $recipes = null;
+        $categories = null;
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-//            $users = $data['query'] && $data['category']->isEmpty() ? $userRepository->findByUsername($data['query']) : null;
-//            $recipes = $data['query'] ? $recipeRepository->findByTitle($data['query']) : null;
             switch ($data['category']->isEmpty()) {
                 case true && $data['query']:
                     $users = $userRepository->findByUsername($data['query']);
@@ -54,7 +53,7 @@ class SearchController extends AbstractController
                     break;
                 case false && $data['query']:
                     $recipes = $recipeRepository->findByCategory($data['query'], $data['category']);
-                    dump($recipes);die();
+                    $categories = $data['category'];
                     break;
             }
         }
@@ -62,7 +61,8 @@ class SearchController extends AbstractController
         return $this->render('front/search/index.html.twig', [
             'form' => $form->createView(),
             'users' => $users,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'categories' => $categories,
         ]);
     }
 }

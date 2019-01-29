@@ -9,14 +9,14 @@
         <button class="btn"><i data-feather="search"></i></button>
     {{ form_end(form) }}
     <div class="d-flex flex-row justify-content-around">
-    {% if users is not empty %}
+    {% if users %}
         <div class="d-flex flex-column">
-            <h1 class="text-center">Users</h1>
+            <h1 class="text-center">Utilisateur(s)</h1>
             <br>
             {% for user in users %}
                 <div class="card align-self-center" style="width: 20rem;">
                     <a href="/profile/{{ user.username }}">
-                        <img class="card-img-top" src="{{ user.pathImg }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ user.pathImg }}" alt="User profile picture">
                         <div class="card-body">
                             <h5 class="card-title">@{{ user.username }}</h5>
                         </div>
@@ -25,23 +25,39 @@
                 <br>
             {% endfor %}
         </div>
+    {% elseif categories is empty and app.request.method is same as("POST") %}
+        <h1 class="text-center">Aucun utilisateur trouvé</h1>
     {% endif %}
-    {% if recipes is not empty %}
+    {% if recipes %}
         <div class="d-flex flex-column">
-            <h1 class="text-center">Recipes</h1>
+            <h1 class="text-center">Recette(s)</h1>
+            {% if categories %}
+                <h3>Catégorie(s) recherché(s) :
+                {% for category in categories %}
+                    {{ category.name }}
+                {% endfor %}
+                </h3>
+            {% endif %}
             <br>
            {% for recipe in recipes %}
                 <div class="card align-self-center" style="width: 20rem;">
                     <a href="/recipe/{{ recipe.id }}">
-                        <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Recipe cover">
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
+                            <p> Catégorie(s) :
+                            {% for category in recipe.categories %}
+                                {{ category.name }}
+                            {% endfor %}
+                            </p>
                         </div>
                     </a>
                 </div>
                <br>
             {% endfor %}
         </div>
+    {% elseif app.request.method is same as("POST") %}
+        <h1 class="text-center">Aucune recette trouvé</h1>
     {% endif %}
     </div>
 {% endblock %}
