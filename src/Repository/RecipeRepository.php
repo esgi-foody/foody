@@ -19,23 +19,6 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /**
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     /**
      * @param $query
      * @return mixed
@@ -46,8 +29,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->where('r.title LIKE :query')
             ->setParameter('query', '%' . $query . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     /**
@@ -57,26 +39,18 @@ class RecipeRepository extends ServiceEntityRepository
      */
     public function findByCategory($query, $categories)
     {
-        $results = [];
-        $recipes = [];
-
+        $categoriesId = [];
         foreach ($categories as $category) {
-            $qb = $this->createQueryBuilder('r');
-            $recipes[] = $qb->addSelect('r')
-                ->innerJoin('r.categories', 'c')
-                ->where('r.title LIKE :query')
-                ->andWhere('c.id = :id')
-                ->setParameters([ 'query' => '%' . $query . '%', 'id' => $category->getId() ])
-                ->getQuery()
-                ->getResult();
+            $categoriesId[] = $category->getId();
         }
 
-        foreach ($recipes as $recipe) {
-            foreach ($recipe as $value) {
-                $results[] = $value;
-            }
-        }
-
-        return $results;
+        $qb = $this->createQueryBuilder('r');
+        return $qb->addSelect('r')
+            ->innerJoin('r.categories', 'c')
+            ->where('r.title LIKE :query')
+            ->andWhere('c.id IN (:id)')
+            ->setParameters([ 'query' => '%' . $query . '%', 'id' => $categoriesId ])
+            ->getQuery()
+            ->getResult();
     }
 }
