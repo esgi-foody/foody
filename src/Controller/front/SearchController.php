@@ -38,6 +38,7 @@ class SearchController extends AbstractController
             ->getForm()
         ;
 
+        $data = ['query' => null];
         $users = null;
         $recipes = null;
         $categories = null;
@@ -60,6 +61,7 @@ class SearchController extends AbstractController
 
         return $this->render('front/search/index.html.twig', [
             'form' => $form->createView(),
+            'data' => $data,
             'users' => $users,
             'recipes' => $recipes,
             'categories' => $categories,

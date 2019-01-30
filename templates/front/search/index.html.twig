@@ -8,10 +8,14 @@
         {{ form_widget(form) }}
         <button class="btn"><i data-feather="search"></i></button>
     {{ form_end(form) }}
+    {% if data.query %}
+    <h1 class="text-center">Résultat(s) pour "{{ data.query }}"</h1>
+    <br>
+    {% endif %}
     <div class="d-flex flex-row justify-content-around">
     {% if users %}
         <div class="d-flex flex-column">
-            <h1 class="text-center">Utilisateur(s)</h1>
+            <h2 class="text-center">{{ users| length }} utilisateur(s)</h2>
             <br>
             {% for user in users %}
                 <div class="card align-self-center" style="width: 20rem;">
@@ -25,12 +29,12 @@
                 <br>
             {% endfor %}
         </div>
-    {% elseif categories is empty and app.request.method is same as("POST") %}
-        <h1 class="text-center">Aucun utilisateur trouvé</h1>
+    {% elseif data.query and not categories and app.request.method is same as("POST") %}
+        <h2 class="text-center">Aucun utilisateur trouvé</h2>
     {% endif %}
     {% if recipes %}
         <div class="d-flex flex-column">
-            <h1 class="text-center">Recette(s)</h1>
+            <h2 class="text-center">{{ recipes| length }} recette(s)</h2>
             {% if categories %}
                 <h3>Catégorie(s) recherché(s) :
                 {% for category in categories %}
@@ -56,8 +60,8 @@
                <br>
             {% endfor %}
         </div>
-    {% elseif app.request.method is same as("POST") %}
-        <h1 class="text-center">Aucune recette trouvé</h1>
+    {% elseif data.query and app.request.method is same as("POST") %}
+        <h2 class="text-center">Aucune recette trouvé</h2>
     {% endif %}
     </div>
 {% endblock %}
