@@ -46,7 +46,7 @@
             <br>
            {% for recipe in recipes %}
                 <div class="card align-self-center" style="width: 20rem;">
-                    <a href="/recipe/{{ recipe.id }}">
+                    <a href="/recipe/{{ recipe.id }}/{{ recipe.slug }}">
                         <img class="card-img-top" src="{{ recipe.pathCoverImg }}" alt="Recipe cover">
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
