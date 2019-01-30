@@ -1,2 +1,10 @@
 @import 'sass/back/main.scss';
 @import 'sass/front/main.scss';
+@font-face {
+    font-family: Nunito;
+    src: url(../fonts/Nunito-Regular.ttf);
+}
+
+* {
+    font-family: Nunito !important;
+}
