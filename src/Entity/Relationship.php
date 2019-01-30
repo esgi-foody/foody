@@ -5,12 +5,15 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 
+
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
  */
 class Relationship
 {
-    use TimestampableTrait;
+//    use TimestampableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
