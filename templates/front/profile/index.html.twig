@@ -18,11 +18,16 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ user.username  }}/follow">{{ (true) ? 'Follow' : 'Unfollow' }}</a>
 
-    {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
-    {#<a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>#}
+    {% for follower in app.user.followers %}
+        {{ follower }}
+    {% endfor %}
+    {% if (true)  %}
+        <a class="btn btn-primary" href="{{ user.username }}/unfollow">Unfollow</a>
+    {% else %}
+        <a class="btn btn-primary" href="{{ user.username }}/follow">Follow</a>
+    {% endif %}
 
-    {#{{ include('back/category/_delete_form.html.twig') }}#}
+
 {% endblock %}
