@@ -15,7 +15,7 @@
     <div class="d-flex flex-row justify-content-around">
     {% if users %}
         <div class="d-flex flex-column">
-            <h2 class="text-center">{{ users| length }} utilisateur(s)</h2>
+            <h3 class="text-center">{{ users| length }} utilisateur(s)</h3>
             <br>
             {% for user in users %}
                 <div class="card align-self-center" style="width: 20rem;">
@@ -30,18 +30,19 @@
             {% endfor %}
         </div>
     {% elseif data.query and not categories and app.request.method is same as("POST") %}
-        <h2 class="text-center">Aucun utilisateur trouvé</h2>
+        <h3 class="text-center">Aucun utilisateur trouvé</h3>
     {% endif %}
     {% if recipes %}
         <div class="d-flex flex-column">
-            <h2 class="text-center">{{ recipes| length }} recette(s)</h2>
             {% if categories %}
                 <h3>Catégorie(s) recherché(s) :
-                {% for category in categories %}
-                    {{ category.name }}
-                {% endfor %}
+                    {% for category in categories %}
+                        {{ category.name }}
+                    {% endfor %}
                 </h3>
             {% endif %}
+            <br>
+            <h3 class="text-center">{{ recipes| length }} recette(s)</h3>
             <br>
            {% for recipe in recipes %}
                 <div class="card align-self-center" style="width: 20rem;">
@@ -51,7 +52,7 @@
                             <h5 class="card-title">{{ recipe.title }}</h5>
                             <p> Catégorie(s) :
                             {% for category in recipe.categories %}
-                                {{ category.name }}
+                                {{ categogry.name }}
                             {% endfor %}
                             </p>
                         </div>
@@ -61,7 +62,7 @@
             {% endfor %}
         </div>
     {% elseif data.query and app.request.method is same as("POST") %}
-        <h2 class="text-center">Aucune recette trouvé</h2>
+        <h3 class="text-center">Aucune recette trouvé</h3>
     {% endif %}
     </div>
 {% endblock %}
