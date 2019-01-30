@@ -1,31 +1,26 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/">Foody</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    {% if(is_granted('IS_AUTHENTICATED_FULLY')) %}
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Déconnexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a>
-                </li>
-            </ul>
-        </div>
-    {% else %}
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Inscription</a>
-                </li>
-            </ul>
-        </div>
-    {% endif %}
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Explorer</a>
+            </li>
+            {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Déconnexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Connexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register">Inscription</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>
