@@ -22,14 +22,14 @@ class Relationship
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="followed")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="followed", cascade={"persist"}))
+     * @ORM\JoinColumn(name="followed_id", referencedColumnName="id")
      */
     private $followed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower",cascade={"persist"})
+     * @ORM\JoinColumn(name="follower_id", referencedColumnName="id")
      */
     private $follower;
 

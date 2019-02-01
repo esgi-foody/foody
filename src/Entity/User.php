@@ -66,12 +66,12 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followeds")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed" ,cascade={"persist"}, fetch="LAZY")
      */
     private $followeds;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followers")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist"}, fetch="LAZY")
      */
     private $followers;
 
