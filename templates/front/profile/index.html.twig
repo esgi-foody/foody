@@ -19,27 +19,27 @@
         </tbody>
     </table>
     <a class="btn btn-primary" href="{{ user.username }}/unfollow">Unfollow</a>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const url = 'localhost:8000/profile/isfollower';
-// The data we are going to send in our request
-            let user = {
-                name: '{{ user|json_encode|raw }}'
-            };
-// The parameters we are gonna pass to the fetch function
-            let fetchData = {
-                method: 'GET',
-                body: user,
-                headers: new Headers()
-            };
-            fetch(url, fetchData)
-                .then(console.log(Response))
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                });
-        }, false);
-    </script>
+    {#<script>#}
+        {#document.addEventListener('DOMContentLoaded', function() {#}
+            {#const url = 'localhost:8000/profile/isfollower';#}
+{#// The data we are going to send in our request#}
+            {#let user = {#}
+                {#name: '{{ user|json_encode|raw }}'#}
+            {#};#}
+{#// The parameters we are gonna pass to the fetch function#}
+            {#let fetchData = {#}
+                {#method: 'GET',#}
+                {#body: user,#}
+                {#headers: new Headers()#}
+            {#};#}
+            {#fetch(url, fetchData)#}
+                {#.then(console.log(Response))#}
+                {#.then(response => response.json())#}
+                {#.then(data => {#}
+                    {#console.log(data)#}
+                {#});#}
+        {#}, false);#}
+    {#</script>#}
 
 
 {% endblock %}
