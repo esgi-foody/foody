@@ -53,7 +53,8 @@ class ProfileController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
-        $relation = $em->getRepository(Relationship::class)->findBy(['followed_id' => $user->getId()], ['follower_id' => $follower->getId()]);
+        $relation = $this->getDoctrine()->getRepository(Relationship::class)->
+        findOneBy(['followed_id' => $user->getId()], ['follower_id' => $follower->getId()]);
 
         $em->remove($relation);
         $em->flush();
