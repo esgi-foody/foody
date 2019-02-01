@@ -33,8 +33,31 @@
     $( "#addIngredient" ).click(function() {
         addPrototypeForm($('#ingredients'));
     });
+
     $(document).on('click', '.remove', function() {
         $(this).parent().remove();
+    });
+
+    $('#ingredients').on('change', '.measuring-unit', function() {
+        let  id = $(this).attr('id');
+        let  ProteinHelpId = id.replace(/_measuringUnit/g, '_protein_help');
+        let  fatHelpId = id.replace(/_measuringUnit/g, '_fat_help');
+        let  CarbohydrateHelpId = id.replace(/_measuringUnit/g, '_carbohydrate_help');
+
+        let text = 'Pour ';
+        if($(this).val() === 'g'|| $(this).val() === 'kg' ) {
+            text+='100g';
+        } else if ($(this).val() === 'mL') {
+            text+='100ml'
+        } else if ($(this).val() === 'cL' || $(this).val() === 'L') {
+            text+='100cl'
+        } else {
+            text+='1 pièce'
+        }
+
+        $('#'+ProteinHelpId).text(text)
+        $('#'+fatHelpId).text(text)
+        $('#'+CarbohydrateHelpId).text(text)
     });
 
     function addPrototypeForm(collectionHolder) {
