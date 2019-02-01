@@ -46,12 +46,12 @@ class Recipe
     private $fat;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeStep", mappedBy="recipe",cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeStep", mappedBy="recipe",cascade={"persist"},orphanRemoval=true)
      */
     private $recipeSteps;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="recipe",cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ingredient", mappedBy="recipe",cascade={"persist"},orphanRemoval=true)
      */
     private $ingredients;
 
@@ -81,7 +81,7 @@ class Recipe
     private $pathCoverImg;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="recipes", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="recipes", cascade={"persist"})
      * @ORM\JoinTable(name="category_recipe")
      */
     private $categories;
