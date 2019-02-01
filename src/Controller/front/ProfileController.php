@@ -27,6 +27,9 @@ class ProfileController extends AbstractController
     public function show(User $user): Response
     {
 
+        $user = $this->getUser();
+        var_dump($user);die();
+
         return $this->render('front/profile/index.html.twig', ['user' => $user]);
 
     }
@@ -66,15 +69,20 @@ class ProfileController extends AbstractController
     /**
      * @Route("/{username}/isfollower", name="isfollower", methods="GET|POST")
      */
-    public function isFollower(User $user): String
+    public function isFollower(User $user): Response
     {
         $currentUser = $this->getUser();
+//        $currentUser->getFolloweds();
+//        $currentUser->getFollowers();
+        $response = new Response();
 
-        if ( in_array($user,$currentUser->getFolloweds())){
-            return 'true';
-        } else {
-            return 'false';
-        }
 
+//        if ( in_array($user,$followed)){
+//            $response->setContent('TRUE');
+//        } else {
+//            $response->setContent('FALSE');
+//        }
+        var_dump($currentUser);die();
+        return $followed;
     }
 }
