@@ -26,12 +26,7 @@ class ProfileController extends AbstractController
      */
     public function show(User $user): Response
     {
-
-        $user = $this->getUser();
-        var_dump($user);die();
-
         return $this->render('front/profile/index.html.twig', ['user' => $user]);
-
     }
 
     /**
@@ -71,10 +66,12 @@ class ProfileController extends AbstractController
      */
     public function isFollower(User $user): Response
     {
-        $currentUser = $this->getUser();
-//        $currentUser->getFolloweds();
-//        $currentUser->getFollowers();
-        $response = new Response();
+        $em = $this->getDoctrine()->getManager();
+        $loggedUser = $em->getRepository(User::class)->find($this->getUser()->getId());
+        $loggedUser->getFolloweds();
+        $loggedUser->getFollowers();
+        $this->getDoctrine()->getManager()->initializeObject($loggedUser);
+//        $response = new Response();
 
 
 //        if ( in_array($user,$followed)){
@@ -82,7 +79,7 @@ class ProfileController extends AbstractController
 //        } else {
 //            $response->setContent('FALSE');
 //        }
-        var_dump($currentUser);die();
-        return $followed;
+        dump($loggedUser);die();
+        return $reponse;
     }
 }
