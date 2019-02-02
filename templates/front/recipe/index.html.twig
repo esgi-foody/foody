@@ -29,7 +29,7 @@
                 <td>{{ recipe.fat }}</td>
                 <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
                 <td>
-                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">Voir</a>
+                    <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">Voir</a>
                     <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
                 </td>
             </tr>

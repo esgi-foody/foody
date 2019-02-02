@@ -19,32 +19,38 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /**
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function findByTitle($query)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('r.title LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Recipe
+    /**
+     * @param $query
+     * @param $categories
+     * @return array
+     */
+    public function findByCategory($query, $categories)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+        $categoriesId = [];
+        foreach ($categories as $category) {
+            $categoriesId[] = $category->getId();
+        }
+
+        $qb = $this->createQueryBuilder('r');
+        return $qb->addSelect('r')
+            ->innerJoin('r.categories', 'c')
+            ->where('r.title LIKE :query')
+            ->andWhere('c.id IN (:id)')
+            ->setParameters([ 'query' => '%' . $query . '%', 'id' => $categoriesId ])
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }
