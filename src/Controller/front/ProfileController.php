@@ -27,6 +27,7 @@ class ProfileController extends AbstractController
      */
     public function show(User $user): Response
     {
+        dump($this->getUser());die();
         return $this->render('front/profile/index.html.twig', ['user' => $user]);
     }
 
@@ -70,19 +71,17 @@ class ProfileController extends AbstractController
     public function isFollower(User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $loggedUser = $em->getRepository(User::class)->find($this->getUser()->getId());
-        $loggedUser->getFolloweds();
-        $loggedUser->getFollowers();
-        $this->getDoctrine()->getManager()->initializeObject($loggedUser);
-//        $response = new Response();
+        $follower = $this->getUser();
+        $relation = $em->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
+        $response = new Response();
 
+        if ( isset($relation[0]['id'])){
+            $response->setContent('TRUE');
+        } else {
+            $response->setContent('FALSE');
+        }
 
-//        if ( in_array($user,$followed)){
-//            $response->setContent('TRUE');
-//        } else {
-//            $response->setContent('FALSE');
-//        }
-        dump($loggedUser);die();
-        return $reponse;
+        return $response;
+
     }
 }
