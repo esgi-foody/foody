@@ -1,4 +1,4 @@
-<form method="post"  action="{{ path('app_front_security_logout', {'id': app.user.id}) }}" action="{{ path('app_front_profile_delete', {'id': app.user.id}) }}"  onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('app_front_profile_delete', {'id': app.user.id}) }}"  onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
     <button class="btn">Supprimer</button>
