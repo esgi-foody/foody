@@ -20,10 +20,10 @@ $('#ingredients').on('change', '.measuring-unit', function() {
 });
 
 function helpMacro(elt) {
-    let id  = elt.attr('id');
-    let  ProteinHelpId = id.replace(/_measuringUnit/g, '_protein_help');
-    let  fatHelpId = id.replace(/_measuringUnit/g, '_fat_help');
-    let  CarbohydrateHelpId = id.replace(/_measuringUnit/g, '_carbohydrate_help');
+    const id  = elt.attr('id');
+    const ProteinHelpId = id.replace(/_measuringUnit/g, '_protein_help');
+    const fatHelpId = id.replace(/_measuringUnit/g, '_fat_help');
+    const CarbohydrateHelpId = id.replace(/_measuringUnit/g, '_carbohydrate_help');
 
     let text = 'Pour ';
     if(elt.val() === 'g'|| elt.val() === 'kg' ) {
@@ -44,7 +44,7 @@ function helpMacro(elt) {
 function addPrototypeForm(collectionHolder) {
     let liNode = $('<li></li>');
     let prototype = collectionHolder.data('prototype');
-    let index = collectionHolder.data('index') ;
+    const index = collectionHolder.data('index') ;
     let newForm = prototype.replace(/__name__/g, index);
     let removeLink  = $('<button class="remove">Supprimer</button>');
 
