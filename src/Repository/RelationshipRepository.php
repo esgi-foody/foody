@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Relationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -36,15 +37,20 @@ class RelationshipRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Relationship
+//    /**
+//      * @return Relationship Returns an array of Relationship objects
+//      */
+
+    public function findOneById($id1 , $id2)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.follower = :id1')
+            ->andWhere('r.followed = :id2')
+            ->setParameter('id1', $id1)
+            ->setParameter('id2', $id2)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult(Query::HYDRATE_ARRAY)
         ;
     }
-    */
+
 }

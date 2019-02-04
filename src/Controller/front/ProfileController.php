@@ -5,6 +5,7 @@ namespace App\Controller\front;
 use App\Entity\User;
 use App\Entity\Relationship;
 use App\Repository\UserRepository;
+use App\Repository\RelationshipRepository;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Node\Scalar\String_;
@@ -53,9 +54,12 @@ class ProfileController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
-        $relation = $this->getDoctrine()->getRepository(Relationship::class)->
-        findOneBy(['followed_id' => $user->getId()], ['follower_id' => $follower->getId()]);
 
+//        $relation = $this->getDoctrine()->getRepository(Relationship::class)->
+//        findBy(array('followed_id' => $user->getId(), 'follower_id' => $follower->getId()));
+
+        $relation = $this->getDoctrine()->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
+        dump($relation);die();
         $em->remove($relation);
         $em->flush();
 
