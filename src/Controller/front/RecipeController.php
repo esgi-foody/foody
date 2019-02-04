@@ -101,6 +101,8 @@ class RecipeController extends AbstractController
      */
     public function edit(Request $request, Recipe $recipe, FileUploader $fileUploader): Response
     {
+        $this->denyAccessUnlessGranted('edit', $recipe);
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -134,6 +136,8 @@ class RecipeController extends AbstractController
      */
     public function delete(Request $request, Recipe $recipe): Response
     {
+        $this->denyAccessUnlessGranted('delete', $recipe);
+
         if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
