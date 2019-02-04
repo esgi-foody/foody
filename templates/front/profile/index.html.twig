@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Foody | Profile > {{ user.pseudo }}{% endblock %}
+{% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
     <h1>{{ user.pseudo }}</h1>
@@ -13,7 +13,7 @@
             <td>{{ user.pseudo }}</td>
         </tr>
         <tr>
-            <th>Biography</th>
+            <th>Biographie</th>
             <td>{{ user.biography }}</td>
         </tr>
         </tbody>
@@ -21,7 +21,7 @@
 
     {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
-    {#<a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>#}
+    <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
 
-    {#{{ include('back/category/_delete_form.html.twig') }}#}
+{#{{ include('front/profile/_delete_form.html.twig') }}#}
 {% endblock %}
