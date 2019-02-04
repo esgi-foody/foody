@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\RecipeStep;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,9 @@ class RecipeStepType extends AbstractType
     {
         $builder->add('title',TextType::class,['label' => 'Titre']);
         $builder->add('stepNumber',IntegerType::class,['label' => 'Etape n°']);
-        $builder->add('content',TextareaType::class,['label' => 'Description']);
+        $builder->add('content',CKEditorType::class,[
+            'config' => array('toolbar' => 'full'),
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
