@@ -27,6 +27,11 @@ class Ingredient
     private $quantity;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $measuringUnit;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $protein;
@@ -60,6 +65,18 @@ class Ingredient
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getMeasuringUnit(): ?string
+    {
+        return $this->measuringUnit;
+    }
+
+    public function setMeasuringUnit(string $measuringUnit): self
+    {
+        $this->measuringUnit = $measuringUnit;
 
         return $this;
     }
