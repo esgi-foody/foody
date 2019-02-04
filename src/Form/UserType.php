@@ -41,11 +41,12 @@ class UserType extends AbstractType
                 ],
                 'label' => 'Nom d\'utilisateur',
                 'required' => true,
-                'constraints' => [new Length(['min' => 3, 'max' => 30])]
+                'constraints' => [new Length(['min' => 3, 'max' => 30])],
             ])
             ->add('dateOfBirth', DateType::class, [
                 'format' => 'ddMMyyyy',
-                'label' => 'Date de naissance'
+                'label' => 'Date de naissance',
+                'years' => range(date('Y')-100, date('Y')+100),
             ])
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
@@ -56,8 +57,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success',
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
