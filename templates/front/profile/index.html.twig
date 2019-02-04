@@ -18,28 +18,38 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ user.username }}/follow">Follow</a>
-    <a class="btn btn-primary" href="{{ user.username }}/unfollow">Unfollow</a>
+    <a id="btn-follow" class="btn btn-primary" href="{{ user.username }}/follow"></a>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const url = 'localhost:8000/profile/isfollower';
-// The data we are going to send in our request
-            let user = {
-                name: '{{ user|json_encode|raw }}'
-            };
-// The parameters we are gonna pass to the fetch function
-            let fetchData = {
-                method: 'GET',
-                body: user,
-                headers: new Headers()
-            };
-            fetch(url, fetchData)
-                .then(console.log(Response))
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                });
-        }, false);
+        {#const btn = document.getElementById('btn-follow');#}
+        {#document.addEventListener('DOMContentLoaded', function() {#}
+            {#const url = 'localhost:8000/profile/{{ user.username }}/isfollower';#}
+{#// The data we are going to send in our request#}
+            {#let user = {#}
+                {#name: '{{ user|json_encode|raw }}'#}
+            {#};#}
+            {#console.log(url);#}
+            {#console.log (user);#}
+{#// The parameters we are gonna pass to the fetch function#}
+            {#let fetchData = {#}
+                {#method: 'POST',#}
+                {#body: user,#}
+                {#headers: new Headers()#}
+            {#};#}
+            {#fetch(url, fetchData)#}
+                {#.then(response => {#}
+                    {#console.log(response.json());#}
+                    {#if (Response.content === 'TRUE') {#}
+                        {#btn.href("{{ user.username }}/unfollow");#}
+                        {#btn.innerHTML('Ne plus suivre');#}
+                    {#} else {#}
+                        {#btn.href("{{ user.username }}/follow");#}
+                        {#btn.innerHTML('Suivre');#}
+                    {#}#}
+                {#})#}
+                {#.catch(error => {#}
+                    {#console.error(`Error: ${error}`);#}
+                {#})#}
+        {#}, false);#}
     </script>
 
 

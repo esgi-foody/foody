@@ -8,6 +8,7 @@ use App\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -66,12 +67,14 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followeds", cascade={"persist"},orphanRemoval=true, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @MaxDepth(1)
      */
     private $followeds;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followers", cascade={"persist"},orphanRemoval=true, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @MaxDepth(1)
      */
     private $followers;
 
