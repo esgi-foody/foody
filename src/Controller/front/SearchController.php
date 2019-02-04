@@ -20,6 +20,8 @@ class SearchController extends AbstractController
      */
     public function index(Request $request, ExplorerFilters $explorerFilters)
     {
+        $data = ['query' => null];
+        $results = ['users' => null, 'recipes' => null, 'categories' => null];
         $form = $this->createForm(ExplorerType::class);
 
         $form->handleRequest($request);
