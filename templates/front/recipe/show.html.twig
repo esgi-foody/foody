@@ -42,7 +42,7 @@
     {% for  step in recipe.recipeSteps  %}
         <div>
             <h2>Etape n°{{ step.stepNumber }} :  {{ step.title }}</h2>
-            <p>{{ step.content }} </p>
+            <p>{{ step.content | raw }} </p>
         </div>
 
     {% endfor %}
