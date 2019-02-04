@@ -26,9 +26,6 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,['label' => 'Titre'])
-            ->add('protein',IntegerType::class,['label' => 'Protéine'])
-            ->add('carbohydrate',IntegerType::class,['label' => 'Glucides'])
-            ->add('fat',IntegerType::class,['label' => 'Lipides'])
             ->add('pathCoverImg',FileType::class,['label' => 'image','data_class' => null])
             ->add('time',TimeTypeField::class,['label' => 'Temps'])
             ->add('categories', EntityType::class, [
