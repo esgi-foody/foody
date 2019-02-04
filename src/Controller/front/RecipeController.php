@@ -62,8 +62,7 @@ class RecipeController extends AbstractController
                 $recipe->addCategory($category);
             }
 
-            $calories = $recipe->getCarbohydrate()* 4 + $recipe->getProtein() * 4 + $recipe->getFat()*9;
-            $recipe->setCalory($calories);
+            $recipe = $this->calculateMacro($recipe);
 
             $em = $this->getDoctrine()->getManager();
             $recipe->setUserRecipe($this->getUser());
@@ -120,6 +119,8 @@ class RecipeController extends AbstractController
 
             $fileName = $fileUploader->upload($recipe->getPathCoverImg(),'recipes');
             $recipe->setPathCoverImg($fileName);
+            $recipe = $this->calculateMacro($recipe);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('recipe_index', ['id' => $recipe->getId()]);
@@ -145,5 +146,27 @@ class RecipeController extends AbstractController
         }
 
         return $this->redirectToRoute('recipe_index');
+    }
+
+    private function calculateMacro(Recipe $recipe): Recipe
+    {
+        $protein = 0;
+        $carbohydrate = 0;
+        $fat = 0;
+
+        foreach ($recipe->getIngredients() as $ingredient) {
+            $quantity = $ingredient->getMeasuringUnit() === 'piece'? $ingredient->getQuantity() : $ingredient->getQuantity() /100 ;
+            $carbohydrate+= $ingredient->getCarbohydrate() * $quantity;
+            $protein+= $ingredient->getProtein() * $quantity ;
+            $fat+= $ingredient->getFat() * $quantity ;
+        }
+
+        $calories = $carbohydrate * 4 + $protein * 4 + $fat * 9;
+        $recipe->setCarbohydrate($carbohydrate);
+        $recipe->setProtein($protein);
+        $recipe->setFat($fat);
+        $recipe->setCalory($calories);
+
+        return $recipe;
     }
 }
