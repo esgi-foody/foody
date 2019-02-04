@@ -10,7 +10,7 @@ use App\Entity\Traits\TimestampableTrait;
  */
 class Relationship
 {
-    use TimestampableTrait;
+//    use TimestampableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
