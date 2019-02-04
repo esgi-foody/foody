@@ -49,18 +49,16 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/{username}/unfollow", name="user_unfollow", methods="GET|POST")
+     * @param User $user
+     * @return Response
      */
     public function unfollow(User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
 
-//        $relation = $this->getDoctrine()->getRepository(Relationship::class)->
-//        findBy(array('followed_id' => $user->getId(), 'follower_id' => $follower->getId()));
-
-        $relation = $this->getDoctrine()->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
-        dump($relation);die();
-        $em->remove($relation);
+        $relation = $em->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
+        $em->remove($em->getRepository(Relationship::class)->find($relation[0]['id']));
         $em->flush();
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
