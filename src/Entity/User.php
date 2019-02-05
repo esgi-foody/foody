@@ -67,13 +67,13 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
      */
     private $followeds;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
      */
     private $followers;
