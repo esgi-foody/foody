@@ -27,8 +27,14 @@ class ProfileController extends AbstractController
      */
     public function show(User $user): Response
     {
-        dump($this->getUser());die();
-        return $this->render('front/profile/index.html.twig', ['user' => $user]);
+
+        $em = $this->getDoctrine()->getManager();
+        if ($em->getRepository(Relationship::class)->findOneById($this->getUser()->getId(),$user->getId())){
+            $followBtn = ['title'=>'Ne plus suivre','path'=>'profile_unfollow'];
+        } else {
+            $followBtn = ['title'=>'Suivre','path'=>'profile_follow'];
+        }
+        return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn]);
     }
 
     /**
@@ -49,7 +55,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/unfollow", name="user_unfollow", methods="GET|POST")
+     * @Route("/{username}/unfollow", name="profile_unfollow", methods="GET|POST")
      * @param User $user
      * @return Response
      */
@@ -65,23 +71,4 @@ class ProfileController extends AbstractController
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }
 
-    /**
-     * @Route("/{username}/isfollower", name="isfollower", methods="GET|POST")
-     */
-    public function isFollower(User $user): Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $follower = $this->getUser();
-        $relation = $em->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
-        $response = new Response();
-
-        if ( isset($relation[0]['id'])){
-            $response->setContent('TRUE');
-        } else {
-            $response->setContent('FALSE');
-        }
-
-        return $response;
-
-    }
 }
