@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class SearchController
+ * Class ExplorerController
  * @package App\Controller
- * @Route("/search", name="app_front_")
+ * @Route("/explorer", name="app_front_")
  */
-class SearchController extends AbstractController
+class ExplorerController extends AbstractController
 {
     /**
      * @Route("/", name="search_index", methods={"GET", "POST"})
@@ -31,7 +31,7 @@ class SearchController extends AbstractController
             $results = $explorerFilters->filters($data);
         }
 
-        return $this->render('front/search/index.html.twig', [
+        return $this->render('front/explorer/index.html.twig', [
             'form' => $form->createView(),
             'data' => $data,
             'results' => $results,
