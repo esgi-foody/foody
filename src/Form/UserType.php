@@ -37,7 +37,7 @@ class UserType extends AbstractType
             ])
             ->add('username', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'ex: @foody',
+                    'placeholder' => 'ex: foody',
                 ],
                 'label' => 'Nom d\'utilisateur',
                 'required' => true,

@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Entity;
+
+use App\Entity\Traits\TimestampableTrait;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\TimestampableTrait;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -13,8 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_account")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email"}), message="Cet email est déjà utiliser")
- * @UniqueEntity(fields={"username"}), message="Ce nom d'utilisateur est déjà utiliser")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé")
+ * @UniqueEntity(fields={"username"}, message="Ce nom d'utilisateur est déjà utilisé")
  */
 class User implements UserInterface
 {
@@ -28,6 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
+     * @Assert\NotBlank(message="test")
      */
     private $username;
 
@@ -475,22 +479,6 @@ class User implements UserInterface
             }
         }
 
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAtValue() : self {
-        $this->createdAt = new \DateTime();
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedAtValue() : self {
-        $this->updatedAt = new \DateTime();
         return $this;
     }
 
