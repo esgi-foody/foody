@@ -21,7 +21,7 @@
             <br>
             {% for user in results.users %}
                 <div class="card align-self-center" style="width: 20rem;">
-                    <a href="/profile/{{ user.username }}">
+                    <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
                         <img class="card-img-top" src="{{ user.pathImg }}" alt="User profile picture">
                         <div class="card-body">
                             <h5 class="card-title">@{{ user.username }}</h5>
@@ -49,7 +49,7 @@
             <br>
             {% for recipe in results.recipes %}
                 <div class="card align-self-center" style="width: 20rem;">
-                    <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                    <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
                         <img class="card-img-top" src="{{ asset('uploads/recipes/'~recipe.pathCoverImg )}}" alt="Recipe cover">
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
