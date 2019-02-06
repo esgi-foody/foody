@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Node\Scalar\String_;
+use Symfony\Component\DependencyInjection\Compiler\ResolveBindingsPass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -25,7 +26,9 @@ class ProfileController extends AbstractController
      */
     public function show(User $user): Response
     {
+
         return $this->render('front/profile/index.html.twig', ['user' => $user]);
+
     }
 
     /**
@@ -53,12 +56,25 @@ class ProfileController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
         $relation = $em->getRepository(Relationship::class)->findBy(['followed_id' => $user->getId()], ['follower_id' => $follower->getId()]);
-        $relation->setFollowed($user);
-        $relation->setFollower($follower);
 
         $em->remove($relation);
         $em->flush();
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
+    }
+
+    /**
+     * @Route("/{username}/isfollower", name="isfollower", methods="GET|POST")
+     */
+    public function isFollower(User $user): String
+    {
+        $currentUser = $this->getUser();
+
+        if ( in_array($user,$currentUser->getFolloweds())){
+            return 'true';
+        } else {
+            return 'false';
+        }
+
     }
 }
