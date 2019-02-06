@@ -30,8 +30,8 @@ security:
             anonymous: true
 
             form_login:
-                check_path: app_front_security_login
-                login_path: app_front_security_login
+                check_path: app_front_auth_login
+                login_path: app_front_auth_login
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: app_front_default_home
                 provider: app_user_provider
