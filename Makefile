@@ -1,5 +1,6 @@
 install :
 	composer install
+	php bin/console ckeditor:install
 	php bin/console assets:install public
 	yarn
 	yarn encore dev

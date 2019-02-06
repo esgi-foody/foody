@@ -47,15 +47,12 @@ class SearchController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            switch ($data['category']->isEmpty()) {
-                case true && $data['query']:
-                    $users = $userRepository->findByUsername($data['query']);
-                    $recipes = $recipeRepository->findByTitle($data['query']);
-                    break;
-                case false && $data['query']:
-                    $recipes = $recipeRepository->findByCategory($data['query'], $data['category']);
-                    $categories = $data['category'];
-                    break;
+            if ($data['category']->isEmpty() && $data['query']) {
+                $users = $userRepository->findByUsername($data['query']);
+                $recipes = $recipeRepository->findByTitle($data['query']);
+            } else if (!$data['category']->isEmpty() && $data['query']) {
+                $recipes = $recipeRepository->findByCategory($data['query'], $data['category']);
+                $categories = $data['category'];
             }
         }
 
