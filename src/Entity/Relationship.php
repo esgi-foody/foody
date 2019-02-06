@@ -5,6 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 
+
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
  */
@@ -20,13 +23,13 @@ class Relationship
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="followed")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="follower_id", referencedColumnName="id")
      */
     private $followed;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="followed_id", referencedColumnName="id")
      */
     private $follower;
 
