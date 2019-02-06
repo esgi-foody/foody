@@ -14,9 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-
-
-
 /**
  * @Route("/profile", name="app_front_")
  */

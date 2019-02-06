@@ -31,7 +31,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
-     * @Assert\NotBlank(message="test")
      */
     private $username;
 

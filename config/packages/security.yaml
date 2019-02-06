@@ -15,12 +15,6 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-        in_memory:
-            memory:
-                users:
-                    enzo_huynh@hotmail.com:
-                        password: test
-                        roles: 'ROLE_ADMIN'
 
     firewalls:
         dev:
