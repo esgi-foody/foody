@@ -15,12 +15,6 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-        in_memory:
-            memory:
-                users:
-                    enzo_huynh@hotmail.com:
-                        password: test
-                        roles: 'ROLE_ADMIN'
 
     firewalls:
         dev:
@@ -55,5 +49,5 @@ security:
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/admin/category, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
