@@ -10,20 +10,20 @@ trait TimestampableTrait
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetimetz", options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdAt;
     /**
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetimetz", options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     private $updatedAt;
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt():? \DateTime
     {
         return $this->createdAt;
     }
@@ -40,7 +40,7 @@ trait TimestampableTrait
     /**
      * @return \DateTime
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt():? \DateTime
     {
         return $this->updatedAt;
     }
