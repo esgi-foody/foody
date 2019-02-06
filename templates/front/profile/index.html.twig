@@ -16,32 +16,13 @@
             <th>Biography</th>
             <td>{{ user.biography }}</td>
         </tr>
-        <button type="button" class="btn btn-primary">{{  }}</button>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ user.username }}/follow">Follow</a>
-    <a class="btn btn-primary" href="{{ user.username }}/unfollow">Unfollow</a>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const url = 'localhost:8000/profile/isfollower';
-// The data we are going to send in our request
-            let user = {
-                name: '{{ user|json_encode|raw }}'
-            };
-// The parameters we are gonna pass to the fetch function
-            let fetchData = {
-                method: 'GET',
-                body: user,
-                headers: new Headers()
-            };
-            fetch(url, fetchData)
-                .then(console.log(Response))
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                });
-        }, false);
-    </script>
+    <a class="btn btn-primary" href="{{ user.username  }}/follow">{{ (true) ? 'Follow' : 'Unfollow' }}</a>
 
+    {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
+    {#<a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>#}
+
+    {#{{ include('back/category/_delete_form.html.twig') }}#}
 {% endblock %}
