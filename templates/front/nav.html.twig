@@ -3,10 +3,11 @@
     <a class="navbar-brand" href="/">Foody</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/explorer">Explorer</a>
-            </li>
+
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/explorer">Explorer</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/recipe/new">Ajouter</a>
                 </li>
