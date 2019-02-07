@@ -11,6 +11,7 @@ use App\Entity\RecipeStep;
 use App\Entity\Ingredient;
 use App\Entity\User;
 use Faker;
+use Symfony\Component\HttpFoundation\File\File;
 
 class RecipeFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -66,7 +67,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->addCategory($category);
             $recipe->getRecipeSteps($arrStep);
             $recipe->getComments([]);
-            $recipe->setPathCoverImg($faker->imageUrl( 640, 480 , 'food'));
+            $recipe->setImageFile(new File('assets/images/loclac.jpg'));
+            $recipe->setImageName('food');
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED

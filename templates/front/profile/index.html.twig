@@ -30,7 +30,7 @@
 
             <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
             <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                <img class="card-img-top" src="{{ asset('uploads/recipes/'~recipe.pathCoverImg )}}" alt="Recipe cover">
+                <img class="card-img-top" src="{{ asset('uploads/images/recipes/' ~ recipe.getImageFile )}}" alt="Recipe cover">
                 <div class="card-body">
                     <h5 class="card-title">{{ recipe.title }}</h5>
                     <p> Catégorie(s) :

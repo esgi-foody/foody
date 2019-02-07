@@ -65,7 +65,7 @@ class ProfileController extends AbstractController
         $request->getSession()->invalidate();
         $em->flush();
 
-        return $this->redirectToRoute('app_front_security_login');
+        return $this->redirectToRoute('app_front_auth_login');
     }
 
 }
