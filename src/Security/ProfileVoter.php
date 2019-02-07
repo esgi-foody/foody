@@ -9,11 +9,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class ProfileVoter extends Voter
 {
     const EDIT = 'edit';
-    const DELETE = 'delete';
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
+        if (!in_array($attribute, [self::EDIT])) {
             return false;
         }
 

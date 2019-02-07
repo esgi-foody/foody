@@ -3,15 +3,11 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    <h1>{{ user.pseudo }}</h1>
+    <h3>{{ user.pseudo }}</h3>
 
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Pseudo</th>
-            <td>{{ user.pseudo }}</td>
-        </tr>
         <tr>
             <th>Biographie</th>
             <td>{{ user.biography | raw }}</td>
@@ -21,7 +17,6 @@
     </table>
 
 
-    {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
     {% if app.user == user %}
     <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
 
