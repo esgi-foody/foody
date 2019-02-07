@@ -1,27 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Foody | Profile > {{ user.pseudo }}{% endblock %}
+{% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    <h1>{{ user.pseudo }}</h1>
+    <h3>{{ user.pseudo }}</h3>
 
 
     <table class="table">
         <tbody>
         <tr>
-            <th>Pseudo</th>
-            <td>{{ user.pseudo }}</td>
+            <th>Biographie</th>
+            <td>{{ user.biography | raw }}</td>
         </tr>
-        <tr>
-            <th>Biography</th>
-            <td>{{ user.biography }}</td>
-        </tr>
+
         </tbody>
     </table>
 
-    {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
-    {#<a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>#}
+    {% if app.user == user %}
+    <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
 
-    {#{{ include('back/category/_delete_form.html.twig') }}#}
+    {{ include('front/profile/_delete_form.html.twig') }}
+    {% endif %}
+
+    <h1>Recettes</h1>
+    <div class="d-flex bd-highlight justify-content-center">
+        <div class="row">
+    {% for recipe in user.recipes %}
+
+            <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
+            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                <img class="card-img-top" src="{{ asset('uploads/recipes/'~recipe.pathCoverImg )}}" alt="Recipe cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p> Catégorie(s) :
+                        {% for category in recipe.categories %}
+                            {{ category.name }}
+                        {% endfor %}
+                    </p>
+                </div>
+            </a>
+
+        </div>
+    {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

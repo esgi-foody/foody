@@ -1,37 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Color</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Couleur</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for category in categories %}
             <tr>
-                <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
-                <td>{{ category.hexaColor }}</td>
+                <td style="background-color: {{ category.hexaColor }}">{{ category.hexaColor }}</td>
                 <td>
-                    <a href="{{ path('app_back_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('app_back_category_show', {'id': category.id}) }}">Voir</a>
+                    <a href="{{ path('app_back_category_edit', {'id': category.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucune données trouvées</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_category_new') }}">Create new</a>
+    <a href="{{ path('app_back_category_new') }}">Créer une nouvelle catégorie</a>
 {% endblock %}
