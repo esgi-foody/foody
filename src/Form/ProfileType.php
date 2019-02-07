@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class ProfileType extends AbstractType
 {
@@ -16,7 +17,8 @@ class ProfileType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => "Nom d'utilisateur"
             ])
-            ->add('biography', TextType::class, [
+
+            ->add('biography',CKEditorType::class,[
                 'label' => "Biographie"
             ])
         ;
