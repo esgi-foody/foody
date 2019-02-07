@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Recipe{% endblock %}
-
 {% block body %}
     <h1>Recette {{ recipe.title }}</h1>
     <table class="table">
@@ -27,7 +26,7 @@
                 <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <td><img src="{{ asset('uploads/recipes/'~recipe.pathCoverImg)}}" ></td>
+                <td><img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" ></td>
             </tr>
             <tr>
                 <th>Categories</th>

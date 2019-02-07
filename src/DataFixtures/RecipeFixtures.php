@@ -28,6 +28,8 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
 
             //INGREDIENTS
             for ($y = 0; $y < rand(3,10); $y++){
+                $measuringUnit =  ['g','kg','piece','mL','cL','L'];
+                $keyMeasuringUnit = array_rand($measuringUnit);
                 $arrIngr=[];
                 $ingredient = new Ingredient();
                 $ingredient->setName($faker->ingredient);
@@ -35,8 +37,9 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 $ingredient->setProtein(rand(1,10));
                 $ingredient->setCarbohydrate(rand(1,10));
                 $ingredient->setFat(rand(1,10));
+                $ingredient->setMeasuringUnit($measuringUnit[$keyMeasuringUnit]);
                 $ingredient->setRecipe($recipe);
-                array_push($arrIngr,$ingredient);
+                $arrIngr[] = $ingredient;
 
                 $manager->persist($ingredient);
             }

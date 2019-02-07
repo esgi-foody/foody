@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\front\Auth;
+namespace App\Controller\front\auth;
 
 use App\Form\UserType;
 use App\Entity\User;
@@ -14,26 +14,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 /**
  * Class SecurityController
  * @package App\Controller
- * @Route(name="app_front_security_")
+ * @Route(name="app_front_auth_")
  */
 class SecurityController extends Controller
 {
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function admin(AuthenticationUtils $helper): Response
-    {
-        return $this->render('front/Security/admin.html.twig', [
-            'error' => $helper->getLastAuthenticationError(),
-        ]);
-    }
-
     /**
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $helper): Response
     {
-        return $this->render('front/Security/login.html.twig', [
+        return $this->render('front/auth/login.html.twig', [
             'error' => $helper->getLastAuthenticationError(),
         ]);
     }
@@ -73,11 +63,11 @@ class SecurityController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('app_front_security_login');
+            return $this->redirectToRoute('app_front_auth_login');
         }
 
         return $this->render(
-            'front/Security/register.html.twig', [
+            'front/auth/register.html.twig', [
                 'form' => $form->createView(),
             ]
         );
