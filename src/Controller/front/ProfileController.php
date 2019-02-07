@@ -25,7 +25,6 @@ class ProfileController extends AbstractController
     public function show(User $user): Response
     {
         return $this->render('front/profile/index.html.twig', ['user' => $user]);
-
     }
 
     /**
@@ -67,4 +66,5 @@ class ProfileController extends AbstractController
 
         return $this->redirectToRoute('app_front_security_login');
     }
+
 }

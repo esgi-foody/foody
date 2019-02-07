@@ -3,12 +3,10 @@
 {% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <h1>Liste des catégories</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Couleur</th>
                 <th>Actions</th>
@@ -17,7 +15,6 @@
         <tbody>
         {% for category in categories %}
             <tr>
-                <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td style="background-color: {{ category.hexaColor }}">{{ category.hexaColor }}</td>
                 <td>
