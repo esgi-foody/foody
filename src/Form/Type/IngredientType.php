@@ -15,7 +15,12 @@ class IngredientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class,['label' => 'Nom'])
+        $builder->add('name',TextType::class,
+                    [
+                        'label' => 'Nom',
+                        'required' => true
+                    ]
+                    )
                 ->add('measuringUnit', ChoiceType::class, [
                     'choices'  => [
                         'g' => 'g',

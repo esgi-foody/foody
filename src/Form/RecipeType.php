@@ -26,6 +26,7 @@ class RecipeType extends AbstractType
                 'required' => false,
                 'allow_delete' => false,
                 'download_label' => false,
+                'required' => true,
                 'label' => 'Image'
             ])
             ->add('time',TimeTypeField::class,['label' => 'Temps'])
