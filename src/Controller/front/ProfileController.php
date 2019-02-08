@@ -67,5 +67,4 @@ class ProfileController extends AbstractController
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }
-
 }
