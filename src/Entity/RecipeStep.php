@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeStepRepository")
@@ -19,17 +21,20 @@ class RecipeStep
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Le titre doit etre renseigné")
      * @ORM\Column(type="string",  length=255, nullable=true)
      */
     private $title;
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le numero de l'étape doit etre renseigné")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $stepNumber;
 
     /**
+     * @Assert\NotBlank(message="Le contenu doit etre renseigné")
      * @ORM\Column(type="text")
      */
     private $content;

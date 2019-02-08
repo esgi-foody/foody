@@ -4,14 +4,9 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Recipe;
-use App\Entity\RecipeStep;
 use App\Form\Type\RecipeStepType;
 use App\Form\Type\IngredientType;
-use Doctrine\DBAL\Types\TimeType;
-use Gedmo\Mapping\Driver\File;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType as TimeTypeField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
@@ -26,7 +22,12 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,['label' => 'Titre'])
-            ->add('pathCoverImg',FileType::class,['label' => 'image','data_class' => null])
+            ->add('imageFile', VichImageType::class, [
+                'allow_delete' => false,
+                'download_label' => false,
+                'required' => true,
+                'label' => 'Image'
+            ])
             ->add('time',TimeTypeField::class,['label' => 'Temps'])
             ->add('categories', EntityType::class, [
                 'label'        => 'Categories',
