@@ -3,6 +3,9 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
+    {% if user.pathImg%}
+        <img src="{{ user.pathImg }}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+    {% endif %}
     <h3>{{ user.pseudo }}</h3>
 
 
