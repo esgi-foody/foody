@@ -11,6 +11,9 @@ use Doctrine\Common\Annotations;
 
 
 
+
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
  * @UniqueEntity(fields={"followed_id", "follower_id"})

@@ -18,7 +18,11 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username}) }}">{{ follow.title }}</a>
+    <a class="btn btn-primary" href="{{ path( follow.path , {'user': user.username}) }}">{{ follow.title }}</a>
 
+    {#<a href="{{ path('app_back_category_index') }}">back to list</a>#}
 
+    {#<a href="{{ path('app_back_category_edit', {'id': category.id}) }}">edit</a>#}
+
+    {#{{ include('back/category/_delete_form.html.twig') }}#}
 {% endblock %}

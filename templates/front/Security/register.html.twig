@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form, {'attr': {'id': 'user-form'}})}}
+    {{ form_row(form.username) }}
+    {{ form_row(form.pseudo) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.dateOfBirth) }}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+<<<<<<< HEAD
+=======
+
+{% block javascripts %}
+    {#{{ encore_entry_script_tags('register') }}#}
+{% endblock %}
+>>>>>>> f937d2ba013c48c6a05b77be5a8712c0dc339dc1
