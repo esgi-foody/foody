@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Annotations;
 
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
+ * @UniqueEntity(fields={"followed_id", "follower_id"})
  */
 class Relationship
 {
