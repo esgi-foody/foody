@@ -1,30 +1,15 @@
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">Foody</a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Foody</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/explorer">Explorer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/recipe/new">Ajouter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Déconnexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a>
-                </li>
-
+                <li><a href="/explorer">Explorer</a></li>
+                <li><a href="/recipe/new">Ajouter</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
+                <li><a href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a></li>
             {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Inscription</a>
-                </li>
+                <li><a href="/login">Connexion</a></li>
+                <li><a href="/register">Inscription</a></li>
             {% endif %}
         </ul>
     </div>
