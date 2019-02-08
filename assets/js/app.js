@@ -10,6 +10,7 @@ import feather from 'feather-icons';
 
 feather.replace();
 $('select').formSelect();
+M.AutoInit();
 
 // Images
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|svg)$/);
