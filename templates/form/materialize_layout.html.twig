@@ -172,7 +172,7 @@
 
 {%- block choice_widget_collapsed -%}
     <select {{ block('widget_attributes') }}{% if multiple %} multiple{% endif %}>
-        <option value="" disabled {% if value is empty %} selected{% endif %}>Choisir une option</option>
+        <option value="" disabled>Choisir une option</option>
         {%- if preferred_choices|length > 0 -%}
             {% set options = preferred_choices %}
             {{- block('choice_widget_options') -}}
