@@ -61,5 +61,5 @@ function addPrototypeForm(collectionHolder) {
         liNode.remove();
     });
     collectionHolder.append(liNode);
-
+    $('select').formSelect();
 }
