@@ -3,7 +3,7 @@
 {% block body %}
     {% if error %}
         <div class="alert alert-danger">
-            {{ error.messageKey }}
+            {{ error }}
         </div>
     {% endif %}
 
@@ -14,7 +14,7 @@
                 <h4><i class="fa fa-lock" aria-hidden="true"></i> Connexion</h4>
                 <div>
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="_username" value="{% if error %}{{ error.token.user }}{% endif %}"/>
+                    <input type="text" id="email" name="_username" />
                 </div>
                 <div>
                     <label for="password">Mot de passe</label>

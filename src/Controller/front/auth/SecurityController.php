@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+//use App\Services\Mailer;
 /**
  * Class SecurityController
  * @package App\Controller
@@ -21,10 +22,10 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $helper): Response
+    public function login(): Response
     {
         return $this->render('front/auth/login.html.twig', [
-            'error' => $helper->getLastAuthenticationError(),
+            'error' => 'Les identifiants sont invalides',
         ]);
     }
 
@@ -44,7 +45,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoderd)
     {
         if ($this->getUser() instanceof User) {
             return $this->redirectToRoute('home');
@@ -63,6 +64,7 @@ class SecurityController extends Controller
             $em->persist($user);
             $em->flush();
 
+            //$mailer->send($user->getUsername(), 'Salut', 'enzossj1@gmail.com', []);
             return $this->redirectToRoute('app_front_auth_login');
         }
 
