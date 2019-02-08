@@ -40,6 +40,9 @@ class ExplorerFilters
         } else if (!$data['category']->isEmpty() && $data['query']) {
             $recipes = $this->recipeRepository->findByCategory($data['query'], $data['category']);
             $categories = $data['category'];
+        } else if (!$data['category']->isEmpty() && !$data['query']) {
+            $recipes = $this->recipeRepository->findByCategory('', $data['category']);
+            $categories = $data['category'];
         }
 
         return ['users' => $users, 'recipes' => $recipes, 'categories' => $categories];
