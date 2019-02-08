@@ -54,8 +54,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 $recipeStep->setStepNumber($y);
                 $recipeStep->setContent($faker->paragraph( 4,  true));
                 $recipeStep->setRecipe($recipe);
-                //$recipeStep->addImage($faker->placeholder());
-                array_push($arrStep,$recipeStep);
+                $arrStep[] = $recipeStep ;
 
                 $manager->persist($recipeStep);
             }
