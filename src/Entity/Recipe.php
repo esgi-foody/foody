@@ -25,6 +25,8 @@ class Recipe
      */
     private $id;
     /**
+     *
+     * @Assert\NotBlank(message="Le titre doit etre renseigné")
      * @ORM\Column(type="string",  length=255, nullable=false)
      */
     private $title;
