@@ -6,15 +6,11 @@ use App\Entity\User;
 use App\Entity\Relationship;
 use App\Repository\UserRepository;
 use App\Repository\RelationshipRepository;
-use phpDocumentor\Reflection\Types\Boolean;
-use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Node\Scalar\String_;
-use Symfony\Component\DependencyInjection\Compiler\ResolveBindingsPass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider;
 
 /**
  * @Route("/profile", name="app_front_")
