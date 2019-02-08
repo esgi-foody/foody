@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\Relationship;
 use App\Repository\UserRepository;
 use App\Repository\RelationshipRepository;
-use PhpParser\Node\Scalar\String_;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -61,9 +60,8 @@ class ProfileController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
-
-        $relation = $em->getRepository(Relationship::class)->findOneById($follower->getId(),$user->getId());
-        $em->remove($em->getRepository(Relationship::class)->find($relation[0]['id']));
+        $relation = $em->getRepository(Relationship::class)->findOneBy(['follower'=>$follower->getId(),'followed'=>$user->getId()]);
+        $em->remove($relation);
         $em->flush();
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
