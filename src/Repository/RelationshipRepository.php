@@ -37,20 +37,5 @@ class RelationshipRepository extends ServiceEntityRepository
     }
     */
 
-//    /**
-//      * @return Relationship Returns an array of Relationship objects
-//      */
-
-    public function findOneById($id1 , $id2)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.follower = :id1')
-            ->andWhere('r.followed = :id2')
-            ->setParameter('id1', $id1)
-            ->setParameter('id2', $id2)
-            ->getQuery()
-            ->getResult(Query::HYDRATE_ARRAY)
-        ;
-    }
 
 }
