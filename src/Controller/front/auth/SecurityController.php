@@ -45,7 +45,7 @@ class SecurityController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoderd)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         if ($this->getUser() instanceof User) {
             return $this->redirectToRoute('home');
@@ -64,7 +64,6 @@ class SecurityController extends Controller
             $em->persist($user);
             $em->flush();
 
-            //$mailer->send($user->getUsername(), 'Salut', 'enzossj1@gmail.com', []);
             return $this->redirectToRoute('app_front_auth_login');
         }
 
