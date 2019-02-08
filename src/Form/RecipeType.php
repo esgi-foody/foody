@@ -23,7 +23,6 @@ class RecipeType extends AbstractType
         $builder
             ->add('title',TextType::class,['label' => 'Titre'])
             ->add('imageFile', VichImageType::class, [
-                'required' => false,
                 'allow_delete' => false,
                 'download_label' => false,
                 'required' => true,
