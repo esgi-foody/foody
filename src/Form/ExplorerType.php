@@ -14,11 +14,11 @@ class ExplorerType extends AbstractType
     {
         $builder
             ->add('query', TextType::class, [
-                'label' => false,
+                'label' => 'Un utilisateur, une recette à rechercher ?',
                 'required' => false,
             ])
             ->add('category', EntityType::class, [
-                'label'        => false,
+                'label'        => 'Catégories',
                 'class'        => Category::class,
                 'choice_label' => 'name',
                 'multiple'     => true,
