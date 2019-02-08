@@ -17,7 +17,11 @@ class RecipeStepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title',TextType::class,['label' => 'Titre']);
-        $builder->add('stepNumber',IntegerType::class,['label' => 'Etape n°']);
+        $builder->add('stepNumber',IntegerType::class,
+            [
+                'label' => 'Etape n°'
+                ,'required' => true
+            ]);
         $builder->add('content',CKEditorType::class,[
             'config' => array('toolbar' => 'full'),
         ]);

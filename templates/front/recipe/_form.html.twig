@@ -13,7 +13,10 @@
 <ul id="recipeSteps" data-index="{{ form.recipeSteps|length }}" data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
     <button type="button" id="addStep">+   Etapes</button>
     {% for recipeStep in form.recipeSteps %}
-        <li>{{ form_row(recipeStep) }}<button type="button" class="remove">Supprimer</button></li>
+        <li>
+            {{ form_row(recipeStep) }}
+            <button type="button" class="remove">Supprimer</button>
+        </li>
     {% endfor %}
 </ul>
     {{ form_widget(form) }}

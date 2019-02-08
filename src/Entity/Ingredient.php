@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IngredientRepository")
@@ -17,32 +18,37 @@ class Ingredient
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @Assert\NotBlank(message="Le nom doit etre renseigné")
+     * @ORM\Column(type="string", length=45, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La quantité doit etre renseignée")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $quantity;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $measuringUnit;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La quantité de protéine doit etre renseignée")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $protein;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La quantité de glucide doit etre renseignée")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $carbohydrate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La quantité de lipide doit etre renseignée")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $fat;
 

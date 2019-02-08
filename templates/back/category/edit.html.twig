@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}Modifier une catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit Category</h1>
+    <h1>Modifier une catégorie</h1>
 
     {{ include('back/category/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_back_category_index') }}">back to list</a>
+    <a href="{{ path('app_back_category_index') }}">Retour</a>
 
     {{ include('back/category/_delete_form.html.twig') }}
 {% endblock %}
