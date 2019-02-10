@@ -7,25 +7,23 @@
         </div>
     {% endif %}
 
-
     <div class="row">
-        <div class="col s6 offset-s3">
-            <form action="{{ path('app_front_auth_login') }}" method="post">
-                <h4><i class="fa fa-lock" aria-hidden="true"></i> Connexion</h4>
-                <div>
+        <h4 class="centger-align">Connexion</h4>
+        <form class="col s12" action="{{ path('app_front_auth_login') }}" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" name="_username">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="_username" value="{% if error %}{{ error.token.user }}{% endif %}"/>
                 </div>
-                <div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="_password">
                     <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="_password" />
                 </div>
-
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                <button type="submit" class="btn">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i> Connexion
-                </button>
-            </form>
-        </div>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <button type="submit" class="waves-effect waves-light btn">Connexion</button>
+        </form>
     </div>
 {% endblock %}

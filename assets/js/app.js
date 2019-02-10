@@ -1,7 +1,7 @@
 // CSS
 import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/sass/materialize.scss';
-import '../css/app.css';
+import '../css/app.scss';
 
 // JS
 import 'materialize-css';
@@ -12,6 +12,7 @@ $(".dropdown-trigger").dropdown();
 
 feather.replace();
 $('select').formSelect();
+M.AutoInit();
 
 // Images
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|svg)$/);
