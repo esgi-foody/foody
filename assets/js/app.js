@@ -8,6 +8,8 @@ import 'materialize-css';
 import 'jquery';
 import feather from 'feather-icons';
 
+$(".dropdown-trigger").dropdown();
+
 feather.replace();
 $('select').formSelect();
 

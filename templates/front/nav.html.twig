@@ -1,16 +1,46 @@
 <nav>
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Foody</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
-                <li><a href="/explorer">Explorer</a></li>
-                <li><a href="/recipe/new">Ajouter</a></li>
+
+        {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+
+                <li><a href="/" class="logo">Foody</a></li>
+
+                <li><a href="/">
+                        <i data-feather="home" id="home" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Accueil
+                    </a>
+                </li>
+                <li><a href="/explorer">
+                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Explorer
+                    </a>
+                </li>
+                <li><a href="/recipe/new">
+                        <i data-feather="plus-square" id="add" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Ajouter
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#"><i data-feather="bell"></i><span class="new badge">4</span></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@{{ app.user.username }}<i data-feather="arrow-down-circle" stroke-width="1" width="20" height="20" stroke="black"></i></a></li>
+            </ul>
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a href="/profile/{{ app.user.username }}">Profil</a></li>
+                <li><a href="#!">Paramètre</a></li>
+                <li class="divider"></li>
                 <li><a href="/logout">Déconnexion</a></li>
-                <li><a href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a></li>
-            {% else %}
+            </ul>
+
+        {% else %}
+            <ul>
                 <li><a href="/login">Connexion</a></li>
                 <li><a href="/register">Inscription</a></li>
-            {% endif %}
-        </ul>
+            </ul>
+        {% endif %}
+
     </div>
 </nav>
