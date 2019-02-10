@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_account")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email"}), message="Cet email est déjà utiliser")
- * @UniqueEntity(fields={"username"}), message="Ce nom d'utilisateur est déjà utiliser")
+ * @UniqueEntity(fields={"email"}), message="Cet email est déjà utilisé")
+ * @UniqueEntity(fields={"username"}), message="Ce nom d'utilisateur est déjà utilisé")
  */
 class User implements UserInterface
 {
