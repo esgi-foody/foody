@@ -481,22 +481,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAtValue() : self {
-        $this->createdAt = new \DateTime();
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedAtValue() : self {
-        $this->updatedAt = new \DateTime();
-        return $this;
-    }
-
     public function getBiography(): ?string
     {
         return $this->biography;
