@@ -41,12 +41,14 @@ class RecipeType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Ingredients',
+                'entry_options' => ['label' => false]
             ])
             ->add('recipeSteps', CollectionType::class, [
                 'entry_type' => RecipeStepType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Etapes',
+                'entry_options' => ['label' => false]
             ])
         ;
     }
