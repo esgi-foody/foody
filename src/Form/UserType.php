@@ -52,13 +52,13 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Confirmer le mot de passe'),
-                'invalid_message' => 'Les mot de passes ne correspondent pas',
+                'invalid_message' => 'Les mots de passes ne correspondent pas',
                 'constraints' => [
                     new Length([
                         'min' => 6,
-                        'max' => 12,
-                        'minMessage' => 'Le mot de passe doit contenir entre 6 et 12 caractères',
-                        'maxMessage' => 'Le mot de passe doit contenir entre 6 et 12 caractères',
+                        'max' => 20,
+                        'minMessage' => 'Le mot de passe doit contenir entre 6 et 20 caractères',
+                        'maxMessage' => 'Le mot de passe doit contenir entre 6 et 20 caractères',
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/',
