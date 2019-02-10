@@ -1,7 +1,7 @@
 // CSS
 import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/sass/materialize.scss';
-import '../css/app.css';
+import '../css/app.scss';
 
 // JS
 import 'materialize-css';
