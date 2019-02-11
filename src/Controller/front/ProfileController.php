@@ -37,7 +37,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/follow", name="profile_follow", methods="GET|POST")
+     * @Route("/{username}/follow", name="profile_follow", methods="POST")
      * @param User $user
      * @return Response
      */
