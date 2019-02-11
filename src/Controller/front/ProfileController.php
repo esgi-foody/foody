@@ -56,7 +56,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/unfollow", name="profile_unfollow", methods="GET|POST")
+     * @Route("/{username}/unfollow", name="profile_unfollow", methods="POST")
      * @param User $user
      * @return Response
      */
@@ -72,7 +72,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="profile_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="profile_edit", methods="POST")
      */
 
     public function edit(Request $request, User $user): Response
