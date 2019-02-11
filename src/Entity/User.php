@@ -41,7 +41,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
      */
     private $password;
 
@@ -116,7 +115,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer", options={"default":0})
      */
-    private $status=0;
+    private $status = 0;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $lostPasswordToken;
 
     public function __construct()
     {
@@ -501,6 +505,18 @@ class User implements UserInterface
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getLostPasswordToken(): ?string
+    {
+        return $this->lostPasswordToken;
+    }
+
+    public function setLostPasswordToken(?string $lostPasswordToken): self
+    {
+        $this->lostPasswordToken = $lostPasswordToken;
 
         return $this;
     }
