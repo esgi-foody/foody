@@ -20,27 +20,11 @@ class RelationshipRepository extends ServiceEntityRepository
         parent::__construct($registry, Relationship::class);
     }
 
-    // /**
-    //  * @return Relationship[] Returns an array of Relationship objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
     public function findOneById($id1 , $id2)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.follower = :id1')
-            ->andWhere('r.followed = :id2')
+        return $this->createQueryBuilder('relation')
+            ->andWhere('relation.follower = :id1')
+            ->andWhere('relation.followed = :id2')
             ->setParameter('id1', $id1)
             ->setParameter('id2', $id2)
             ->getQuery()
