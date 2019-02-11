@@ -72,7 +72,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="profile_edit", methods="POST")
+     * @Route("/{id}/edit", name="profile_edit", methods="GET|POST")
      */
 
     public function edit(Request $request, User $user): Response
