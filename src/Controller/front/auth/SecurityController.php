@@ -66,8 +66,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_front_auth_emailSent');
         }
 
-        return $this->render(
-            'front/auth/forgottenPassword.html.twig', [
+        return $this->render('front/auth/forgottenPassword.html.twig', [
                 'form' => $form->createView()
             ]
         );
@@ -101,8 +100,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_front_auth_login');
         }
 
-        return $this->render(
-            'front/auth/resetPassword.html.twig', [
+        return $this->render('front/auth/resetPassword.html.twig', [
                 'form' => $form->createView()
             ]
         );
@@ -137,8 +135,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_front_auth_login');
         }
 
-        return $this->render(
-            'front/auth/register.html.twig', [
+        return $this->render('front/auth/register.html.twig', [
                 'form' => $form->createView(),
             ]
         );
