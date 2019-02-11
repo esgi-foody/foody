@@ -511,6 +511,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
+<<<<<<< HEAD
     public function getLostPasswordToken(): ?string
     {
         return $this->lostPasswordToken;
@@ -523,6 +524,9 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
+=======
+    /** @see \Serializable::serialize() */
+>>>>>>> Problem change profile image done
     public function serialize()
     {
         return serialize(array(
@@ -530,8 +534,15 @@ class User implements UserInterface, Serializable
             $this->username,
             $this->password,
             $this->email,
+<<<<<<< HEAD
         ));
     }
+=======
+
+        ));
+    }
+
+>>>>>>> Problem change profile image done
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
