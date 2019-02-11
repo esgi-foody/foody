@@ -35,9 +35,10 @@ class UserType extends AbstractType
                 'constraints' => [new Length(['min' => 3, 'max' => 30])],
             ])
             ->add('dateOfBirth', DateType::class, [
-                'format' => 'ddMMyyyy',
+                'format' => 'dd-MM-yyyy',
                 'label' => 'Date de naissance en format jour/mois/année',
-                'years' => range(date('Y')-100, date('Y')+100),
+                'widget' => 'single_text',
+                'attr' => ['class' => 'datepicker'],
             ])
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
