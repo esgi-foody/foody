@@ -28,7 +28,7 @@
             <tr>
                 <td>
                     {% if recipe.imageName %}
-                        <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}"></td>
                     {% else %}
                         <img src="{{ asset('build/images/defaultRecipe.png')}}"></td>
                     {% endif %}

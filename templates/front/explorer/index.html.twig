@@ -22,7 +22,11 @@
             {% for user in results.users %}
                 <div class="card align-self-center" style="width: 20rem;">
                     <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
-                        <img class="card-img-top" src="{{ user.pathImg }}" alt="User profile picture">
+                        {% if user.imageName %}
+                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}">
+                        {% else %}
+                            <img src="{{ asset('build/images/defaultUser.png')}}">
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">@{{ user.username }}</h5>
                         </div>
@@ -50,7 +54,11 @@
             {% for recipe in results.recipes %}
                 <div class="card align-self-center" style="width: 20rem;">
                     <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
-                        <img class="card-img-top" src="{{ asset('uploads/images/recipes/' ~ recipe.imageName )}}" alt="Recipe cover">
+                        {% if recipe.imageName %}
+                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        {% else %}
+                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
                             <p> Catégorie(s) :

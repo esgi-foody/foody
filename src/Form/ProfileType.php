@@ -17,12 +17,7 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', VichImageType::class, [
-                'required' => false,
-                'allow_delete' => false,
-                'download_label' => false,
-                'label' => 'Image de profil'
-            ])
+
             ->add('pseudo', TextType::class, [
                 'label' => "Pseudo",
                 'constraints' => [new Length(['min' => 3, 'max' => 30])]
@@ -30,6 +25,13 @@ class ProfileType extends AbstractType
 
             ->add('biography',CKEditorType::class,[
                 'label' => "Biographie"
+            ])
+
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_label' => false,
+                'label' => 'Image de profil'
             ])
         ;
     }
