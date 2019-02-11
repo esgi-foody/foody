@@ -25,5 +25,6 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             <button type="submit" class="waves-effect waves-light btn">Connexion</button>
         </form>
+        <a href="{{ path('app_front_auth_forgottenPassword') }}">Mot de passe oublié ?</a>
     </div>
 {% endblock %}

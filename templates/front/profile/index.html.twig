@@ -15,6 +15,7 @@
 
         </tbody>
     </table>
+    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username}) }}">{{ follow.title }}</a>
 
 
     {% if app.user == user %}
