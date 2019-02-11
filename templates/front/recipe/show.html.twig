@@ -26,7 +26,12 @@
                 <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <td><img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" ></td>
+                <td>
+                    {% if recipe.imageName %}
+                        <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                    {% else %}
+                        <img src="{{ asset('build/images/defaultRecipe.png')}}"></td>
+                    {% endif %}
             </tr>
             <tr>
                 <th>Categories</th>

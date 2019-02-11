@@ -3,11 +3,23 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    {% if user.pathImg%}
-        <img src="{{ user.pathImg }}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
-    {% endif %}
-    <h3>{{ user.pseudo }}</h3>
+    {{ dump(user.followers) }}
+    <div class="row">
+        {% if user.imageName %}
+            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+        {% else %}
+            <img src="{{ asset('build/images/defaultUser.png')}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+        {% endif %}
+        {#{% if user.followers %}
+            {% for follower in user.followers %}
+                {{ user.follower }}
+            {% endfor %}
+        {% else %}
+            <p>0 followers</p>
+        {% endif %}#}
+    </div>
 
+    <h3>{{ user.pseudo }}</h3>
 
     <table class="table">
         <tbody>
@@ -15,16 +27,15 @@
             <th>Biographie</th>
             <td>{{ user.biography | raw }}</td>
         </tr>
-
         </tbody>
     </table>
     <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username}) }}">{{ follow.title }}</a>
 
 
     {% if app.user == user %}
-    <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
+        <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
 
-    {{ include('front/profile/_delete_form.html.twig') }}
+        {{ include('front/profile/_delete_form.html.twig') }}
     {% endif %}
 
     <h1>Recettes</h1>
@@ -32,7 +43,7 @@
         <div class="row">
     {% for recipe in user.recipes %}
 
-            <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
+        <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
             <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
                 <img class="card-img-top" src="{{ asset('uploads/images/recipes/' ~ recipe.getImageFile )}}" alt="Recipe cover">
                 <div class="card-body">
@@ -44,7 +55,6 @@
                     </p>
                 </div>
             </a>
-
         </div>
     {% endfor %}
         </div>
