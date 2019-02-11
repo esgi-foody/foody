@@ -28,7 +28,12 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'label' => 'Image'
             ])
-            ->add('time',TimeTypeField::class,['label' => 'Temps'])
+            ->add('time',TimeTypeField::class,[
+                'html5' => false,
+                'label' => 'Temps',
+                'widget' => 'single_text',
+                'attr' => ['class' => 'timepicker']
+            ])
             ->add('categories', EntityType::class, [
                 'label'        => 'Categories',
                 'class'        => Category::class,
