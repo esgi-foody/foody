@@ -86,17 +86,17 @@ class User implements UserInterface, Serializable
     private $followeds;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
+=======
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followers", cascade={"remove"})
+>>>>>>> add remove cascade followers
      */
     private $followers;
 
     /**
-<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe", cascade={"remove"})
-=======
-     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe",cascade={"remove"})
->>>>>>> Remove user's recipes  when you remove an user
      */
     private $recipes;
 
