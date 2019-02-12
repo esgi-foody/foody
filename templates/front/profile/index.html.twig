@@ -10,13 +10,6 @@
         {% else %}
             <img src="{{ asset('build/images/defaultUser.png')}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
         {% endif %}
-        {% if user.followers %}
-            {% for follower in user.followers %}
-                {{ follower.username }}
-            {% endfor %}
-        {% else %}
-            <p>0 followers</p>
-        {% endif %}
     </div>
 
     <h3>{{ user.pseudo }}</h3>
