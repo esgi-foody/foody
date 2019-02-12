@@ -9,6 +9,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Entity\Traits\UploadFileTrait;
+use Serializable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -16,10 +20,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé")
  * @UniqueEntity(fields={"username"}, message="Ce nom d'utilisateur est déjà utilisé")
+ * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface, Serializable
 {
     use TimestampableTrait;
+    use UploadFileTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -51,9 +57,17 @@ class User implements UserInterface
     private $dateOfBirth;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(maxSize="5M")
+     * @Assert\Image(
+     *     detectCorrupted = true,
+     *     corruptedMessage = "L'image est corrompu. Veuillez réssayer",
+     *     mimeTypesMessage = " Ce fichier n'est pas une image"
+     * )
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="imageName")
+     *
+     * @var File
      */
-    private $pathImg;
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -66,19 +80,19 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
      */
     private $followeds;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
      */
     private $followers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe")
+     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe", cascade={"remove"})
      */
     private $recipes;
 
@@ -184,18 +198,6 @@ class User implements UserInterface
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
-
-        return $this;
-    }
-
-    public function getPathImg(): ?string
-    {
-        return $this->pathImg;
-    }
-
-    public function setPathImg(?string $pathImg): self
-    {
-        $this->pathImg = $pathImg;
 
         return $this;
     }
@@ -519,6 +521,28 @@ class User implements UserInterface
         $this->lostPasswordToken = $lostPasswordToken;
 
         return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+        ));
+    }
+    
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            ) = unserialize($serialized);
     }
 
 }
