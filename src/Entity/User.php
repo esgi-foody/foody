@@ -86,12 +86,8 @@ class User implements UserInterface, Serializable
     private $followeds;
 
     /**
-<<<<<<< HEAD
      * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
      * @MaxDepth(1)
-=======
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followers", cascade={"remove"})
->>>>>>> add remove cascade followers
      */
     private $followers;
 
