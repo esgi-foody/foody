@@ -107,7 +107,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('front/profile/edit.html.twig', [
-            'category' => $user,
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }

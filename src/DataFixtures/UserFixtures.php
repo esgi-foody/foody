@@ -6,9 +6,16 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder) {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
@@ -17,9 +24,11 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setUsername($faker->userName);
             $user->setPseudo($faker->firstName . " " . $faker->lastName);
+            $password = $this->encoder->encodePassword($user, 'Foody2019');
+            $user->setPassword($password);
             $user->setPassword($faker->password);
             $user->setDateOfBirth($faker->dateTime);
-            $user->setPathImg($faker->imageUrl(640, 480));
+            $user->setImageName('');
             $user->setEmail($faker->email);
             $user->setStatus(1);
             $user->setRoles(['ROLE_USER']);
@@ -29,26 +38,26 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setUsername('chloe');
         $user->setPseudo('Chloe fit');
-        $user->setPassword('$2y$13$13d5PNpmneww1yehhoSUweJfVdDRTGQqnjbi8Vxs9d1WY3AloZRFW');
+        $password = $this->encoder->encodePassword($user, 'Chloe2019');
+        $user->setPassword($password);
         $user->setDateOfBirth($faker->dateTime);
-        $user->setPathImg($faker->imageUrl(640, 480));
+        $user->setImageName('');
         $user->setEmail('chloe@gmail.com');
         $user->setStatus(1);
         $user->setRoles(['ROLE_USER']);
         $manager->persist($user);
 
-
         $user = new User();
         $user->setUsername('root');
         $user->setPseudo('admin foody');
-        $user->setPassword('$2y$13$dXOe6srZN/F1eMItPegMgezvWHVOkNVY67goEGncTVXE6YFf2EvCu');
+        $password = $this->encoder->encodePassword($user, 'Root2019');
+        $user->setPassword($password);
         $user->setDateOfBirth($faker->dateTime);
-        $user->setPathImg($faker->imageUrl(640, 480));
+        $user->setImageName('');
         $user->setEmail('root@gmail.com');
         $user->setStatus(1);
         $user->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
-
         $manager->flush();
     }
 }
