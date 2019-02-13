@@ -15,8 +15,9 @@
 
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username}) }}">{{ follow.title }}</a>
-
+    {% if not app.user is same as (user) %}
+    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+    {% endif %}
 
     {% if app.user == user %}
     <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>

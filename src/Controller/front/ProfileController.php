@@ -41,7 +41,7 @@ class ProfileController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function follow(User $user): Response
+    public function follow(User $user, Request $request): Response
     {
 
         $relation = new Relationship();
@@ -49,8 +49,18 @@ class ProfileController extends AbstractController
         $relation->setFollower($this->getUser());
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($relation);
-        $em->flush();
+
+        $submittedToken = $request->get('csrf_token');
+
+        if ($this->isCsrfTokenValid('follow', $submittedToken))
+        {
+            if ($user->getUsername() !== $this->getUser()->getUsername()){
+                $em->persist($relation);
+                $em->flush();
+            }
+        }
+
+
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }
@@ -60,13 +70,22 @@ class ProfileController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function unfollow(User $user): Response
+    public function unfollow(User $user, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $follower = $this->getUser();
         $relation = $em->getRepository(Relationship::class)->findOneBy(['follower'=>$follower->getId(),'followed'=>$user->getId()]);
-        $em->remove($relation);
-        $em->flush();
+
+
+        $submittedToken = $request->get('csrf_token');
+
+        if ($this->isCsrfTokenValid('follow', $submittedToken))
+        {
+            $em->remove($relation);
+            $em->flush();
+        }
+
+
 
         return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }

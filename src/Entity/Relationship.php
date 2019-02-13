@@ -4,10 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
 
 /**
+ * @ORM\Table(name="relationship")
+ * @UniqueEntity(fields={"follower_id", "followed_id"})
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
+ *
  */
+
 class Relationship
 {
 //    use TimestampableTrait;
@@ -27,7 +34,6 @@ class Relationship
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower")
      * @ORM\JoinColumn(name="followed_id", referencedColumnName="id", nullable=false)
-     *
      */
     private $follower;
 
