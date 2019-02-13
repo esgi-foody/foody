@@ -1,72 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recherche{% endblock %}
+{% block title %}Explorer{% endblock %}
 
 {% block body %}
-    <h1>Recherche</h1>
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn"><i data-feather="search"></i></button>
+        <button class="btn-flat"><i data-feather="search"></i></button>
     {{ form_end(form) }}
     {% if data.query %}
-        <h1 class="text-center">Résultat(s) pour "{{ data.query }}"</h1>
-        <br>
+        <h4 class="center-align">Résultat(s) pour "{{ data.query }}"</h4>
     {% endif %}
 
-    <div class="d-flex flex-row justify-content-around">
+    <div class="row">
 
-    {% if results.users %}
-        <div class="d-flex flex-column">
-            <h3 class="text-center">{{ results.users| length }} utilisateur(s)</h3>
-            <br>
+        {% if results.users %}
+        <div class="col s6">
+            <h5 class="center-align">{{ results.users| length }} utilisateur(s)</h5>
+                <br>
             {% for user in results.users %}
-                <div class="card align-self-center" style="width: 20rem;">
-                    <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
-                        <img class="card-img-top" src="{{ user.pathImg }}" alt="User profile picture">
-                        <div class="card-body">
-                            <h5 class="card-title">@{{ user.username }}</h5>
-                        </div>
-                    </a>
+                <div class="card">
+                    <div class="card-image">
+                        {% if user.imageName %}
+                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}">
+                        {% else %}
+                            <img src="{{ asset('build/images/defaultUser.png')}}">
+                        {% endif %}
+                        <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
+                            <span class="card-title">@{{ user.username }}</span>
+                        </a>
+                    </div>
                 </div>
                 <br>
             {% endfor %}
         </div>
-    {% elseif data.query and not results.categories and app.request.method is same as("POST") %}
-        <h3 class="text-center">Aucun utilisateur trouvé</h3>
-    {% endif %}
+        {% elseif data.query and not results.categories and app.request.method is same as("POST") %}
+            <h5 class="col s6 center-align">Aucun utilisateur trouvé</h5>
+        {% endif %}
 
-    {% if results.recipes %}
-        <div class="d-flex flex-column">
+        {% if results.recipes %}
+        <div class="col {% if not results.users %} s8 push-s2 {% else %} s6 {% endif %}">
             {% if results.categories %}
-                <h3>Catégorie(s) recherché(s) :
+                <h5 class="center-align">Catégorie(s) recherché(s) :
                     {% for category in results.categories %}
                         {{ category.name }}
                     {% endfor %}
-                </h3>
+                </h5>
             {% endif %}
-            <br>
-            <h3 class="text-center">{{ results.recipes| length }} recette(s)</h3>
+            <h5 class="center-align">{{ results.recipes| length }} recette(s)</h5>
             <br>
             {% for recipe in results.recipes %}
-                <div class="card align-self-center" style="width: 20rem;">
-                    <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
-                        <img class="card-img-top" src="{{ asset('uploads/images/recipes/' ~ recipe.imageName )}}" alt="Recipe cover">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ recipe.title }}</h5>
-                            <p> Catégorie(s) :
-                            {% for category in recipe.categories %}
-                                {{ category.name }}
-                            {% endfor %}
-                            </p>
-                        </div>
-                    </a>
+                <div class="card">
+                    <div class="card-image">
+                        {% if recipe.imageName %}
+                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        {% else %}
+                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                        {% endif %}
+                        <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
+                            <span class="card-title">{{ recipe.title }}</span>
+                            <div class="card-content">
+                                <p> Catégorie(s) :
+                                    {% for category in recipe.categories %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-               <br>
+                <br>
             {% endfor %}
         </div>
-    {% elseif data.query and app.request.method is same as("POST") %}
-        <h3 class="text-center">Aucune recette trouvé</h3>
-    {% endif %}
+        {% elseif data.query and app.request.method is same as("POST") %}
+            <h5 class="col s6 center-align">Aucune recette trouvé</h5>
+        {% endif %}
 
     </div>
 {% endblock %}

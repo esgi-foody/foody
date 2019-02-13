@@ -3,5 +3,5 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
-        - 'bootstrap_4_layout.html.twig'
-        - 'form/quill.html.twig'
+        - 'form/materialize_layout.html.twig'
+        - 'form/materialize_layout_collection.html.twig'

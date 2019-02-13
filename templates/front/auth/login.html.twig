@@ -1,18 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form action="{{ path('app_front_auth_login') }}" method="post">
-        <h4>Connexion</h4>
-        <div>
-            <label for="email">Email</label>
-            <input type="text" id="email" name="_username" value="{% if error %}{{ error.token.user }}{% endif %}"/>
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey }}
         </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="_password" />
-        </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-        <button type="submit" class="btn">Connexion</button>
-    </form>
-    <a href="{{ path('app_front_auth_forgottenPassword') }}">Mot de passe oublié ?</a>
+    {% endif %}
+
+    <div class="row">
+        <h4 class="centger-align">Connexion</h4>
+        <form class="col s12" action="{{ path('app_front_auth_login') }}" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" name="_username">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="_password">
+                    <label for="password">Mot de passe</label>
+                </div>
+                <a class="right" href="{{ path('app_front_auth_forgottenPassword') }}">Mot de passe oublié ?</a>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <button type="submit" class="waves-effect waves-light btn">Connexion</button>
+        </form>
+    </div>
 {% endblock %}
