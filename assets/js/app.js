@@ -1,13 +1,16 @@
 // CSS
-import 'bootstrap/scss/bootstrap.scss';
-import '../css/app.css';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/sass/materialize.scss';
+import '../css/app.scss';
 
 // JS
+import 'materialize-css';
 import 'jquery';
-import 'bootstrap';
 import feather from 'feather-icons';
 
 feather.replace();
+$('select').formSelect();
+M.AutoInit();
 
 // Images
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|svg)$/);
