@@ -60,7 +60,7 @@ class Recipe
      */
     private $userRecipe;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="recipe",cascade={"persist", "remove"},orphanRemoval=true)
      */
     private $likes;
     /**

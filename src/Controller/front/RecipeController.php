@@ -5,6 +5,7 @@ namespace App\Controller\front;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
+use App\Entity\Like;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,6 +81,7 @@ class RecipeController extends AbstractController
      */
     public function show(Recipe $recipe): Response
     {
+
         $iterator =  $recipe->getRecipeSteps()->getIterator();
 
         $iterator->uasort(function ($a, $b) {
@@ -87,7 +89,10 @@ class RecipeController extends AbstractController
         });
         $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe]);
+        $em = $this->getDoctrine()->getManager();
+        $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
+
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked]);
     }
 
     /**
@@ -141,6 +146,47 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('recipe_index');
     }
+
+
+    /**
+     * @Route("/{id}/like", name="recipe_like", methods="GET")
+     */
+    public function like(Request $request, Recipe $recipe): Response
+    {
+
+        if ($this->isCsrfTokenValid('like'.$recipe->getId(),$request->query->get('csrf_token'))) {
+
+            $like = new Like();
+
+            $like->setLiker($this->getUser());
+            $like->setRecipe($recipe);
+            $recipe->getLikes()->add($like);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+    }
+
+
+
+    /**
+     * @Route("/{id}/{idLike}/unlike", name="recipe_unlike", methods="GET")
+     */
+    public function unlike(Request $request,Recipe $recipe): Response
+    {
+        if ($this->isCsrfTokenValid('unlike'.$recipe->getId(),$request->query->get('csrf_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $like = $em->getRepository(Like::class)->findOneBy(['id' => $request->get('idLike')]);
+            $em->remove($like);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+    }
+
+
 
     private function calculateMacro(Recipe $recipe): Recipe
     {
