@@ -37,7 +37,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/follow", name="profile_follow", methods="POST")
+     * @Route("/{username}/follow", name="profile_follow", methods="GET")
      * @param User $user
      * @return Response
      */
@@ -56,7 +56,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/unfollow", name="profile_unfollow", methods="POST")
+     * @Route("/{username}/unfollow", name="profile_unfollow", methods="GET")
      * @param User $user
      * @return Response
      */
@@ -88,7 +88,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('front/profile/edit.html.twig', [
-            'category' => $user,
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
