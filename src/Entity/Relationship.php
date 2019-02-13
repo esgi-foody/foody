@@ -20,13 +20,14 @@ class Relationship
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="followed")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="follower_id", referencedColumnName="id", nullable=false)
      */
     private $followed;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="followed_id", referencedColumnName="id", nullable=false)
+     *
      */
     private $follower;
 
