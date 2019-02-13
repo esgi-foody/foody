@@ -4,9 +4,22 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ORM\Table(name="like_recipe",
+ *     uniqueConstraints={
+ *        @UniqueConstraint(name="uniq_user_like_recipe",
+ *            columns={"liker_id", "recipe_id"})
+ *    })
+ * @UniqueEntity(
+ *     fields={"host", "port"},
+ *     errorPath="port",
+ *     message="This port is already in use on that host."
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\LikeRepository")
+ *
  */
 class Like
 {
@@ -19,8 +32,8 @@ class Like
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="likes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="likes",cascade={"persist"})
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id",nullable=false)
      */
     private $recipe;
 
