@@ -8,6 +8,7 @@ use App\Form\UserType;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\Mailer;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -113,7 +114,7 @@ class SecurityController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer)
     {
         if ($this->getUser() instanceof User) {
             return $this->redirectToRoute('home');
@@ -122,11 +123,21 @@ class SecurityController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
+
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
+
+            $token = bin2hex(random_bytes(10));
+            $user->setRegisterToken($token);
+            $this->getDoctrine()->getManager()->flush();
+            $mailer->send($user->getEmail(), 'Foody : Activation de votre compte', 'emailConfirmation', [
+                'SERVER_URL' => $this->getParameter('SERVER_URL'),
+                'token' => $token
+            ]);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -135,8 +146,35 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_front_auth_login');
         }
 
+
         return $this->render('front/auth/register.html.twig', [
                 'form' => $form->createView(),
+            ]
+        );
+
+    }
+
+    /**
+     * @Route("/login/{registerToken}", name="resetPassword")
+     */
+    public function loginConfirmation(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createForm(ResetPasswordType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $password = $encoder->encodePassword($user, $data['password']);
+
+            $user->setPassword($password);
+            $user->setLostPasswordToken(null);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('app_front_auth_login');
+        }
+
+        return $this->render('front/auth/resetPassword.html.twig', [
+                'form' => $form->createView()
             ]
         );
     }

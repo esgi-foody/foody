@@ -545,4 +545,15 @@ class User implements UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
+    public function getRegisterToken(): ?string
+    {
+        return $this->registerToken;
+    }
+
+    public function setRegisterToken(?string $registerToken): self
+    {
+        $this->registerToken = $registerToken;
+
+        return $this;
+    }
 }
