@@ -66,8 +66,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->addCategory($category);
             $recipe->getRecipeSteps($arrStep);
             $recipe->getComments([]);
-            $recipe->setImageFile(new File('assets/images/loclac.jpg'));
-            $recipe->setImageName('food.jpg');
+            $recipe->setImageName('');
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED
