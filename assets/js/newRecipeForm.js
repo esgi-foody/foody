@@ -19,6 +19,21 @@ $('#ingredients').on('change', '.measuring-unit', function() {
     helpMacro($(this));
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const options = {
+        default: '00:00',
+        autoClose: true,
+        twelveHour: false,
+        i18n: {
+            cancel: 'Annuler',
+            done: 'Enregistrer',
+        },
+    };
+    const elems = document.querySelector('.timepicker');
+    M.Timepicker.init(elems, options);
+});
+
+
 function helpMacro(elt) {
     const id  = elt.attr('id');
     const ProteinHelpId = id.replace(/_measuringUnit/g, '_protein_help');
@@ -61,5 +76,5 @@ function addPrototypeForm(collectionHolder) {
         liNode.remove();
     });
     collectionHolder.append(liNode);
-
+    $('select').formSelect();
 }
