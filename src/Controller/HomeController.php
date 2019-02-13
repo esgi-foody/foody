@@ -17,6 +17,7 @@ class HomeController extends AbstractController
         if ($this->getUser() != null){
             $relations = $this->getUser()->getFolloweds();
             $recipes = [];
+
             foreach ($relations as $relation){
 
                 $userRecipes = $relation->getFollowed()->getRecipes();
