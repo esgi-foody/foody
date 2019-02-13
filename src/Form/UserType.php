@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -23,30 +22,23 @@ class UserType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, array(
-                'attr' => array(
-                    'placeholder' => 'Ce nom sera votre nom public',
-                ),
+                'label' => 'Pseudo, vous pouvez le changer à tout moment',
                 'required' => true,
                 'constraints' => [new Length(['min' => 3, 'max' => 30])]
             ))
             ->add('email', EmailType::class, [
-                'attr' => [
-                    'placeholder' => 'exemple@gmail.com',
-                ],
                 'required' => true,
             ])
             ->add('username', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'ex: foody',
-                ],
-                'label' => 'Nom d\'utilisateur',
+                'label' => 'Nom d\'utilisateur, ce nom ne changera pas',
                 'required' => true,
                 'constraints' => [new Length(['min' => 3, 'max' => 30])],
             ])
             ->add('dateOfBirth', DateType::class, [
-                'format' => 'ddMMyyyy',
-                'label' => 'Date de naissance',
-                'years' => range(date('Y')-100, date('Y')+100),
+                'format' => 'dd-MM-yyyy',
+                'label' => 'Date de naissance en format jour/mois/année',
+                'widget' => 'single_text',
+                'attr' => ['class' => 'datepicker'],
             ])
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
@@ -67,9 +59,8 @@ class UserType extends AbstractType
                 ]
             ))
             ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success',
-                ],
+                'attr' => ['class' => 'waves-effect waves-light btn'],
+                'label' => 'S\'inscrire',
             ]);
     }
 
