@@ -1,31 +1,46 @@
+<nav>
+    <div class="nav-wrapper">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">Foody</a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
+        {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
 
-            {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/explorer">Explorer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/recipe/new">Ajouter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Déconnexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile/{{ app.user.username }}">@{{ app.user.username }}</a>
-                </li>
+                <li><a href="{{ path('home') }}" class="logo">Foody</a></li>
 
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Connexion</a>
+                <li><a href="/">
+                        <i data-feather="home" id="home" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Accueil
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Inscription</a>
+                <li><a href="{{ path('app_front_search_index') }}">
+                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Explorer
+                    </a>
                 </li>
-            {% endif %}
-        </ul>
+                <li><a href="{{ path('recipe_new') }}">
+                        <i data-feather="plus-square" id="add" stroke-width="2" width="24" height="24" stroke="black"></i>
+                        Ajouter
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#"><i data-feather="bell"></i><span class="new badge">4</span></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@{{ app.user.username }}<i data-feather="arrow-down-circle" stroke-width="1" width="20" height="20" stroke="black"></i></a></li>
+            </ul>
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a href="/profile/{{ app.user.username }}">Profil</a></li>
+                <li><a href="#!">Paramètre</a></li>
+                <li class="divider"></li>
+                <li><a href="/logout">Déconnexion</a></li>
+            </ul>
+
+        {% else %}
+            <ul>
+                <li><a href="/login">Connexion</a></li>
+                <li><a href="/register">Inscription</a></li>
+            </ul>
+        {% endif %}
+
     </div>
 </nav>

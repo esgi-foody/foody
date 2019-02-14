@@ -28,7 +28,12 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'label' => 'Image'
             ])
-            ->add('time',TimeTypeField::class,['label' => 'Temps'])
+            ->add('time',TimeTypeField::class,[
+                'html5' => false,
+                'label' => 'Temps',
+                'widget' => 'single_text',
+                'attr' => ['class' => 'timepicker']
+            ])
             ->add('categories', EntityType::class, [
                 'label'        => 'Categories',
                 'class'        => Category::class,
@@ -41,12 +46,14 @@ class RecipeType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Ingredients',
+                'entry_options' => ['label' => false]
             ])
             ->add('recipeSteps', CollectionType::class, [
                 'entry_type' => RecipeStepType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Etapes',
+                'entry_options' => ['label' => false]
             ])
         ;
     }
