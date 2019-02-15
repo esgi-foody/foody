@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 /**
  * Class SecurityController
  * @package App\Controller
- * @Route(name="app_back_security_")
+ * @Route(name="app_back_auth_")
  */
 class SecurityController extends AbstractController
 {
