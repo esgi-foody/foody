@@ -7,6 +7,7 @@ use App\Services\ExplorerFilters;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\RecipeRepository;
 
 /**
  * Class ExplorerController
@@ -18,8 +19,9 @@ class ExplorerController extends AbstractController
     /**
      * @Route("/", name="search_index", methods={"GET", "POST"})
      */
-    public function index(Request $request, ExplorerFilters $explorerFilters)
+    public function index(Request $request, ExplorerFilters $explorerFilters,RecipeRepository $recipeRepository)
     {
+
         $data = ['query' => null];
         $results = ['users' => null, 'recipes' => null, 'categories' => null];
         $form = $this->createForm(ExplorerType::class);
@@ -29,6 +31,8 @@ class ExplorerController extends AbstractController
             $data = $form->getData();
 
             $results = $explorerFilters->filters($data);
+        } else {
+            $results ['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');;
         }
 
         return $this->render('front/explorer/index.html.twig', [
