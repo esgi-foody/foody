@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Table(name="relationship")
- * @UniqueEntity(fields={"follower_id", "followed_id"})
+ * @UniqueEntity(fields={"follower", "followed"})
  * @ORM\Entity(repositoryClass="App\Repository\RelationshipRepository")
  *
  */
