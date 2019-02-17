@@ -136,6 +136,11 @@ class User implements UserInterface, Serializable
      */
     private $lostPasswordToken;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $registerToken;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();

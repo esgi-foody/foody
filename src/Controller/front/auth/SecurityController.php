@@ -9,10 +9,12 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\Mailer;
 
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -155,27 +157,16 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login/{registerToken}", name="resetPassword")
+     * @Route("/registerSuccess/{registerToken}", name="registerSuccess")
      */
-    public function loginConfirmation(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    public function registerSuccess(Request $request, UserRepository $user)
     {
-        $form = $this->createForm(ResetPasswordType::class);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $password = $encoder->encodePassword($user, $data['password']);
+        dump($user->findBy());die;
+        if ($request->attributes->filter('registerToken')) {
 
-            $user->setPassword($password);
-            $user->setLostPasswordToken(null);
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('app_front_auth_login');
         }
 
-        return $this->render('front/auth/resetPassword.html.twig', [
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('front/auth/registerSuccess.html.twig');
     }
 }
