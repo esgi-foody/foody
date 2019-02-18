@@ -159,11 +159,18 @@ class SecurityController extends AbstractController
     /**
      * @Route("/registerSuccess/{registerToken}", name="registerSuccess")
      */
-    public function registerSuccess(Request $request, UserRepository $user)
+    public function registerSuccess(Request $request, User $user)
     {
+        $currentToken = $request->attributes->filter('registerToken');
+        $userToken = $user->getRegisterToken();
 
-        dump($user->findBy());die;
-        if ($request->attributes->filter('registerToken')) {
+        if ($currentToken == $userToken) {
+            $user->setRegisterToken(null);
+            $user->setStatus(1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
         }
 
