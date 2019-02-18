@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\Mailer;
 
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
