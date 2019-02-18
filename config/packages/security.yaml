@@ -36,9 +36,6 @@ security:
 
             access_denied_handler: App\Security\AccessDeniedHandler
             user_checker: App\Security\UserChecker
-
-
-
             # activate different ways to authenticate
 
             # http_basic: true
