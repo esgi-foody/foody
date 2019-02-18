@@ -167,7 +167,6 @@ class SecurityController extends AbstractController
             $user->setStatus(1);
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
             $em->flush();
 
         }
