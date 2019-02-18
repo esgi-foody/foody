@@ -133,7 +133,6 @@ class SecurityController extends AbstractController
 
             $token = bin2hex(random_bytes(10));
             $user->setRegisterToken($token);
-            $this->getDoctrine()->getManager()->flush();
             $mailer->send($user->getEmail(), 'Foody : Activation de votre compte', 'emailConfirmation', [
                 'SERVER_URL' => $this->getParameter('SERVER_URL'),
                 'token' => $token

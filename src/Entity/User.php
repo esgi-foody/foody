@@ -137,7 +137,7 @@ class User implements UserInterface, Serializable
     private $lostPasswordToken;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $registerToken;
 
@@ -151,7 +151,6 @@ class User implements UserInterface, Serializable
         $this->reports = new ArrayCollection();
         $this->recipeReposts = new ArrayCollection();
         $this->userFavorite = new ArrayCollection();
-
     }
 
     public function getId(): ?int
