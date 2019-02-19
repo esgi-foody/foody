@@ -3,6 +3,7 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
+
     <div class="row valign-wrapper" style="margin-top:1em;">
         <div class="col s12 right-align">
             {% if app.user == user %}
@@ -31,6 +32,7 @@
             <a class="btn btn-primary grey lighten-2" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
         {% endif %}
     </div>
+
     <div class="row valign-wrapper ">
         <h5 class="center-align col s12">{{ user.pseudo }}</h5>
     </div>
@@ -74,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-
             {% endfor %}
         </div>
     </div>
