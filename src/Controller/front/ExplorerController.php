@@ -32,7 +32,7 @@ class ExplorerController extends AbstractController
 
             $results = $explorerFilters->filters($data);
         } else {
-            $results ['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');;
+            $results ['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');;
         }
 
         return $this->render('front/explorer/index.html.twig', [
