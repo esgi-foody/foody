@@ -31,22 +31,6 @@
             <a class="btn btn-primary grey lighten-2" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
         {% endif %}
     </div>
-    <div class="row valign-wrapper ">
-        <h5 class="center-align col s12">{{ user.pseudo }}</h5>
-    </div>
-
-    <div class="row valign-wrapper">
-        <div class=" col s5 right-align">
-            <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
-        </div>
-        <div class=" col s3 center-align">
-            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':1}) }}>{{ user.followers | length }} abonnés</a>
-        </div>
-        <div class=" col s5 left-align">
-            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':2}) }}>{{ user.followeds | length }} abonnements</a>
-        </div>
-    </div>
-
 
     <div class="row valign-wrapper ">
         <h5 class="center-align col s12">{{ user.pseudo }}</h5>
