@@ -31,6 +31,7 @@
             <a class="btn btn-primary grey lighten-2" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
         {% endif %}
     </div>
+
     <div class="row valign-wrapper ">
         <h5 class="center-align col s12">{{ user.pseudo }}</h5>
     </div>
