@@ -32,7 +32,7 @@
                     {% else %}
                         <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                     {% endif %}
-                        </li>
+                </li>
             {% endfor %}
         </ul>
     {% else %}

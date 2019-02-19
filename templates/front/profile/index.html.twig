@@ -31,11 +31,9 @@
             <a class="btn btn-primary grey lighten-2" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
         {% endif %}
     </div>
-
     <div class="row valign-wrapper ">
         <h5 class="center-align col s12">{{ user.pseudo }}</h5>
     </div>
-
     <div class="row valign-wrapper">
         <div class=" col s5 right-align">
             <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
@@ -52,32 +50,32 @@
 
     <div class="valign-wrapper">
         <div class="row center-align">
-    {% for recipe in user.recipes %}
-        <div class="col s4">
-            <div class="card">
-                <div class="card-image">
-                    <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                        {% if recipe.imageName %}
-                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
-                        {% else %}
-                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
-                        {% endif %}
-                    </a>
+            {% for recipe in user.recipes %}
+                <div class="col s4">
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                                {% if recipe.imageName %}
+                                    <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
+                                {% else %}
+                                    <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
+                                <span class="card-title">{{ recipe.title }}</span>
+                                <p> Catégorie(s) :
+                                    {% for category in recipe.categories %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
-                        <span class="card-title">{{ recipe.title }}</span>
-                        <p> Catégorie(s) :
-                            {% for category in recipe.categories %}
-                                {{ category.name }}
-                            {% endfor %}
-                        </p>
-                    </a>
-                </div>
-            </div>
-        </div>
 
-    {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
