@@ -5,3 +5,4 @@ twig:
     form_themes:
         - 'form/materialize_layout.html.twig'
         - 'form/materialize_layout_collection.html.twig'
+
