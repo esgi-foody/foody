@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Foody | Favorite > {{ user.pseudo }}{% endblock %}
+
+{% block body %}
+    <ul class="collection">
+        {% for recipe in recipes %}
+        <li class="collection-item avatar">
+
+            {% if recipe.imageName %}
+                <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="circle">
+            {% else %}
+                <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle"></td>
+            {% endif %}
+
+            <span class="title">{{ recipe.title }}</span>
+            <div class="row"><h4></h4><p>{{ recipe.fat }} fat | {{ recipe.carbohydrate }} carbs | {{ recipe.protein }} prot</p></div>
+
+            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="secondary-content"><i data-feather="arrow-right-circle"  stroke-width="1.5" stroke="red"></i></a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
