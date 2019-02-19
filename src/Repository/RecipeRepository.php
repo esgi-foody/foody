@@ -33,6 +33,27 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param $userId
+     * @param $limit
+     * @return array
+     */
+    public function findByUserSuggestion($userId, $limit)
+    {
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('
+            SELECT DISTINCT r
+            FROM App\Entity\Recipe r, App\Entity\Relationship f, App\Entity\Like l
+            WHERE  f.follower = r.userRecipe
+            AND  f.follower = l.liker
+            AND  l.liker != :userId
+            AND  r.userRecipe != :userId
+            ORDER BY r.createdAt DESC
+            ')->setParameter('userId' , $userId )->setMaxResults($limit);
+        return $query->execute();
+    }
+
+    /**
      * @param $query
      * @param $categories
      * @return array
