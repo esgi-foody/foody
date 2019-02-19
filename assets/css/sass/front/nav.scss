@@ -1,36 +1,21 @@
 nav {
     background-color: white;
     box-shadow: 0px 0px 50px rgba(231, 72, 74, 0.3);
-
     .active {
-        color: #E7484A;
-        box-shadow: inset 0 -5px 0 #E7484A;
+        color: $primary-color;
+        box-shadow: inset 0 -5px 0 $primary-color;
+    }
+    ul {
+        a {
+            color: black;
+            font-weight: bold;
+        }
+        a:hover {
+            color: $primary-color;
+        }
+    }
+    .logo {
+        color: $primary-color;
+        font-size: 25px;
     }
 }
-
-nav ul a {
-    color: black;
-    font-weight: bold;
-}
-
-nav ul a:hover {
-    color: #E7484A;
-
-    #home {
-        color: #E7484A;
-    }
-}
-
-nav .brand-logo {
-    color: black;
-}
-
-.logo {
-    color: #E7484A;
-    font-size: 25px;
-}
-
-nav {
-
-}
-
