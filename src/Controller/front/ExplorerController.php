@@ -22,7 +22,6 @@ class ExplorerController extends AbstractController
      */
     public function index(Request $request, UserRepository $userRepository, RecipeRepository $recipeRepository)
     {
-
         $data = ['query' => null, 'category' => null, 'calorie_min' => null, 'calorie_max' => null];
         $results = ['users' => null, 'recipes' => null];
         $form = $this->createForm(ExplorerType::class);

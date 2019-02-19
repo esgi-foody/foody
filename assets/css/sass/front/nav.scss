@@ -1,0 +1,16 @@
+nav {
+    background-color: white;
+    ul {
+        a {
+            color: black;
+            font-weight: bold;
+        }
+        a:hover {
+            color: $primary-color;
+        }
+    }
+    .logo {
+        color: $primary-color;
+        font-size: 25px;
+    }
+}
