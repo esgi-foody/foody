@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
+{% block body %}
+    {% set uri = app.request.pathinfo | split('/') %}
+    {% if uri[4] == 1 %}
+        {% if app.user == user %}
+            <h1>Mes abonnés</h1>
+        {% else %}
+            <h1>Abonnés</h1>
+        {% endif %}
+        <ul class="collection">
+            {% for user in user.followers %}
+                <li class="collection-item avatar">
+                    {% if user.follower.imageName %}
+                        <img src="{{ asset('uploads/images/users/'~user.follower.imageName)}}" class="circle">
+                    {% else %}
+                        <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
+                    {% endif %}
+                    <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.follower.username}) }}">{{ user.follower.username }}</a></span>
+                    {% if app.user == user %}
+                        <a class="btn btn-primary secondary-content" href="{{ path( follow.path , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% if app.user == user %}
+            <h1>Mes abonnements</h1>
+        {% else %}
+            <h1>Abonnements</h1>
+        {% endif %}
+            <ul class="collection">
+                {% for user in user.followeds %}
+                    <li class="collection-item avatar">
+                        {% if user.followed.imageName %}
+                            <img src="{{ asset('uploads/images/users/'~user.followed.imageName)}}" class="circle">
+                        {% else %}
+                            <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
+                        {% endif %}
+                        <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.followed.username}) }}">{{ user.followed.username }}</a></span>
+                        {% if app.user == user %}
+                            <a class="btn btn-primary secondary-content" href="{{ path( follow.path , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+    {% endif %}
+{% endblock %}

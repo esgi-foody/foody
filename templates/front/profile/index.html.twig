@@ -3,15 +3,32 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row valign-wrapper center-align" style="margin-top:2em;">
         {% if user.imageName %}
-            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+            <div class="col s4">
+            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed ">
+            </div>
         {% else %}
-            <img src="{{ asset('build/images/defaultUser.png')}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+            <img src="{{ asset('build/images/defaultUser.png')}}" class="responsive-img circle z-depth-5 materialboxed ">
         {% endif %}
     </div>
+    <div class="row valign-wrapper ">
+        <h5 class="center-align col s12">{{ user.pseudo }}</h5>
+    </div>
 
-    <h3>{{ user.pseudo }}</h3>
+    <div class="row valign-wrapper">
+        <div class=" col s5 right-align">
+            <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
+        </div>
+        <div class=" col s3 center-align">
+            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':1}) }}>{{ user.followers | length }} abonnés</a>
+        </div>
+        <div class=" col s5 left-align">
+            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':2}) }}>{{ user.followeds | length }} abonnements</a>
+        </div>
+    </div>
+
+
 
     <table class="table">
         <tbody>
@@ -26,7 +43,7 @@
     {% endif %}
 
     {% if app.user == user %}
-        <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
+        <a class="btn-floating btn-large grey lighten-2" href="{{ path('app_front_profile_edit', {'id': user.id}) }}"><i data-feather="edit" id="" stroke-width="2" stroke="white"></i></a>
 
         {{ include('front/profile/_delete_form.html.twig') }}
     {% endif %}
