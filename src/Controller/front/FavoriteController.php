@@ -36,6 +36,11 @@ class FavoriteController extends AbstractController
             $recipes[]=$recipeRepository->find($favorite->getRecipe());
         }
 
+        if (!$recipes) {
+            throw $this->createNotFoundException(
+                'Aucune recette trouvée :('
+            );
+        }
 //        dump($recipes);die();
 
         return $this->render('front/favorite/index.html.twig', ['recipes' => $recipes , 'user' => $user]);
