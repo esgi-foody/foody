@@ -159,7 +159,7 @@ class RecipeController extends AbstractController
 
         if ($this->isCsrfTokenValid('like'.$recipe->getId(),$request->query->get('csrf_token'))) {
 
-            $like = new Like();
+            $favorite = new Like();
 
             $like->setLiker($this->getUser());
             $like->setRecipe($recipe);
@@ -214,7 +214,11 @@ class RecipeController extends AbstractController
             $em->flush();
         }
 
+<<<<<<< HEAD
         return $this->redirect($request->headers->get('referer'));
+=======
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+>>>>>>> view + controller working
     }
 
 
@@ -234,7 +238,12 @@ class RecipeController extends AbstractController
             $em->remove($favorite);
             $em->flush();
         }
+<<<<<<< HEAD
         return $this->redirect($request->headers->get('referer'));
+=======
+
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+>>>>>>> view + controller working
     }
 
     private function calculateMacro(Recipe $recipe): Recipe
