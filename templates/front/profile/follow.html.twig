@@ -2,6 +2,13 @@
 
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 {% block body %}
+    {% set relationships = [] %}
+    {% for relation in app.user.followers %}
+        {% set relationships = relationships|merge([relation.follower.id])%}
+    {% endfor %}
+    {% for elem in relationships %}
+        {{ elem }}
+    {% endfor %}
     {% set uri = app.request.pathinfo | split('/') %}
     {% if uri[4] == 1 %}
         {% if app.user == user %}
@@ -18,10 +25,14 @@
                         <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
                     {% endif %}
                     <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.follower.username}) }}">{{ user.follower.username }}</a></span>
-                    {% if app.user == user %}
-                        <a class="btn btn-primary secondary-content" href="{{ path( follow.path , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+                    {% if user.follower.id in relationships %}
+                        {{ user.follower.username }}
+                        {{ user.follower.id }}
+                        <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
+                    {% else %}
+                        <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                     {% endif %}
-                </li>
+                        </li>
             {% endfor %}
         </ul>
     {% else %}
@@ -39,8 +50,10 @@
                             <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
                         {% endif %}
                         <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.followed.username}) }}">{{ user.followed.username }}</a></span>
-                        {% if app.user == user %}
-                            <a class="btn btn-primary secondary-content" href="{{ path( follow.path , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+                        {% if user.followed.id in relationships %}
+                            {{ user.followed.username }}
+                            {{ user.followed.id }}
+                             <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
                         {% endif %}
                     </li>
                 {% endfor %}
