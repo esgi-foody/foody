@@ -21,13 +21,6 @@ class ExplorerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $maxCalories = $this->recipeRepository->findHighestCalorie()[1];
-        $maxChoices = [];
-        for ($i = 0; $i < $maxCalories; $i += 100) {
-            $maxChoices[$i] = $i;
-        }
-        $maxChoices[$maxCalories] = $maxCalories;
-
         $builder
             ->add('query', TextType::class, [
                 'label' => 'Un utilisateur, une recette à rechercher ?',
@@ -43,12 +36,24 @@ class ExplorerType extends AbstractType
             ->add('calorie_min', ChoiceType::class, [
                 'label' => 'Calorie minimum',
                 'required' => false,
-                'choices' => $maxChoices,
+                'choices' => $this->getCalorieChoices(),
             ])
             ->add('calorie_max', ChoiceType::class, [
                 'label' => 'Calorie maximum',
                 'required' => false,
-                'choices' => $maxChoices,
+                'choices' => $this->getCalorieChoices(),
             ]);
+    }
+
+    public function getCalorieChoices()
+    {
+        $maxCalories = $this->recipeRepository->findHighestCalorie()[1];
+        $maxChoices = [];
+        for ($i = 0; $i < $maxCalories; $i += 100) {
+            $maxChoices[$i] = $i;
+        }
+        $maxChoices[$maxCalories] = $maxCalories;
+
+        return $maxChoices;
     }
 }

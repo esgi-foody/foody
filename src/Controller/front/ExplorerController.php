@@ -37,11 +37,11 @@ class ExplorerController extends AbstractController
                 }
             }
 
-            $users = $userRepository->findByUsername($data['query']);
+            $users = $data['query'] ? $userRepository->findByUsername($data['query']) : null;
             $recipes = $recipeRepository->findWithFilters($data, $categoriesId);
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
-            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');;
+            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');
         }
 
         return $this->render('front/explorer/index.html.twig', [
