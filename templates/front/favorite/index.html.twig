@@ -13,11 +13,12 @@
                 <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle"></td>
             {% endif %}
 
-            <span class="title">{{ recipe.title }}</span>
+            <h4 class="title red-text text-darken-2">{{ recipe.title }}</h4>
             </a>
+            <div>Temps - {{ recipe.time ? recipe.time|date('H:i') : '' }}</div>
             <div class="row">
-                <h4></h4><p>{{ recipe.fat }} fat | {{ recipe.carbohydrate }} carbs | {{ recipe.protein }} prot</p>
-                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}" class="right"><i data-feather="star"  fill="yellow"></i></a>
+                <h4></h4><p>Lipides : {{ recipe.fat }}g | Glucides : {{ recipe.carbohydrate }}g | Protéines : {{ recipe.protein }}g | kcal</p>
+                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}" class="right"><i data-feather="star" stroke="orange" fill="yellow"></i></a>
             </div>
 
 
