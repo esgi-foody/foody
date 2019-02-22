@@ -27,8 +27,9 @@ class FavoriteController extends AbstractController
     /**
      * @Route("/{username}/favorite", name="favorite_show", methods="GET")
      */
-    public function index( FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository): Response
+    public function index( FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository, User $user, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('edit', $user);
         $recipes=[];
         $favorites = $favoriteRepository->findBy(['userFavorite' => $this->getUser()]);
         $user = $this->getUser();

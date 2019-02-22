@@ -6,7 +6,7 @@
     <ul class="collection">
         {% for recipe in recipes %}
         <li class="collection-item avatar">
-
+            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
             {% if recipe.imageName %}
                 <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="circle">
             {% else %}
@@ -14,9 +14,14 @@
             {% endif %}
 
             <span class="title">{{ recipe.title }}</span>
-            <div class="row"><h4></h4><p>{{ recipe.fat }} fat | {{ recipe.carbohydrate }} carbs | {{ recipe.protein }} prot</p></div>
+            </a>
+            <div class="row">
+                <h4></h4><p>{{ recipe.fat }} fat | {{ recipe.carbohydrate }} carbs | {{ recipe.protein }} prot</p>
+                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}" class="right"><i data-feather="star"  fill="yellow"></i></a>
+            </div>
 
-            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="secondary-content"><i data-feather="arrow-right-circle"  stroke-width="1.5" stroke="red"></i></a>
+
+
         </li>
         {% endfor %}
     </ul>

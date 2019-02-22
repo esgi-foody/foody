@@ -77,7 +77,7 @@
     {% if favorite is defined and favorite is not null  %}
         <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star"  fill="yellow"></i></a>
     {% else %}
-        <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star"  stroke-width="1" stroke="yellow"></i></a>
+        <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star"  stroke-width="1" stroke="black"></i></a>
     {% endif %}
 
 

@@ -214,7 +214,7 @@ class RecipeController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+        return $this->redirect($request->headers->get('referer'));
     }
 
 
@@ -234,8 +234,7 @@ class RecipeController extends AbstractController
             $em->remove($favorite);
             $em->flush();
         }
-
-        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+        return $this->redirect($request->headers->get('referer'));
     }
 
     private function calculateMacro(Recipe $recipe): Recipe
