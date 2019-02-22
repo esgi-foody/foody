@@ -35,10 +35,10 @@
             <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
         </div>
         <div class=" col s3 center-align">
-            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':1}) }}>{{ user.followers | length }} abonnés</a>
+            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'true'}) }}>{{ user.followers | length }} abonnés</a>
         </div>
         <div class=" col s5 left-align">
-            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'bool':2}) }}>{{ user.followeds | length }} abonnements</a>
+            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'false'}) }}>{{ user.followeds | length }} abonnements</a>
         </div>
     </div>
 

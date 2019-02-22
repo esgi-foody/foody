@@ -130,18 +130,13 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{username}/showFollow/{bool}", name="profile_show_follow", methods="GET")
+     * @Route("/{username}/showFollow", name="profile_show_follow", methods="GET")
      */
-    public function showFollow(User $user): Response
+    public function showFollow(User $user, Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        if ($em->getRepository(Relationship::class)->findOneById($this->getUser()->getId(),$user->getId())){
-            $followBtn = ['title'=>'Ne plus suivre','path'=>'app_front_profile_unfollow'];
-        } else {
-            $followBtn = ['title'=>'Suivre','path'=>'app_front_profile_follow'];
-        }
-        return $this->render('front/profile/follow.html.twig', ['user' => $user,'follow' => $followBtn]);
-    }
+        $follower = $request->get('follower');
+        return $this->render('front/profile/follow.html.twig', ['user' => $user, 'follow' => $follower]);
 
+    }
 
 }

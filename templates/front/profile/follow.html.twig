@@ -7,8 +7,7 @@
         {% set relationships = relationships|merge([relation.followed.id])%}
     {% endfor %}
     {% set userConnected = app.user.username %}
-    {% set uri = app.request.pathinfo | split('/') %}
-    {% if uri[4] == 1 %}
+    {% if app.request.get('follower') == 'true'%}
         {% if app.user == user %}
             <h1>Mes abonnés</h1>
         {% else %}
