@@ -3,27 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Repository\RecipeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ExplorerType extends AbstractType
 {
-    private $recipeRepository;
-
-    public function __construct(RecipeRepository $recipeRepository)
-    {
-        $this->recipeRepository = $recipeRepository;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('query', TextType::class, [
-                'label' => 'Un utilisateur, une recette à rechercher ?',
+                'label' => 'Recherche',
                 'required' => false,
             ])
             ->add('category', EntityType::class, [
@@ -33,27 +25,13 @@ class ExplorerType extends AbstractType
                 'multiple' => true,
                 'required' => false,
             ])
-            ->add('calorie_min', ChoiceType::class, [
-                'label' => 'Calorie minimum',
+            ->add('calorie_min', IntegerType::class, [
+                'label' => 'Nombre de calories minimum',
                 'required' => false,
-                'choices' => $this->getCalorieChoices(),
             ])
-            ->add('calorie_max', ChoiceType::class, [
-                'label' => 'Calorie maximum',
+            ->add('calorie_max', IntegerType::class, [
+                'label' => 'Nombre de calories maximum',
                 'required' => false,
-                'choices' => $this->getCalorieChoices(),
             ]);
-    }
-
-    public function getCalorieChoices()
-    {
-        $maxCalories = $this->recipeRepository->findHighestCalorie()[1];
-        $maxChoices = [];
-        for ($i = 0; $i < $maxCalories; $i += 100) {
-            $maxChoices[$i] = $i;
-        }
-        $maxChoices[$maxCalories] = $maxCalories;
-
-        return $maxChoices;
     }
 }

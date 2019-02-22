@@ -71,17 +71,4 @@ class RecipeRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
-
-    /**
-     * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findHighestCalorie()
-    {
-        return $this->createQueryBuilder('r')
-            ->select('MAX(r.calory)')
-            ->getQuery()
-            ->getSingleResult();
-    }
 }
