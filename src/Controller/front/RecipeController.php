@@ -235,7 +235,10 @@ class RecipeController extends AbstractController
             $em->flush();
         }
         return $this->redirect($request->headers->get('referer'));
+<<<<<<< HEAD
 
+=======
+>>>>>>> favorite ok, return on last page when favorite or unfavorite
     }
 
     private function calculateMacro(Recipe $recipe): Recipe
