@@ -1,4 +1,5 @@
-@import 'sass/variables.scss';
+@import 'sass/_variables.scss';
+@import 'sass/_overrides.scss';
 @import 'sass/back/main.scss';
 @import 'sass/front/main.scss';
 
@@ -9,4 +10,5 @@
 
 * {
     font-family: Nunito !important;
+    color: black;
 }

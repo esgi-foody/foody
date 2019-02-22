@@ -26,18 +26,22 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 100; $i++) {
             $recipe = new Recipe();
             $recipe->setTitle($faker->foodName());
+            $protein = rand(1, 15);
+            $carbohydrate = rand(1, 15);
+            $fat = rand(1, 15);
+            $nbIngredients = rand(3, 6);
 
             //INGREDIENTS
-            for ($y = 0; $y < rand(3,10); $y++){
+            for ($y = 0; $y < $nbIngredients; $y++){
                 $measuringUnit =  ['g','kg','piece','mL','cL','L'];
                 $keyMeasuringUnit = array_rand($measuringUnit);
                 $arrIngr=[];
                 $ingredient = new Ingredient();
                 $ingredient->setName($faker->ingredient);
                 $ingredient->setQuantity(rand(1,50));
-                $ingredient->setProtein(rand(1,10));
-                $ingredient->setCarbohydrate(rand(1,10));
-                $ingredient->setFat(rand(1,10));
+                $ingredient->setProtein($protein);
+                $ingredient->setCarbohydrate($carbohydrate);
+                $ingredient->setFat($fat);
                 $ingredient->setMeasuringUnit($measuringUnit[$keyMeasuringUnit]);
                 $ingredient->setRecipe($recipe);
                 $arrIngr[] = $ingredient;
@@ -64,8 +68,12 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setTime($date);
             $category = $manager->getRepository(Category::class)->find(rand(1,20));
             $recipe->addCategory($category);
-            $recipe->getRecipeSteps($arrStep);
+            $recipe->setCalory(($nbIngredients * $protein * 4) + ($nbIngredients * $carbohydrate * 4) + ($nbIngredients * $fat * 9));
+            $recipe->setProtein($nbIngredients * $protein);
+            $recipe->setCarbohydrate($nbIngredients * $carbohydrate);
+            $recipe->setFat($nbIngredients * $fat);
             $recipe->getComments([]);
+            $recipe->getRecipeSteps($arrStep);
             $recipe->setImageName('');
             $recipe->getRecipeFavorite([]);
 
