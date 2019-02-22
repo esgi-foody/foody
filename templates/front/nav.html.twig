@@ -1,31 +1,30 @@
 <nav>
     <div class="nav-wrapper">
-
         {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
             <ul id="nav-mobile" class="left hide-on-med-and-down">
 
                 <li><a href="{{ path('home') }}" class="logo">Foody</a></li>
 
-                <li><a href="/">
-                        <i data-feather="home" id="home" stroke-width="2" width="24" height="24" stroke="black"></i>
+                <li><a href="{{ path('home') }}" class="valign-wrapper {{ app.request.get('_route') == 'home' ? 'active' }}">
+                        <i data-feather="home" id="home" stroke-width="2" width="24" height="24" ></i>
                         Accueil
                     </a>
                 </li>
-                <li><a href="{{ path('app_front_search_index') }}">
-                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" stroke="black"></i>
+                <li><a href="{{ path('app_front_search_index') }}" class="valign-wrapper {{ app.request.get('_route') == 'app_front_search_index' ? 'active' }}">
+                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" ></i>
                         Explorer
                     </a>
                 </li>
-                <li><a href="{{ path('recipe_new') }}">
-                        <i data-feather="plus-square" id="add" stroke-width="2" width="24" height="24" stroke="black"></i>
+                <li><a href="{{ path('recipe_new') }}" class="valign-wrapper {{ app.request.get('_route') == 'recipe_new' ? 'active' }}">
+                        <i data-feather="plus-square" id="add" stroke-width="2" width="24" height="24"></i>
                         Ajouter
                     </a>
                 </li>
             </ul>
 
             <ul class="right hide-on-med-and-down">
-                <li><a href="#"><i data-feather="bell"></i><span class="new badge">4</span></a></li>
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@{{ app.user.username }}<i data-feather="arrow-down-circle" stroke-width="1" width="20" height="20" stroke="black"></i></a></li>
+                <li><a href="{{ path('app_front_notifications_index') }}"  class=" {{  notificationsNumber() ? 'valign-wrapper '}}{{ app.request.get('_route') == 'app_notifications_index' ? 'active' }}"><i data-feather="bell"></i><span class="notification-badge">{{ notificationsNumber() ?notificationsNumber() }}</span></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@{{ app.user.username }}</a></li>
             </ul>
 
             <ul id="dropdown1" class="dropdown-content">

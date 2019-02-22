@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Notification;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +20,63 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
-    // /**
-    //  * @return Notification[] Returns an array of Notification objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+     /**
+      * @return int Returns a number of user Notification
+      * @param User $user
+      */
 
-    /*
-    public function findOneBySomeField($value): ?Notification
+    public function countUserNotifications($user)
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
+
+        $qb = $this->createQueryBuilder('n');
+        return $qb->select('Count(n)')
+            ->where('n.receiver = :receiver')
+            ->andWhere('n.seen = false')
+            ->setParameter('receiver',$user)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
+
+     /**
+      * @return Notification[] Returns an array of object
+      * @param int $userId
+      * @param int $limit
+      */
+
+    public function userNotifications($userId,$limit)
+    {
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('
+            SELECT n.message,  n.type,  n.link, u.username,u.imageName
+            FROM App\Entity\Notification n, App\Entity\User u
+            WHERE  n.receiver = :userId
+            AND  u.id = n.sender
+            ORDER BY n.createdAt DESC
+            ')->setParameter('userId' , $userId )->setMaxResults($limit);
+        return $query->execute();
+    }
+
+     /**
+      * @return Notification[] Returns an array of object
+      * @param int $userId
+      * @param int $limit
+      */
+
+    public function updateNotificationsSeen($userId)
+    {
+
+        $qb = $this->createQueryBuilder('n');
+
+        $query = $qb->update()
+            ->set('n.seen', ':seen')
+            ->where('n.receiver= :userId')
+            ->setParameters(['userId'=> $userId ,'seen' => true])
+            ->getQuery();
+
+        return $query->execute();
+
+    }
+
+
 }

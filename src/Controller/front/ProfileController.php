@@ -4,13 +4,11 @@ namespace App\Controller\front;
 
 use App\Entity\User;
 use App\Entity\Relationship;
-use App\Repository\UserRepository;
-use App\Repository\RelationshipRepository;
 use App\Form\ProfileType;
+use App\Services\NotificationService;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -41,7 +39,7 @@ class ProfileController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function follow(User $user, Request $request): Response
+    public function follow(User $user, Request $request ,NotificationService $notificationService): Response
     {
 
         $relation = new Relationship();
@@ -54,7 +52,12 @@ class ProfileController extends AbstractController
 
         if ($this->isCsrfTokenValid('follow', $submittedToken))
         {
-            if ($user->getUsername() !== $this->getUser()->getUsername()){
+            if ($user->getId() !== $this->getUser()->getId()){
+
+                $message = 'à commencer à vous suivre';
+                $url = $this->generateUrl('app_front_profile_show',['username' => $user->getUsername()]);
+                $notificationService->sendNotification($user,$message,'FOLLOW',$url);
+
                 $em->persist($relation);
                 $em->flush();
             }
