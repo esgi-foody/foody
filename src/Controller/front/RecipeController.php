@@ -7,6 +7,8 @@ use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Like;
+use App\Entity\RecipeRepost;
+use App\Entity\User;
 use App\Form\RecipeType;
 use App\Repository\FavoriteRepository;
 use App\Services\NotificationService;
@@ -95,8 +97,9 @@ class RecipeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
+        $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked,'favorite' => $favorite]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted]);
     }
 
     /**
@@ -258,5 +261,52 @@ class RecipeController extends AbstractController
         $recipe->setCalory($calories);
 
         return $recipe;
+    }
+
+    /**
+     * @Route("/{id}/repost", name="recipe_repost", methods="GET")
+     */
+    public function recipeRepost(Request $request, Recipe $recipe): Response
+    {
+        if ($this->isCsrfTokenValid('repost'.$recipe->getId(), $request->query->get('csrf_token'))) {
+
+            $repost = new RecipeRepost();
+            $repost->setReporter($this->getUser());
+            $repost->setRecipe($recipe);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($repost);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+    }
+
+    /**
+     * @Route("/{id}/{idRepost}/unrepost", name="recipe_unrepost", methods="GET")
+     */
+    public function unrepost(Request $request,Recipe $recipe): Response
+    {
+
+        if ($this->isCsrfTokenValid('unrepost'.$recipe->getId(),$request->query->get('csrf_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $repost = $em->getRepository(RecipeRepost::class)->findOneBy(['id' => $request->get('idRepost')]);
+            $em->remove($repost);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
+    }
+
+    /**
+     * @Route("/{id}", name="recipe_repost_show", methods="GET")
+     */
+    public function showRecipeRepost(Recipe $recipe): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reposted = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $this->getUser()]);
+        dump($reposted);die;
+
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'reposted' => $reposted]);
     }
 }

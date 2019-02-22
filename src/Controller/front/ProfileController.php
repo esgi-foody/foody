@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Relationship;
 use App\Entity\Recipe;
 use App\Entity\Favorite;
+use App\Entity\RecipeRepost;
 use App\Repository\UserRepository;
 use App\Repository\RelationshipRepository;
 use App\Repository\RecipeRepository;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Validator\Constraints\Count;
 
 /**
  * @Route("/profile", name="app_front_")
@@ -36,7 +38,9 @@ class ProfileController extends AbstractController
         } else {
             $followBtn = ['title'=>'Suivre','path'=>'app_front_profile_follow'];
         }
-        return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn]);
+
+        $repost = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $user]);
+        return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn, 'repost' => $repost]);
     }
 
     /**

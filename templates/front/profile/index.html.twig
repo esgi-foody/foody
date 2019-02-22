@@ -72,4 +72,84 @@
         </div>
     </div>
 
+    <h3>{{ user.pseudo }}</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Biographie</th>
+            <td>{{ user.biography | raw }}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if not app.user is same as (user) %}
+    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+    {% endif %}
+
+    {% if app.user == user %}
+        <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
+
+        {{ include('front/profile/_delete_form.html.twig') }}
+    {% endif %}
+
+    <h2>Recettes</h2>
+    <div class="d-flex bd-highlight justify-content-center">
+        <div class="row">
+            {% for recipe in user.recipes %}
+
+                <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
+                    <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                        {% if recipe.imageName %}
+                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        {% else %}
+                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.title }}</h5>
+                            <p> Catégorie(s) :
+                                {% for category in recipe.categories %}
+                                    {{ category.name }}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <h2>Mes recettes repostées</h2>
+
+    <div class="d-flex bd-highlight justify-content-center">
+        <div class="row">
+
+        {% if repost %}
+            {% for recipe in user.recipes %}
+                <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
+                    <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                        {% if recipe.imageName %}
+                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        {% else %}
+                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.title }}</h5>
+                            <p> Catégorie(s) :
+                                {% for category in recipe.categories %}
+                                    {{ category.name }}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            Aucune recette repostées
+        {% endif %}
+
+        </div>
+    </div>
 {% endblock %}
