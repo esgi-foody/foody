@@ -1,94 +1,46 @@
-{% extends "form_div_layout.html.twig" %}
+{% extends 'form_div_layout.html.twig' %}
 
-{%- block form_row -%}
-    <div{% if not compound %} class="input-field"{% endif %}>
-        {{- form_widget(form) -}}
-        {{- form_label(form) -}}
-        {{- form_help(form) -}}
-    </div>
-{%- endblock form_row -%}
-
-{%- block form_errors -%}
-    {%- if errors|length > 0 -%}
-        <ul class="red-text">
-            {%- for error in errors -%}
-                <li>{{ error.message }}</li>
-            {%- endfor -%}
-        </ul>
-    {%- endif -%}
-{%- endblock form_errors -%}
-
-{%- block textarea_row -%}
-    <div>
-        {{- form_label(form) -}}
+{% block form_row -%}
+    <div class="row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_errors(form) -}}
-        {{- form_widget(form) -}}
+        <div class="input-field col s12">
+            {{- form_widget(form) -}}
+            {{- form_label(form) -}}
+            {{- form_help(form) -}}
+        </div>
     </div>
-{%- endblock textarea_row -%}
+{%- endblock form_row %}
+
+{% block form_widget_simple %}
+    {% if type is not defined or type not in ['file', 'hidden'] %}
+        {%- set attr = attr|merge({class: (attr.class|default(''))|trim}) -%}
+    {% endif %}
+    {{- parent() -}}
+    {% if tooltip is defined %}
+        <span class="material-icons dp48 tooltipped"
+              data-position="bottom" data-delay="50" data-tooltip="{{ tooltip }}">error
+        </span>
+    {% endif %}
+{% endblock form_widget_simple %}
 
 {% block form_label -%}
-    {% if errors|length > 0 -%}
-        {% set stringErrors = [] %}
-        {% for error in errors %}
-            {% set stringErrors = stringErrors|merge([error.message]) %}
-        {% endfor %}
-        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' invalid')|trim, 'data-error': stringErrors|join(' ')}) %}
-    {% endif %}
-    {% if value is not empty -%}
-        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' active')|trim}) %}
-    {% endif %}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default(''))|trim}) -%}
     {{- parent() -}}
 {%- endblock form_label %}
 
-{% block datetime_widget -%}
-    {% if widget == 'single_text' %}
-        {{- block('form_widget_simple') -}}
-    {% else -%}
-        {% set attr = attr|merge({class: (attr.class|default(''))|trim}) -%}
-        <div {{ block('widget_container_attributes') }} class="col s12">
-            {{- form_errors(form.date) -}}
-            {{- form_errors(form.time) -}}
-            <div class="input-field col s6 form_datetime">
-                {{ form_widget(form.date, { datetime: true, 'attr': {'readonly': 'true', 'class': 'validate', 'data-value': form.date.vars.value}} ) }}
-                <label for="icon_prefix">{{ 'label.date.the'|trans }}</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form_widget(form.time, { datetime: true, 'attr': {'class': 'validate timepicker5'}} ) }}
-                <label for="icon_prefix">{{ 'label.at'|trans }}</label>
-            </div>
-        </div>
-    {%- endif %}
-{%- endblock datetime_widget %}
-
-{#{% block time_widget -%}#}
-    {#{% if widget == 'single_text' %}#}
-        {#{{- block('form_widget_simple') -}}#}
-    {#{% else -%}#}
-        {#{% set attr = attr|merge({class: (attr.class|default(''))|trim}) -%}#}
-        {#<div {{ block('widget_container_attributes') }} class="col s12">#}
-            {#{{- form_errors(form.time) -}}#}
-            {#<div class="input-field col s6">#}
-                {#{{ form_widget(form.time, { datetime: true, 'attr': {'class': 'validate timepicker5'}} ) }}#}
-                {#<label for="icon_prefix">{{ 'label.at'|trans }}</label>#}
-            {#</div>#}
-        {#</div>#}
-    {#{%- endif %}#}
-{#{%- endblock time_widget %}#}
-
 {% block checkbox_row -%}
-    <p {% if form.vars.attr['data-label-class'] is defined %}class="{{ form.vars.attr['data-label-class'] }}"{% endif %}>
-        <label>
-            {{- form_widget(form) -}}
-            {{- form_label(form) -}}
-        </label>
-    </p>
+    <div class="row {% if not valid %} has-error{% endif %}">
+        {{- form_widget(form) -}}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+    </div>
 {%- endblock checkbox_row %}
 
 {% block checkbox_widget -%}
-    <input type="checkbox"
-           class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    <input type="checkbox" class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
 {%- endblock checkbox_widget %}
 
+{# Checkbox label is raw here #}
 {%- block checkbox_label -%}
     {% if label is not same as(false) -%}
         {% if not compound -%}
@@ -97,9 +49,6 @@
         {% if required -%}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {%- endif -%}
-        {% if errors|length > 0 -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' invalid')|trim}) %}
-        {% endif %}
         {% if label is empty -%}
             {%- if label_format is not empty -%}
                 {% set label = label_format|replace({
@@ -110,65 +59,16 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <span{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
         {{ translation_domain is same as(false) ? label|raw : label|trans({}, translation_domain)|raw }}
-        </span>
+        </label>
     {%- endif -%}
 {%- endblock -%}
 
-{% block radio_row -%}
-    {{- block('checkbox_row') -}}
-{%- endblock radio_row %}
-
-{% block radio_widget -%}
-    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{%- endblock radio_widget %}
-
-{% block text_row -%}
-    <div class="row">
-        <div class="input-field col s12">
-            {{- form_widget(form) -}}
-            {{- form_label(form) -}}
-        </div>
-    </div>
-{%- endblock text_row %}
-
-{% block text_widget %}
-    {%- set type = type|default('text') -%}
-    <input type="{{ type }}" {% if not valid %} class="invalid"{% endif %} {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-{% endblock text_widget %}
-
-{% block app_bundle_switch_row -%}
-    <div class="row">
-        <div class="col s12">
-            {{ form_label(form) }}
-            {{ form_widget(form) }}
-        </div>
-    </div>
-{%- endblock app_bundle_switch_row %}
-
-{% block app_bundle_switch_widget -%}
-    <div class="switch">
-        <label>
-            {{ form.vars.label_off|trans }}
-            <input type="checkbox"
-                   name="{{ form.vars.full_name }}"
-                   value="{{ form.vars.value }}"
-                    {% if form.vars.data %} checked="checked"{% endif %}>
-            <span class="lever"></span>
-            {{ form.vars.label_on|trans }}
-        </label>
-    </div>
-{%- endblock app_bundle_switch_widget %}
-
-{% block choice_row -%}
-    <div class="row">
-        <div class="input-field col s12">
-            {{- form_widget(form) -}}
-            {{- form_label(form) -}}
-        </div>
-    </div>
-{%- endblock choice_row %}
+{% block button_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('waves-effect waves-light') ~ ' btn')|trim}) %}
+    {{- parent() -}}
+{%- endblock %}
 
 {%- block choice_widget_collapsed -%}
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
@@ -189,3 +89,22 @@
         {{- block('choice_widget_options') -}}
     </select>
 {%- endblock choice_widget_collapsed -%}
+
+{%- block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ 'materialize-textarea')|trim}) %}
+    {{ parent() }}
+{%- endblock -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul>
+            {%- for error in errors -%}
+                <li class="card red lighten-2">
+                    <div class="card-content white-text">
+                        <span>{{ error.message }}</span>
+                    </div>
+                </li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
