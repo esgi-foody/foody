@@ -62,7 +62,8 @@ class ProfileController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
+        return $this->redirect($request->headers->get('referer'));
+        //return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }
 
     /**
@@ -84,8 +85,8 @@ class ProfileController extends AbstractController
             $em->flush();
         }
 
-
-        return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
+        return $this->redirect($request->headers->get('referer'));
+        //return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
     }
 
     /**
