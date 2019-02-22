@@ -1,5 +1,11 @@
 nav {
     background-color: white;
+    box-shadow: 0px 0px 50px rgba(231, 72, 74, 0.3);
+
+    .active {
+        color: #E7484A;
+        box-shadow: inset 0 -5px 0 #E7484A;
+    }
 }
 
 nav ul a {
@@ -22,5 +28,9 @@ nav .brand-logo {
 .logo {
     color: #E7484A;
     font-size: 25px;
+}
+
+nav {
+
 }
 

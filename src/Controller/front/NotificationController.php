@@ -11,7 +11,7 @@ use App\Repository\NotificationRepository;
 /**
  * Class NotificationController
  * @package App\Controller
- * @Route("/notifications", name="app_notifications_")
+ * @Route("/notifications", name="app_front_notifications_")
  */
 class NotificationController extends AbstractController
 {

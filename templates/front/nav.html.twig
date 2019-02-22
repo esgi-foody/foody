@@ -23,7 +23,7 @@
             </ul>
 
             <ul class="right hide-on-med-and-down">
-                <li><a href="{{ path('app_notifications_index') }}"  class=" {{  notificationsNumber() ? 'valign-wrapper '}}{{ app.request.get('_route') == 'app_notifications_index' ? 'active' }}"><i data-feather="bell"></i><span class="notification-badge">{{ notificationsNumber() ?notificationsNumber() }}</span></a></li>
+                <li><a href="{{ path('app_front_notifications_index') }}"  class=" {{  notificationsNumber() ? 'valign-wrapper '}}{{ app.request.get('_route') == 'app_notifications_index' ? 'active' }}"><i data-feather="bell"></i><span class="notification-badge">{{ notificationsNumber() ?notificationsNumber() }}</span></a></li>
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">@{{ app.user.username }}</a></li>
             </ul>
 
