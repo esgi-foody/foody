@@ -29,8 +29,16 @@ class ExplorerController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            $categoriesId = [];
+
+            if (!$data['category']->isEmpty()) {
+                foreach ($data['category'] as $category) {
+                    $categoriesId[] = $category->getId();
+                }
+            }
+
             $users = $userRepository->findByUsername($data['query']);
-            $recipes = $recipeRepository->findWithFilters($data);
+            $recipes = $recipeRepository->findWithFilters($data, $categoriesId);
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
             $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');;

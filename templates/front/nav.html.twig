@@ -10,8 +10,8 @@
                         Accueil
                     </a>
                 </li>
-                <li><a href="{{ path('app_front_explorer_index') }}">
-                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" stroke="black"></i>
+                <li><a href="{{ path('app_front_explorer_index') }}" class="valign-wrapper {{ app.request.get('_route') == 'app_front_explorer_index' ? 'active' }}">
+                        <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" ></i>
                         Explorer
                     </a>
                 </li>

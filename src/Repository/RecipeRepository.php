@@ -49,32 +49,25 @@ class RecipeRepository extends ServiceEntityRepository
      * @param $data
      * @return \Doctrine\ORM\QueryBuilder|mixed
      */
-    public function findWithFilters($data)
+    public function findWithFilters($data, $categories = null)
     {
         $qb = $this->createQueryBuilder('r');
         $qb = $qb->addSelect('r')
             ->innerJoin('r.categories', 'c')
             ->where('r.title LIKE :query')
             ->setParameter('query', '%' . $data['query'] . '%');
-
-        if (!$data['category']->isEmpty()) {
-            $categoriesId = [];
-            foreach ($data['category'] as $category) {
-                $categoriesId[] = $category->getId();
-            }
-
+        if ($categories) {
             $qb = $qb->andWhere('c.id IN (:id)')
-                ->setParameter('id', $categoriesId);
+                ->setParameter('id', $categories);
         }
-        if ($data['calorie_min'] >= 0) {
+        if ($data['calorie_min']) {
             $qb = $qb->andWhere('r.calory >= :calorie_min')
                 ->setParameter('calorie_min', $data['calorie_min']);
         }
-        if ($data['calorie_max'] > 0) {
+        if ($data['calorie_max']) {
             $qb = $qb->andWhere('r.calory <= :calorie_max')
                 ->setParameter('calorie_max', $data['calorie_max']);
         }
-
         return $qb->getQuery()
             ->getResult();
     }
