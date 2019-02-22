@@ -390,6 +390,17 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getLiker() === $this) {
+                $like->setLiker(null);
+            }
+        }
+    }
+
     /**
      * @return Collection|RecipeRepost[]
      */
@@ -406,17 +417,6 @@ class User implements UserInterface, Serializable
         }
 
         return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
-            // set the owning side to null (unless already changed)
-            if ($like->getLiker() === $this) {
-                $like->setLiker(null);
-            }
-        }
     }
 
     public function removeRecipeRepost(RecipeRepost $recipeRepost): self
