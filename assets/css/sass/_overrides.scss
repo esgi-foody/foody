@@ -1,0 +1,14 @@
+.collection {
+    border: 0;
+    .collection-item {
+        border: 0;
+        margin: 1rem;
+        border-radius: 3px;
+        box-shadow: $basic-box-shadow;
+    }
+}
+  
+.tabs {
+    box-shadow: $basic-box-shadow;
+    border-radius: 3px;
+}

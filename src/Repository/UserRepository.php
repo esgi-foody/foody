@@ -46,7 +46,6 @@ class UserRepository extends ServiceEntityRepository
             ->where('u.username LIKE :query')
             ->setParameter('query', '%' . $query . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }
