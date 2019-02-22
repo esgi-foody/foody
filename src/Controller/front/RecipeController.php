@@ -7,6 +7,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Like;
 use App\Form\RecipeType;
+use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,7 +152,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/{id}/like", name="recipe_like", methods="GET")
      */
-    public function like(Request $request, Recipe $recipe): Response
+    public function like(Request $request, Recipe $recipe,NotificationService $notificationService): Response
     {
 
         if ($this->isCsrfTokenValid('like'.$recipe->getId(),$request->query->get('csrf_token'))) {
@@ -163,6 +164,10 @@ class RecipeController extends AbstractController
             $recipe->getLikes()->add($like);
 
             $em = $this->getDoctrine()->getManager();
+
+            $message = 'à aimé votre recette : '.$recipe->getTitle();
+            $url = $this->generateUrl('recipe_show',['id' => $recipe->getId(),'slug'=>$recipe->getSlug()]);
+            $notificationService->sendNotification($recipe->getUserRecipe() ,$message,'LIKE',$url);
             $em->flush();
         }
 

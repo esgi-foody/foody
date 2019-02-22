@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repository\NotificationRepository;
 use App\Entity\Notification;
 use Symfony\Component\Security\Core\Security;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class NotificationService
 {
@@ -15,13 +16,13 @@ class NotificationService
      * Notification constructor.
      * @param NotificationRepository $notificationRepository
      */
-    public function __construct(Security $security,NotificationRepository $notificationRepository)
+    public function __construct(Security $security,NotificationRepository $notificationRepository ,ObjectManager $om)
     {
         $this->notificationRepository = $notificationRepository;
         $this->sender = $security->getUser();
+        $this->om = $om;
 
     }
-
 
     public function sendNotification($receiver,$message,$type,$link)
     {
@@ -30,24 +31,15 @@ class NotificationService
         $notification->setReceiver($receiver);
         $notification->setMessage($message);
         $notification->setType($type);
+        $notification->setSeen(0);
         $notification->setLink($link);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($notification);
-        $em->flush();
-
-      dump($this->sender);die;
+        $this->om->persist($notification);
     }
 
 
-    public function countNotifications(NotificationRepository $notificationRepository)
+    public function countNotifications()
     {
-        return $notificationRepository->countUserNotifications($this->sender);
-    }
-
-    public function senderNotifications(NotificationRepository $notificationRepository)
-    {
-        $notificationRepository->findBy(['sender' => $this->sender],['createdAt'=>'DESC'],50);
-      dump($this->sender);die;
+        return $this->notificationRepository->countUserNotifications($this->sender);
     }
 }
