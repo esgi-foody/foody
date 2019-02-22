@@ -18,19 +18,26 @@ class Notification
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string")
      */
     private $type;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $idType;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string")
      */
-    private $status;
+    private $link;
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $message;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $seen;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -44,43 +51,55 @@ class Notification
      */
     private $receiver;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getType(): ?int
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(int $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getIdType(): ?int
+    public function getMessage(): ?string
     {
-        return $this->idType;
+        return $this->message;
     }
 
-    public function setIdType(int $idType): self
+    public function setMessage(string $message): self
     {
-        $this->idType = $idType;
+        $this->message = $message;
 
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getLink(): ?string
     {
-        return $this->status;
+        return $this->link;
     }
 
-    public function setStatus(int $status): self
+    public function setLink(string $link): self
     {
-        $this->status = $status;
+        $this->link = $link;
+
+        return $this;
+    }
+
+    public function getSeen(): ?bool
+    {
+        return $this->seen;
+    }
+
+    public function setSeen(bool $seen): self
+    {
+        $this->seen = $seen;
 
         return $this;
     }
