@@ -21,33 +21,17 @@ class FavoriteRepository extends ServiceEntityRepository
         parent::__construct($registry, Favorite::class);
     }
 
-
-    public function findFavoritesByUser(User $user): ?Collection
+    public function findFavoritesByUser(User $user)
     {
-<<<<<<< Updated upstream
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery('
-            SELECT DISTINCT r
-            FROM App\Entity\Recipe r, App\Entity\Favorite f, App\Entity\User u
-            WHERE  f.userFavorite = :userId
-            AND  f.follower = l.liker
-            ORDER BY r.createdAt DESC
+            SELECT r
+            FROM App\Entity\Recipe r
+            WHERE  r.id IN (SELECT f FROM App\Entity\Favorite f WHERE f.userFavorite = :userId)
             ')->setParameter('userId', $user->getId());
 
         return $query->execute();
-
     }
-=======
-        return$this->createQueryBuilder('q')
-            ->from('recipe','r')
-            ->innerJoin('r.recipe', 'recipe')
-            ->where('user.id LIKE :userId')
-            ->setParameters(['userId' => $user->getId()])
-            ->getQuery()
-            ->getResult();
-    }
-
->>>>>>> Stashed changes
 }
 
-//SELECT * FROM Recipe WHERE recipe.id = SELECT recipeId FROM favorite WHERE favorite.UserId =:UserId
+

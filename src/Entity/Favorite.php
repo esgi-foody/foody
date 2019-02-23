@@ -31,7 +31,7 @@ class Favorite
      * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
     private $recipe;
-
+FavoriteRepository
     public function getId(): ?int
     {
         return $this->id;

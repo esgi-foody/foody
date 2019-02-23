@@ -8,6 +8,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Like;
 use App\Form\RecipeType;
+use App\Repository\FavoriteRepository;
 use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

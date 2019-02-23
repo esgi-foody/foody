@@ -142,23 +142,16 @@ class ProfileController extends AbstractController
     /**
      * @Route("/{username}/favorite", name="favorite_show", methods="GET")
      */
-    public function indexFavorite( FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository, User $user, Request $request): Response
+    public function indexFavorite( FavoriteRepository $favoriteRepository, User $user): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
-        $recipes=[];
-        $favorites = $favoriteRepository->findBy(['userFavorite' => $this->getUser()]);
-        $user = $this->getUser();
-
-        foreach ($favorites as $favorite){
-            $recipes[]=$recipeRepository->find($favorite->getRecipe());
-        }
+        $recipes = $favoriteRepository->findFavoritesByUser($this->getUser());
 
         if (!$recipes) {
             throw $this->createNotFoundException(
                 'Aucune recette trouvée :('
             );
         }
-//        dump($recipes);die();
 
         return $this->render('front/favorite/index.html.twig', ['recipes' => $recipes , 'user' => $user]);
     }
