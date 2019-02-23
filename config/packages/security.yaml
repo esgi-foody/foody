@@ -35,11 +35,7 @@ security:
                 target: /
 
             access_denied_handler: App\Security\AccessDeniedHandler
-<<<<<<< HEAD
             user_checker: App\Security\UserChecker
-=======
-
->>>>>>> Fix bug
 
             # activate different ways to authenticate
 
