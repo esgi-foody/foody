@@ -18,6 +18,10 @@ use App\Repository\RecipeRepository;
 class ExplorerController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param RecipeRepository $recipeRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="explorer_index", methods={"GET", "POST"})
      */
     public function index(Request $request, UserRepository $userRepository, RecipeRepository $recipeRepository)
@@ -38,10 +42,10 @@ class ExplorerController extends AbstractController
             }
 
             $users = $data['query'] ? $userRepository->findByUsername($data['query']) : null;
-            $recipes = $recipeRepository->findWithFilters($data, $categoriesId);
+            $recipes = $this->isAllQueryNull($data) ? $recipeRepository->findWithFilters($data, $categoriesId) : null;
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
-            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');
+            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');
         }
 
         return $this->render('front/explorer/index.html.twig', [
@@ -49,5 +53,16 @@ class ExplorerController extends AbstractController
             'data' => $data,
             'results' => $results,
         ]);
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    public function isAllQueryNull($data)
+    {
+        return $data['query'] || !$data['category']->isEmpty() || $data['calorie_min'] || $data['calorie_max']
+            || $data['protein_min'] || $data['protein_max'] || $data['carbohydrate_min'] || $data['carbohydrate_max']
+            || $data['fat_min'] || $data['fat_max'];
     }
 }

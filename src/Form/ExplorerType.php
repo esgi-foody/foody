@@ -32,6 +32,30 @@ class ExplorerType extends AbstractType
             ->add('calorie_max', IntegerType::class, [
                 'label' => 'Nombre de calories maximum',
                 'required' => false,
+            ])
+            ->add('protein_min', IntegerType::class, [
+                'label' => 'Nombre de protéines minimum',
+                'required' => false,
+            ])
+            ->add('protein_max', IntegerType::class, [
+                'label' => 'Nombre de protéines maximum',
+                'required' => false,
+            ])
+            ->add('carbohydrate_min', IntegerType::class, [
+                'label' => 'Nombre de glucides minimum',
+                'required' => false,
+            ])
+            ->add('carbohydrate_max', IntegerType::class, [
+                'label' => 'Nombre de glucides maximum',
+                'required' => false,
+            ])
+            ->add('fat_min', IntegerType::class, [
+                'label' => 'Nombre de lipides minimum',
+                'required' => false,
+            ])
+            ->add('fat_max', IntegerType::class, [
+                'label' => 'Nombre de lipides maximum',
+                'required' => false,
             ]);
     }
 }
