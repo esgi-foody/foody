@@ -159,7 +159,7 @@ class RecipeController extends AbstractController
 
         if ($this->isCsrfTokenValid('like'.$recipe->getId(),$request->query->get('csrf_token'))) {
 
-            $favorite = new Like();
+            $like = new Like();
 
             $like->setLiker($this->getUser());
             $like->setRecipe($recipe);
