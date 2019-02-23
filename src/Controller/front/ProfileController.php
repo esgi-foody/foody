@@ -24,7 +24,6 @@ class ProfileController extends AbstractController
      */
     public function show(User $user): Response
     {
-
         $em = $this->getDoctrine()->getManager();
         if ($em->getRepository(Relationship::class)->findOneById($this->getUser()->getId(),$user->getId())){
             $followBtn = ['title'=>'Ne plus suivre','path'=>'app_front_profile_unfollow'];
@@ -63,9 +62,7 @@ class ProfileController extends AbstractController
             }
         }
 
-
-
-        return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
@@ -79,7 +76,6 @@ class ProfileController extends AbstractController
         $follower = $this->getUser();
         $relation = $em->getRepository(Relationship::class)->findOneBy(['follower'=>$follower->getId(),'followed'=>$user->getId()]);
 
-
         $submittedToken = $request->get('csrf_token');
 
         if ($this->isCsrfTokenValid('follow', $submittedToken))
@@ -88,9 +84,7 @@ class ProfileController extends AbstractController
             $em->flush();
         }
 
-
-
-        return $this->redirectToRoute('app_front_profile_show',['username'=> $user->getUsername()]);
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
@@ -131,6 +125,16 @@ class ProfileController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_front_auth_login');
+    }
+
+    /**
+     * @Route("/{username}/showFollow", name="profile_show_follow", methods="GET")
+     */
+    public function showFollow(User $user, Request $request): Response
+    {
+        $follower = $request->get('follower');
+        return $this->render('front/profile/follow.html.twig', ['user' => $user, 'follow' => $follower]);
+
     }
 
 }
