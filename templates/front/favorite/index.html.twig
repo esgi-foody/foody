@@ -10,7 +10,7 @@
             {% if recipe.imageName %}
                 <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="circle">
             {% else %}
-                <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle"></td>
+                <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
             {% endif %}
 
             <h4 class="title red-text text-darken-2">{{ recipe.title }}</h4>
