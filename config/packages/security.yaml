@@ -38,6 +38,10 @@ security:
             user_checker: App\Security\UserChecker
 
 
+            #pattern: ^/
+            #user_checker: App\Security\UserChecker
+
+
             # activate different ways to authenticate
 
             # http_basic: true

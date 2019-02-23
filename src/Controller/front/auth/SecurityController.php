@@ -173,4 +173,29 @@ class SecurityController extends AbstractController
 
         return $this->render('front/auth/registerSuccess.html.twig');
     }
+
+    /**
+     * @Route("/login/{registerToken}", name="resetPassword")
+     */
+    public function loginConfirmation(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createForm(ResetPasswordType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $password = $encoder->encodePassword($user, $data['password']);
+
+            $user->setPassword($password);
+            $user->setLostPasswordToken(null);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('app_front_auth_login');
+        }
+
+        return $this->render('front/auth/resetPassword.html.twig', [
+                'form' => $form->createView()
+            ]
+        );
+    }
 }
