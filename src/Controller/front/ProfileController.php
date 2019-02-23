@@ -4,6 +4,12 @@ namespace App\Controller\front;
 
 use App\Entity\User;
 use App\Entity\Relationship;
+use App\Entity\Recipe;
+use App\Entity\Favorite;
+use App\Repository\UserRepository;
+use App\Repository\RelationshipRepository;
+use App\Repository\RecipeRepository;
+use App\Repository\FavoriteRepository;
 use App\Form\ProfileType;
 use App\Services\NotificationService;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -131,6 +137,30 @@ class ProfileController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_front_auth_login');
+    }
+
+    /**
+     * @Route("/{username}/favorite", name="favorite_show", methods="GET")
+     */
+    public function indexFavorite( FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository, User $user, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('edit', $user);
+        $recipes=[];
+        $favorites = $favoriteRepository->findBy(['userFavorite' => $this->getUser()]);
+        $user = $this->getUser();
+
+        foreach ($favorites as $favorite){
+            $recipes[]=$recipeRepository->find($favorite->getRecipe());
+        }
+
+        if (!$recipes) {
+            throw $this->createNotFoundException(
+                'Aucune recette trouvée :('
+            );
+        }
+//        dump($recipes);die();
+
+        return $this->render('front/favorite/index.html.twig', ['recipes' => $recipes , 'user' => $user]);
     }
 
 }
