@@ -3,10 +3,11 @@
 {% block title %}Modifier son profil{% endblock %}
 
 {% block body %}
-    <h1>Modifier son profil</h1>
+    <h2>Modifier son profil</h2>
 
     {{ include('front/profile/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ include('front/profile/_delete_form.html.twig') }}
 
-    <a href="{{ path('app_front_profile_show', {'username': app.user.username}) }}">Retour</a>
+    <a href="{{ path('app_front_profile_show', {'username': app.user.username}) }}" class="btn btn-primary grey lighten-2">Retour</a>
 
 {% endblock %}
