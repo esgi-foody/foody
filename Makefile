@@ -1,5 +1,4 @@
 install :
-	composer require vich/uploader-bundle
 	composer install
 	php bin/console ckeditor:install
 	php bin/console assets:install public
