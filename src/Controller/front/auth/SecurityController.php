@@ -142,7 +142,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('app_front_auth_login');
+            return $this->redirectToRoute('app_front_auth_emailSent');
         }
 
 
