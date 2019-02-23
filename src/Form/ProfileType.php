@@ -27,6 +27,7 @@ class ProfileType extends AbstractType
                 'label' => "Biographie"
             ])
 
+
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => false,
