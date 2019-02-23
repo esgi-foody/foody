@@ -24,7 +24,14 @@ class UserType extends AbstractType
             ->add('pseudo', TextType::class, array(
                 'label' => 'Pseudo, vous pouvez le changer à tout moment',
                 'required' => true,
-                'constraints' => [new Length(['min' => 3, 'max' => 30])]
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'max' => 30,
+                        'minMessage' => 'Le pseudo doit contenir entre 3 et 30 caractères',
+                        'maxMessage' => 'Le pseudo doit contenir entre 3 et 30 caractères',
+                    ])
+                ]
             ))
             ->add('email', EmailType::class, [
                 'required' => true,
@@ -32,13 +39,21 @@ class UserType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Nom d\'utilisateur, ce nom ne changera pas',
                 'required' => true,
-                'constraints' => [new Length(['min' => 3, 'max' => 30])],
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'max' => 30,
+                        'minMessage' => 'Le pseudo doit contenir entre 3 et 30 caractères',
+                        'maxMessage' => 'Le pseudo doit contenir entre 3 et 30 caractères',
+                    ])
+                ],
             ])
             ->add('dateOfBirth', DateType::class, [
                 'format' => 'dd-MM-yyyy',
-                'label' => 'Date de naissance en format jour/mois/année',
+                'label' => 'Date de naissance en format jour-mois-année',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'datepicker'],
+                'invalid_message' => 'La date de naissance doit être au format jj-mm-aaaa',
             ])
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
