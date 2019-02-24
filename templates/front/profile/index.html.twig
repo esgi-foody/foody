@@ -41,38 +41,7 @@
             <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'false'}) }}>{{ user.followeds | length }} abonnements</a>
         </div>
     </div>
-
-<<<<<<< HEAD
-    <h3>{{ user.pseudo }}</h3>
-
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Biographie</th>
-            <td>{{ user.biography | raw }}</td>
-        </tr>
-        </tbody>
-    </table>
-    {% if not app.user is same as (user) %}
-        <a class="btn btn-primary red" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
-    {% endif %}
-
-
-    {% if app.user == user %}
-        <a class="btn btn-primary red" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}">Favoris</a>
-        <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
-
-        {{ include('front/profile/_delete_form.html.twig') }}
-    {% endif %}
-
-    <h1>Recettes</h1>
-    <div class="d-flex bd-highlight justify-content-center">
-        <div class="row">
-    {% for recipe in user.recipes %}
-=======
     <div class=" col s3 center-align"><p>{{ user.biography | raw }}</p></div>
->>>>>>> c03acae8c492f8454c966e80d387ce2c3951fb70
-
     <div class="valign-wrapper">
         <div class="row center-align">
             {% for recipe in user.recipes %}
