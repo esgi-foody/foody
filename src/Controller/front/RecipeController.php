@@ -2,6 +2,7 @@
 
 namespace App\Controller\front;
 
+use App\Entity\Comment;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
@@ -191,6 +192,52 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
     }
 
+    /**
+     * @Route("/{id}//comment", name="recipe_comment", methods="POST")
+     */
+    public function comment(Request $request,Recipe $recipe): Response
+    {
+        $comment = new Comment();
+        $comment->setRecipe($recipe);
+        $comment->setCommentator($this->getUser());
+        $comment->setData($request->data);
+
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($recipe->getRecipeSteps() as $recipeStep) {
+                $recipeStep->setRecipe($recipe);
+                $recipe->addRecipeStep($recipeStep);
+            }
+
+            foreach ($recipe->getIngredients() as $ingredient) {
+                $ingredient->setRecipe($recipe);
+                $recipe->addIngredient($ingredient);
+            }
+
+            foreach ($recipe->getCategories() as $category) {
+                $category->addRecipe($recipe);
+                $recipe->addCategory($category);
+            }
+
+            $recipe = $this->calculateMacro($recipe);
+
+            $em = $this->getDoctrine()->getManager();
+            $recipe->setUserRecipe($this->getUser());
+            $em->persist($recipe);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_index');
+    }
+
+    /**
+     * @Route("/{id}//uncomment", name="recipe_uncomment", methods="GET")
+     */
+    public function uncomment(Request $request,Recipe $recipe): Response
+    {
+        return false;
+    }
 
 
     private function calculateMacro(Recipe $recipe): Recipe
