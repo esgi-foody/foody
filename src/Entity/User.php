@@ -136,6 +136,11 @@ class User implements UserInterface, Serializable
      */
     private $lostPasswordToken;
 
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $registerToken;
+
     public function __construct()
     {
         $this->followeds = new ArrayCollection();
@@ -146,7 +151,6 @@ class User implements UserInterface, Serializable
         $this->reports = new ArrayCollection();
         $this->recipeReposts = new ArrayCollection();
         $this->userFavorite = new ArrayCollection();
-
     }
 
     public function getId(): ?int
@@ -545,4 +549,15 @@ class User implements UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
+    public function getRegisterToken(): ?string
+    {
+        return $this->registerToken;
+    }
+
+    public function setRegisterToken(?string $registerToken): self
+    {
+        $this->registerToken = $registerToken;
+
+        return $this;
+    }
 }

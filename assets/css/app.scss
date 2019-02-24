@@ -1,13 +1,17 @@
-@import 'sass/_variables.scss';
-@import 'sass/_overrides.scss';
-@import 'sass/back/main.scss';
-@import 'sass/front/main.scss';
+// Abstracts
+@import 'sass/abstracts/variables';
 
-@font-face {
-    font-family: Nunito;
-    src: url(../fonts/Nunito-Regular.ttf);
-}
+// Layout
+@import 'sass/layout/base';
+@import 'sass/layout/typography';
+@import 'sass/layout/helpers';
 
-* {
-    font-family: Nunito !important;
-}
+// Back
+@import 'sass/back/nav';
+
+// Front
+@import 'sass/front/nav';
+
+// Components
+@import 'sass/components/collection';
+@import 'sass/components/tabs';

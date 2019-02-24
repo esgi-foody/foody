@@ -164,7 +164,7 @@ class RecipeController extends AbstractController
 
             $like->setLiker($this->getUser());
             $like->setRecipe($recipe);
-            $recipe->getLikes()->add($favorite);
+            $recipe->getLikes()->add($like);
 
             $em = $this->getDoctrine()->getManager();
 
@@ -186,8 +186,8 @@ class RecipeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('unlike'.$recipe->getId(),$request->query->get('csrf_token'))) {
             $em = $this->getDoctrine()->getManager();
-            $favorite = $em->getRepository(Like::class)->findOneBy(['id' => $request->get('idLike')]);
-            $em->remove($favorite);
+            $unlike = $em->getRepository(Like::class)->findOneBy(['id' => $request->get('idLike')]);
+            $em->remove($unlike);
             $em->flush();
         }
 

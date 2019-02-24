@@ -3,14 +3,46 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row valign-wrapper" style="margin-top:1em;">
+        <div class="col s12 right-align">
+            {% if app.user == user %}
+                <a class="btn-floating btn-large grey lighten-2" href="{{ path('app_front_profile_edit', {'id': user.id}) }}"><i data-feather="edit" id="" stroke-width="2" stroke="white"></i></a>
+                <a class="btn btn-primary red" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}">Favoris</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row valign-wrapper">
         {% if user.imageName %}
-            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+            <div class="col s7">
+                <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:10em;width: 10em; height: 10em;">
+            </div>
         {% else %}
-            <img src="{{ asset('build/images/defaultUser.png')}}" style="width:10em;height: 10em;border-radius: 40%;margin-top: 1em;margin-bottom: 1em;">
+            <div class="col s7">
+                <img src="{{ asset('build/images/defaultUser.png')}}" class="responsive-img circle z-depth-5 materialboxed " style="max-height:10em;">
+            </div>
         {% endif %}
     </div>
+    <div class="center-align ">
+        {% if not app.user is same as (user) %}
+            <a class="btn btn-primary grey lighten-2" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+        {% endif %}
+    </div>
+    <div class="row valign-wrapper ">
+        <h5 class="center-align col s12">{{ user.pseudo }}</h5>
+    </div>
+    <div class="row valign-wrapper">
+        <div class=" col s5 right-align">
+            <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
+        </div>
+        <div class=" col s3 center-align">
+            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'true'}) }}>{{ user.followers | length }} abonnés</a>
+        </div>
+        <div class=" col s5 left-align">
+            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'false'}) }}>{{ user.followeds | length }} abonnements</a>
+        </div>
+    </div>
 
+<<<<<<< HEAD
     <h3>{{ user.pseudo }}</h3>
 
     <table class="table">
@@ -37,25 +69,37 @@
     <div class="d-flex bd-highlight justify-content-center">
         <div class="row">
     {% for recipe in user.recipes %}
+=======
+    <div class=" col s3 center-align"><p>{{ user.biography | raw }}</p></div>
+>>>>>>> c03acae8c492f8454c966e80d387ce2c3951fb70
 
-        <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
-            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                {% if recipe.imageName %}
-                    <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
-                {% else %}
-                    <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ recipe.title }}</h5>
-                    <p> Catégorie(s) :
-                        {% for category in recipe.categories %}
-                            {{ category.name }}
-                        {% endfor %}
-                    </p>
+    <div class="valign-wrapper">
+        <div class="row center-align">
+            {% for recipe in user.recipes %}
+                <div class="col s4">
+                    <div class="card">
+                        <div class="card-image">
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                                {% if recipe.imageName %}
+                                    <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
+                                {% else %}
+                                    <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
+                                <span class="card-title">{{ recipe.title }}</span>
+                                <p> Catégorie(s) :
+                                    {% for category in recipe.categories %}
+                                        {{ category.name }}
+                                    {% endfor %}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </a>
-        </div>
-    {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
