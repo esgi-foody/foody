@@ -153,7 +153,7 @@ class ProfileController extends AbstractController
             );
         }
 
-        return $this->render('front/favorite/index.html.twig', ['recipes' => $recipes , 'user' => $user]);
+        return $this->render('front/profile/favorite.html.twig', ['recipes' => $recipes , 'user' => $user]);
     }
 
 }

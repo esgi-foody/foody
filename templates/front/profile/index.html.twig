@@ -25,10 +25,6 @@
         <a class="btn btn-primary red" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
     {% endif %}
 
-    {% if app.user is same as (user) %}
-        <a class="btn btn-primary red" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}">Favoris</a>
-    {% endif %}
-
 
     {% if app.user == user %}
         <a class="btn btn-primary red" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}">Favoris</a>
