@@ -7,7 +7,7 @@
         <div class="col s12 right-align">
             {% if app.user == user %}
                 <a class="btn-floating btn-large grey lighten-2" href="{{ path('app_front_profile_edit', {'id': user.id}) }}"><i data-feather="edit" id="" stroke-width="2" stroke="white"></i></a>
-                <a class="btn btn-primary red" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}">Favoris</a>
+                <a class="btn-floating btn-large red lighten-1" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}"><i data-feather="star" id="" stroke-width="2" stroke="white"></i>Favoris</a>
             {% endif %}
         </div>
     </div>

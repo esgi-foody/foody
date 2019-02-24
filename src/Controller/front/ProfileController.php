@@ -147,9 +147,9 @@ class ProfileController extends AbstractController
             );
         }
 
-        return $this->render('front/favorite/index.html.twig', ['recipes' => $recipes, 'user' => $user]);
+        return $this->render('front/profile/favorite.html.twig', ['recipes' => $recipes, 'user' => $user]);
     }
-    /*
+    /**
      * @Route("/{username}/showFollow", name="profile_show_follow", methods="GET")
      */
     public function showFollow(User $user, Request $request): Response
