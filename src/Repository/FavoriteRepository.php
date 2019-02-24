@@ -25,13 +25,14 @@ class FavoriteRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery('
-            SELECT r
-            FROM App\Entity\Recipe r
-            WHERE  r.id IN (SELECT f FROM App\Entity\Favorite f WHERE f.userFavorite = :userId)
+           SELECT r FROM App\Entity\Recipe r 
+           JOIN App\Entity\Favorite f 
+           WITH f.recipe = r.id 
+           WHERE f.userFavorite = :userId
             ')->setParameter('userId', $user->getId());
-
         return $query->execute();
     }
 }
 
+//
 
