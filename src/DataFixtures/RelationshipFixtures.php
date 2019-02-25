@@ -12,7 +12,6 @@ class RelationshipFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create();
 
         for ($i = 0; $i < 200; $i++) {
             $relationship = new Relationship();

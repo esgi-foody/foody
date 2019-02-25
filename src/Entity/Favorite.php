@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
+ * @ORM\Table(name="favorite")
+ * @UniqueEntity(fields={"userFavorite", "recipe"})
  * @ORM\Entity(repositoryClass="App\Repository\FavoriteRepository")
  */
 class Favorite
@@ -19,13 +22,13 @@ class Favorite
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userFavorite")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
     private $userFavorite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeFavorite")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeFavorite", fetch="EAGER")
+     * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
      */
     private $recipe;
 
