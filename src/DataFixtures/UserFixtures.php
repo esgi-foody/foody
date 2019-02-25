@@ -26,7 +26,6 @@ class UserFixtures extends Fixture
             $user->setPseudo($faker->firstName . " " . $faker->lastName);
             $password = $this->encoder->encodePassword($user, 'Foody2019');
             $user->setPassword($password);
-            $user->setPassword($faker->password);
             $user->setDateOfBirth($faker->dateTime);
             $user->setImageName('');
             $user->setEmail($faker->email);
