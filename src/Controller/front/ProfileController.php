@@ -16,6 +16,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -97,13 +98,16 @@ class ProfileController extends AbstractController
      * @Route("/{id}/edit", name="profile_edit", methods="GET|POST")
      */
 
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData()->getPassword();
+            $password = $encoder->encodePassword($user,$data);
+            $user->setPassword($password);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_front_profile_show', ['username' => $user->getUsername()]);
@@ -149,7 +153,12 @@ class ProfileController extends AbstractController
     public function showFollow(User $user, Request $request): Response
     {
         $follower = $request->get('follower');
-        return $this->render('front/profile/follow.html.twig', ['user' => $user, 'follow' => $follower]);
+        $followeds = $this->getUser()->getFolloweds();
+        $arrayFollowedsId = array();
+        foreach($followeds as $users){
+            $arrayFollowedsId[]= $users->getFollowed()->getId();
+        }
+        return $this->render('front/profile/follow.html.twig', ['user' => $user, 'follow' => $follower, 'followedsArray' => $arrayFollowedsId]);
     }
 
 }
