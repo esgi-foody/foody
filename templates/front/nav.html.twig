@@ -29,6 +29,7 @@
 
             <ul id="dropdown1" class="dropdown-content">
                 <li><a href="/profile/{{ app.user.username }}">Profil</a></li>
+                <li><a href="{{ path( 'app_front_favorite_show' , {'username': app.user.username}) }}">Favoris</a></li>
                 <li><a href="#!">Paramètre</a></li>
                 <li class="divider"></li>
                 <li><a href="/logout">Déconnexion</a></li>

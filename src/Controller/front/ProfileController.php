@@ -4,6 +4,12 @@ namespace App\Controller\front;
 
 use App\Entity\User;
 use App\Entity\Relationship;
+use App\Entity\Recipe;
+use App\Entity\Favorite;
+use App\Repository\UserRepository;
+use App\Repository\RelationshipRepository;
+use App\Repository\RecipeRepository;
+use App\Repository\FavoriteRepository;
 use App\Form\ProfileType;
 use App\Services\NotificationService;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -128,13 +134,22 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/{username}/favorite", name="favorite_show", methods="GET")
+     */
+    public function indexFavorite( FavoriteRepository $favoriteRepository, User $user): Response
+    {
+        $this->denyAccessUnlessGranted('edit', $user);
+        $recipes = $favoriteRepository->findFavoritesByUser($this->getUser());
+
+        return $this->render('front/profile/favorite.html.twig', ['recipes' => $recipes, 'user' => $user]);
+    }
+    /**
      * @Route("/{username}/showFollow", name="profile_show_follow", methods="GET")
      */
     public function showFollow(User $user, Request $request): Response
     {
         $follower = $request->get('follower');
         return $this->render('front/profile/follow.html.twig', ['user' => $user, 'follow' => $follower]);
-
     }
 
 }

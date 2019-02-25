@@ -73,6 +73,15 @@
 
     <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
 
+
+    {% if favorite is defined and favorite is not null  %}
+        <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" stroke="orange" fill="yellow"></i></a>
+    {% else %}
+        <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star"  stroke-width="1" stroke="black"></i></a>
+    {% endif %}
+
+
+
     {{ include('front/recipe/_delete_form.html.twig') }}
     {% endif %}
 
