@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Foody | Favorite > {{ user.pseudo }}{% endblock %}
+
+{% block body %}
+    {% if recipes %}
+    <ul class="collection">
+        {% for recipe in recipes %}
+        <li class="collection-item avatar">
+            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
+            {% if recipe.imageName %}
+                <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="circle">
+            {% else %}
+                <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
+            {% endif %}
+            <h4 class="title red-text text-darken-2">{{ recipe.title }}</h4>
+            </a>
+            <div>Temps - {{ recipe.time ? recipe.time|date('H:i') : '' }}</div>
+            <div class="row">
+                <h4></h4><p>Lipides : {{ recipe.fat }}g | Glucides : {{ recipe.carbohydrate }}g | Protéines : {{ recipe.protein }}g | kcal</p>
+                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}" class="right"><i data-feather="star" stroke="orange" fill="yellow"></i></a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <h4>Vous n'avez aucun favoris, rendez-vous dans l'onglet "Explorer" pour découvrir de délicieuses recettes :)</h4>
+    {% endif %}
+
+{% endblock %}

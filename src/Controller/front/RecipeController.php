@@ -2,11 +2,13 @@
 
 namespace App\Controller\front;
 
+use App\Entity\Favorite;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Like;
 use App\Form\RecipeType;
+use App\Repository\FavoriteRepository;
 use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -92,8 +94,9 @@ class RecipeController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
+        $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked,'favorite' => $favorite]);
     }
 
     /**
@@ -192,6 +195,48 @@ class RecipeController extends AbstractController
     }
 
 
+    /**
+     * @Route("/{id}/favorite", name="recipe_favorite", methods="GET")
+     */
+    public function favorite(Recipe $recipe, Request $request): Response
+    {
+
+        $submittedToken = $request->get('csrf_token');
+
+        if ($this->isCsrfTokenValid('favorite', $submittedToken))
+        {
+            $favorite = new Favorite();
+
+            $favorite->setUserFavorite($this->getUser());
+            $favorite->setRecipe($recipe);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($favorite);
+            $em->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+
+
+    /**
+     * @Route("/{id}/unfavorite", name="recipe_unfavorite", methods="GET")
+     */
+    public function unfavorite(Request $request,Recipe $recipe): Response
+    {
+
+        $submittedToken = $request->get('csrf_token');
+
+        if ($this->isCsrfTokenValid('unfavorite', $submittedToken))
+        {
+            $em = $this->getDoctrine()->getManager();
+            $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(), 'recipe' =>$recipe->getId()]);
+            $em->remove($favorite);
+            $em->flush();
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
 
     private function calculateMacro(Recipe $recipe): Recipe
     {
