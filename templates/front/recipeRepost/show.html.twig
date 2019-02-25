@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html.twig' %}
 
 {% block title %}Recipe Repost{% endblock %}
@@ -18,3 +19,8 @@
     {% endfor %}
 
 {% endblock %}
+=======
+{% for  reposted in recipe.recipeRepost  %}
+    {{ reposted.id }}
+{% endfor %}
+>>>>>>> Repost show
