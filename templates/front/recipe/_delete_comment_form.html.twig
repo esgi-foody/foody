@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('recipe_uncomment', {'id': comment.id}) }}" onsubmit="return confirm(' Etes vous sur de vouloir suprimer votre commentaire?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+    <button class="right"><i data-feather="trash-2"  stroke-width="1" stroke="red"></i></button>
+</form>

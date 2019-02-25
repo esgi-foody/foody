@@ -75,4 +75,19 @@
 
     {{ include('front/recipe/_delete_form.html.twig') }}
     {% endif %}
+
+    {{ include('front/recipe/_comment_form.html.twig') }}
+<ul class="collection">
+    {% for  comment in comments  %}
+    <li class="collection-item avatar">
+        <img src="{{ asset('build/images/defaultRecipe.png')}}" alt="" class="circle">
+        <span class="title">{{ comment.commentator.pseudo }}</span>
+        <p>"{{ comment.data }}"</p>
+        {% if  app.user is same as (comment.commentator) %}
+        {{ include('front/recipe/_delete_comment_form.html.twig') }}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

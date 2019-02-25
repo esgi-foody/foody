@@ -7,6 +7,7 @@ use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Entity\RecipeStep;
 use App\Entity\Like;
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
@@ -83,18 +84,21 @@ class RecipeController extends AbstractController
      */
     public function show(Recipe $recipe): Response
     {
+        $em = $this->getDoctrine()->getManager();
 
         $iterator =  $recipe->getRecipeSteps()->getIterator();
-
         $iterator->uasort(function ($a, $b) {
             return ($a->getStepNumber() < $b->getStepNumber()) ? -1 : 1;
         });
-        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
 
-        $em = $this->getDoctrine()->getManager();
+        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
+        $comments = $em->getRepository(Comment::class)->findBy(['recipe'=>$recipe]);
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked]);
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'form' => $form->createView(), 'comments'=> $comments]);
     }
 
     /**
@@ -198,45 +202,38 @@ class RecipeController extends AbstractController
     public function comment(Request $request,Recipe $recipe): Response
     {
         $comment = new Comment();
-        $comment->setRecipe($recipe);
-        $comment->setCommentator($this->getUser());
-        $comment->setData($request->data);
-
-        $form = $this->createForm(RecipeType::class, $recipe);
+        $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-
-            foreach ($recipe->getRecipeSteps() as $recipeStep) {
-                $recipeStep->setRecipe($recipe);
-                $recipe->addRecipeStep($recipeStep);
-            }
-
-            foreach ($recipe->getIngredients() as $ingredient) {
-                $ingredient->setRecipe($recipe);
-                $recipe->addIngredient($ingredient);
-            }
-
-            foreach ($recipe->getCategories() as $category) {
-                $category->addRecipe($recipe);
-                $recipe->addCategory($category);
-            }
-
-            $recipe = $this->calculateMacro($recipe);
+            $comment->setRecipe($recipe);
+            $comment->setCommentator($this->getUser());
+            $comment->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $recipe->setUserRecipe($this->getUser());
-            $em->persist($recipe);
+            $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('recipe_index');
+            return $this->redirect($request->headers->get('referer'));
+        }
     }
 
     /**
-     * @Route("/{id}//uncomment", name="recipe_uncomment", methods="GET")
+     * @Route("/{id}//uncomment", name="recipe_uncomment", methods="DELETE")
      */
-    public function uncomment(Request $request,Recipe $recipe): Response
+    public function uncomment(Request $request, Comment $comment): Response
     {
-        return false;
+
+        $this->denyAccessUnlessGranted('delete', $comment);
+
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($comment);
+            $em->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+
     }
 
 

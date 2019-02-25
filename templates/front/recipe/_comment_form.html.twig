@@ -1,0 +1,4 @@
+{{ form_start(form,{'action': path('recipe_comment',{'id':recipe.id}), 'method': 'POST'}) }}
+    {{ form_widget(form) }}
+<button class="btn-flat input-field red lighten-1 waves-effect white-text"><i data-feather="send" class="right"></i>Envoyer</button>
+{{ form_end(form) }}
