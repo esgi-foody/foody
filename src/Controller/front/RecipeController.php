@@ -17,6 +17,7 @@ use App\Repository\FavoriteRepository;
 use App\Repository\RecipeRepostRepository;
 use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
+use App\Repository\RecipeRepostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,8 +104,9 @@ class RecipeController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
+        $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'form' => $form->createView(), 'comments'=> $comments]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'form' => $form->createView(), 'comments'=> $comments]);
     }
 
     /**
@@ -304,7 +306,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="recipe_repost_show", methods="GET")
+     * @Route("/{id}/showRecipeRepost", name="recipe_repost_show", methods="GET")
      */
     public function showRecipeRepost(Recipe $recipe, RecipeRepostRepository $recipeRepostRepository): Response
     {
