@@ -199,7 +199,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/{id}//comment", name="recipe_comment", methods="POST")
      */
-    public function comment(Request $request,Recipe $recipe): Response
+    public function comment(Request $request,Recipe $recipe, NotificationService $notificationService): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -211,6 +211,11 @@ class RecipeController extends AbstractController
             $comment->getData();
 
             $em = $this->getDoctrine()->getManager();
+
+            $message = 'à commenté votre recette : ' . $recipe->getTitle();
+            $url = $this->generateUrl('recipe_show', ['id' => $recipe->getId(), 'slug' => $recipe->getSlug()]);
+            $notificationService->sendNotification($recipe->getUserRecipe(), $message, 'COMMENT', $url);
+
             $em->persist($comment);
             $em->flush();
 
