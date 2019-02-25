@@ -81,7 +81,7 @@
     {% for  comment in comments  %}
     <li class="collection-item avatar">
         <img src="{{ asset('build/images/defaultRecipe.png')}}" alt="" class="circle">
-        <span class="title">{{ comment.commentator.pseudo }}</span>
+        <h5 class="title">{{ comment.commentator.pseudo }}<span class="grey-text text-lighten-1">({{ comment.createdAt|date('H:i m.d.y') }})</span></h5>
         <p>"{{ comment.data }}"</p>
         {% if  app.user is same as (comment.commentator) %}
         {{ include('front/recipe/_delete_comment_form.html.twig') }}

@@ -85,17 +85,15 @@ class RecipeController extends AbstractController
     public function show(Recipe $recipe): Response
     {
         $em = $this->getDoctrine()->getManager();
-
+        $comment = new Comment();
         $iterator =  $recipe->getRecipeSteps()->getIterator();
         $iterator->uasort(function ($a, $b) {
             return ($a->getStepNumber() < $b->getStepNumber()) ? -1 : 1;
         });
 
         $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
-        $comments = $em->getRepository(Comment::class)->findBy(['recipe'=>$recipe]);
+        $comments = $em->getRepository(Comment::class )->findBy(['recipe'=> $recipe], ['createdAt' => 'DESC']);
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
-
-        $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'form' => $form->createView(), 'comments'=> $comments]);
@@ -197,31 +195,29 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}//comment", name="recipe_comment", methods="POST")
+     * @Route("/{idRecipe}/comment", name="recipe_comment", methods="POST")
      */
-    public function comment(Request $request,Recipe $recipe, NotificationService $notificationService): Response
+    public function comment(Request $request, NotificationService $notificationService): Response
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository(Recipe::class)->findOneBy(['id' => $request->get('idRecipe')]);
+
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
+        $comment->setRecipe($recipe);
+        $comment->setCommentator($this->getUser());
+        $comment->setData($request->get('comment')['data']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setRecipe($recipe);
-            $comment->setCommentator($this->getUser());
-            $comment->getData();
+        $message = 'à commenté votre recette : ' . $recipe->getTitle();
+        $url = $this->generateUrl('recipe_show', ['id' => $recipe->getId(), 'slug' => $recipe->getSlug()]);
+        $notificationService->sendNotification($recipe->getUserRecipe(), $message, 'COMMENT', $url);
 
-            $em = $this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();
 
-            $message = 'à commenté votre recette : ' . $recipe->getTitle();
-            $url = $this->generateUrl('recipe_show', ['id' => $recipe->getId(), 'slug' => $recipe->getSlug()]);
-            $notificationService->sendNotification($recipe->getUserRecipe(), $message, 'COMMENT', $url);
-
-            $em->persist($comment);
-            $em->flush();
-
-            return $this->redirect($request->headers->get('referer'));
+        return $this->redirect($request->headers->get('referer'));
         }
-    }
+
 
     /**
      * @Route("/{id}//uncomment", name="recipe_uncomment", methods="DELETE")
