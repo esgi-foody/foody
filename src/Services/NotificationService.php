@@ -26,15 +26,18 @@ class NotificationService
 
     public function sendNotification($receiver,$message,$type,$link)
     {
-        $notification = new Notification();
-        $notification->setSender($this->sender);
-        $notification->setReceiver($receiver);
-        $notification->setMessage($message);
-        $notification->setType($type);
-        $notification->setSeen(0);
-        $notification->setLink($link);
+        if($receiver !== $this->sender) {
+            $notification = new Notification();
+            $notification->setSender($this->sender);
+            $notification->setReceiver($receiver);
+            $notification->setMessage($message);
+            $notification->setType($type);
+            $notification->setSeen(0);
+            $notification->setLink($link);
 
-        $this->om->persist($notification);
+            $this->om->persist($notification);
+        }
+
     }
 
 
