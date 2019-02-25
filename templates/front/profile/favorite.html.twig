@@ -3,6 +3,7 @@
 {% block title %}Foody | Favorite > {{ user.pseudo }}{% endblock %}
 
 {% block body %}
+    {% if recipes %}
     <ul class="collection">
         {% for recipe in recipes %}
         <li class="collection-item avatar">
@@ -26,5 +27,10 @@
         </li>
         {% endfor %}
     </ul>
+    {% else %}
+
+    <h4>Vous n'avez aucun favoris, rendez-vous dans l'onglet "Explorer" pour découvrir de délicieuses recettes :)</h4>
+
+    {% endif %}
 
 {% endblock %}

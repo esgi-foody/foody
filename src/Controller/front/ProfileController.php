@@ -141,12 +141,6 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $user);
         $recipes = $favoriteRepository->findFavoritesByUser($this->getUser());
 
-        if (!$recipes) {
-            throw $this->createNotFoundException(
-                'Aucune recette trouvée :('
-            );
-        }
-
         return $this->render('front/profile/favorite.html.twig', ['recipes' => $recipes, 'user' => $user]);
     }
     /**
