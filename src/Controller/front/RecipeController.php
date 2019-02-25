@@ -13,6 +13,7 @@ use App\Form\RecipeType;
 use App\Repository\FavoriteRepository;
 use App\Services\NotificationService;
 use App\Repository\RecipeRepository;
+use App\Repository\RecipeRepostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -98,8 +99,9 @@ class RecipeController extends AbstractController
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
+        $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'nbRepost' => count($nbRepost)]);
     }
 
     /**
@@ -299,14 +301,14 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="recipe_repost_show", methods="GET")
+     * @Route("/{id}/showRecipeRepost", name="recipe_repost_show", methods="GET")
      */
-    public function showRecipeRepost(Recipe $recipe): Response
+    public function showRecipeRepost(Recipe $recipe, RecipeRepostRepository $recipeRepostRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
         $reposted = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $this->getUser()]);
-        dump($reposted);die;
-
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'reposted' => $reposted]);
+        $user = $recipeRepostRepository->findRecipeRepostByUser($this->getUser());
+        dump($user);die;
+        return $this->render('front/recipeRepost/show.html.twig', ['recipe' => $this->getUser()->getRecipe(),'reposted' => $reposted]);
     }
 }
