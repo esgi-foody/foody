@@ -19,7 +19,7 @@ class RecipeRepostRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeRepost::class);
     }
 
-    public function findRecipeRepostByUser($idRecipe)
+    public function findUserByRecipeRepost($idRecipe)
     {
 
         $entityManager = $this->getEntityManager();
