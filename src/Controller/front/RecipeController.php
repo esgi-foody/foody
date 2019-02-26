@@ -305,7 +305,7 @@ class RecipeController extends AbstractController
      */
     public function showRecipeRepost(Recipe $recipe, RecipeRepostRepository $recipeRepostRepository): Response
     {
-        $userRepost = $recipeRepostRepository->findRecipeRepostByUser($recipe->getId());
+        $userRepost = $recipeRepostRepository->findUserByRecipeRepost($recipe->getId());
         return $this->render('front/recipeRepost/show.html.twig', ['userRepost' => $userRepost]);
     }
 }
