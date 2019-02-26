@@ -19,15 +19,16 @@ class RecipeRepostRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeRepost::class);
     }
 
-    public function findRecipeRepostByUser($user)
+    public function findRecipeRepostByUser($idRecipe)
     {
 
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery('
            SELECT u
-           FROM App\Entity\User u
-           WHERE  u.id IN (SELECT rc FROM App\Entity\Recipe rc WHERE rc.userRecipe IN (SELECT r FROM App\Entity\RecipeRepost r WHERE r.reporter = :userId))
-           ')->setParameter('userId', $user->getId());
+           FROM App\Entity\User u,App\Entity\RecipeRepost r
+           WHERE r.reporter  = u.id
+           AND r.recipe  = :idRecipe
+           ')->setParameter('idRecipe', $idRecipe);
 
         return $query->execute();
     }
