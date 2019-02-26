@@ -2,6 +2,8 @@
 
 namespace App\Controller\front;
 
+
+use App\Entity\Comment;
 use App\Entity\Favorite;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
@@ -9,6 +11,8 @@ use App\Entity\RecipeStep;
 use App\Entity\Like;
 use App\Entity\RecipeRepost;
 use App\Entity\User;
+
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\FavoriteRepository;
 use App\Services\NotificationService;
@@ -87,21 +91,22 @@ class RecipeController extends AbstractController
      */
     public function show(Recipe $recipe): Response
     {
-
+        $em = $this->getDoctrine()->getManager();
+        $comment = new Comment();
         $iterator =  $recipe->getRecipeSteps()->getIterator();
-
         $iterator->uasort(function ($a, $b) {
             return ($a->getStepNumber() < $b->getStepNumber()) ? -1 : 1;
         });
-        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
 
-        $em = $this->getDoctrine()->getManager();
+        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
+        $comments = $em->getRepository(Comment::class )->findBy(['recipe'=> $recipe], ['createdAt' => 'DESC']);
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
         $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
-
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'nbRepost' => count($nbRepost)]);
+        $form = $this->createForm(CommentType::class, $comment);
+      
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'form' => $form->createView(), 'comments'=> $comments]);
     }
 
     /**
@@ -199,6 +204,48 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
     }
 
+    /**
+     * @Route("/{idRecipe}/comment", name="recipe_comment", methods="POST")
+     */
+    public function comment(Request $request, NotificationService $notificationService): Response
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository(Recipe::class)->findOneBy(['id' => $request->get('idRecipe')]);
+
+        $comment = new Comment();
+        $comment->setRecipe($recipe);
+        $comment->setCommentator($this->getUser());
+        $comment->setData($request->get('comment')['data']);
+
+        $message = 'à commenté votre recette : ' . $recipe->getTitle();
+        $url = $this->generateUrl('recipe_show', ['id' => $recipe->getId(), 'slug' => $recipe->getSlug()]);
+        $notificationService->sendNotification($recipe->getUserRecipe(), $message, 'COMMENT', $url);
+
+        $em->persist($comment);
+        $em->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+        }
+
+
+    /**
+     * @Route("/{id}//uncomment", name="recipe_uncomment", methods="DELETE")
+     */
+    public function uncomment(Request $request, Comment $comment): Response
+    {
+
+        $this->denyAccessUnlessGranted('delete', $comment);
+
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($comment);
+            $em->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+
+    }
 
     /**
      * @Route("/{id}/favorite", name="recipe_favorite", methods="GET")
