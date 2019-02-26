@@ -26,8 +26,6 @@ class ExplorerController extends AbstractController
      */
     public function index(Request $request, UserRepository $userRepository, RecipeRepository $recipeRepository)
     {
-        $data = ['query' => null, 'category' => null, 'calorie_min' => null, 'calorie_max' => null];
-        $results = ['users' => null, 'recipes' => null];
         $form = $this->createForm(ExplorerType::class);
 
         $form->handleRequest($request);
@@ -42,9 +40,10 @@ class ExplorerController extends AbstractController
             }
 
             $users = $data['query'] ? $userRepository->findByUsername($data['query']) : null;
-            $recipes = $this->isAllQueryNull($data) ? $recipeRepository->findWithFilters($data, $categoriesId) : null;
+            $recipes = $this->isAllQueryNotNull($data) ? $recipeRepository->findWithFilters($data, $categoriesId) : null;
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
+            $data = [];
             $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');
         }
 
@@ -59,10 +58,22 @@ class ExplorerController extends AbstractController
      * @param $data
      * @return bool
      */
-    public function isAllQueryNull($data)
+    public function isAllQueryNotNull($data)
     {
-        return $data['query'] || !$data['category']->isEmpty() || $data['calorie_min'] || $data['calorie_max']
-            || $data['protein_min'] || $data['protein_max'] || $data['carbohydrate_min'] || $data['carbohydrate_max']
-            || $data['fat_min'] || $data['fat_max'];
+        $queries = [];
+
+        foreach ($data as $filter) {
+            if (gettype($filter) === 'object') {
+                if (!$filter->isEmpty()) {
+                    $queries[] = 1;
+                }
+            } else if ($filter) {
+                $queries[] = 1;
+            } else {
+                $queries[] = 0;
+            }
+        }
+
+        return in_array(1, $queries);
     }
 }
