@@ -18,12 +18,14 @@ use App\Repository\RecipeRepository;
 class ExplorerController extends AbstractController
 {
     /**
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param RecipeRepository $recipeRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="explorer_index", methods={"GET", "POST"})
      */
     public function index(Request $request, UserRepository $userRepository, RecipeRepository $recipeRepository)
     {
-        $data = ['query' => null, 'category' => null, 'calorie_min' => null, 'calorie_max' => null];
-        $results = ['users' => null, 'recipes' => null];
         $form = $this->createForm(ExplorerType::class);
 
         $form->handleRequest($request);
@@ -38,10 +40,11 @@ class ExplorerController extends AbstractController
             }
 
             $users = $data['query'] ? $userRepository->findByUsername($data['query']) : null;
-            $recipes = $recipeRepository->findWithFilters($data, $categoriesId);
+            $recipes = $this->isAllQueryNotNull($data) ? $recipeRepository->findWithFilters($data, $categoriesId) : null;
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
-            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'21');
+            $data = [];
+            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');
         }
 
         return $this->render('front/explorer/index.html.twig', [
@@ -49,5 +52,28 @@ class ExplorerController extends AbstractController
             'data' => $data,
             'results' => $results,
         ]);
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    public function isAllQueryNotNull($data)
+    {
+        $queries = [];
+
+        foreach ($data as $filter) {
+            if (gettype($filter) === 'object') {
+                if (!$filter->isEmpty()) {
+                    $queries[] = 1;
+                }
+            } else if ($filter) {
+                $queries[] = 1;
+            } else {
+                $queries[] = 0;
+            }
+        }
+
+        return in_array(1, $queries);
     }
 }
