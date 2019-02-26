@@ -305,10 +305,7 @@ class RecipeController extends AbstractController
      */
     public function showRecipeRepost(Recipe $recipe, RecipeRepostRepository $recipeRepostRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $reposted = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $this->getUser()]);
-        $user = $recipeRepostRepository->findRecipeRepostByUser($this->getUser());
-        dump($user);die;
-        return $this->render('front/recipeRepost/show.html.twig', ['recipe' => $this->getUser()->getRecipe(),'reposted' => $reposted]);
+        $userRepost = $recipeRepostRepository->findRecipeRepostByUser($recipe->getId());
+        return $this->render('front/recipeRepost/show.html.twig', ['userRepost' => $userRepost]);
     }
 }
