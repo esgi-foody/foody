@@ -272,7 +272,7 @@ class RecipeController extends AbstractController
     /**
      * @Route("/{id}/repost", name="recipe_repost", methods="GET")
      */
-    public function recipeRepost(Request $request, Recipe $recipe): Response
+    public function recipeRepost(Request $request, Recipe $recipe,NotificationService $notificationService): Response
     {
         if ($this->isCsrfTokenValid('repost'.$recipe->getId(), $request->query->get('csrf_token'))) {
 
@@ -282,6 +282,11 @@ class RecipeController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($repost);
+
+
+            $message = 'à reposté votre recette : '.$recipe->getTitle();
+            $url = $this->generateUrl('recipe_show',['id' => $recipe->getId(),'slug'=>$recipe->getSlug()]);
+            $notificationService->sendNotification($recipe->getUserRecipe() ,$message,'REPOST',$url);
             $em->flush();
         }
 
