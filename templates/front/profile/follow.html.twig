@@ -20,7 +20,7 @@
                     <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.follower.username}) }}">{{ user.follower.username }}</a></span>
                     {% if user.follower.id in followedsArray %}
                         <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
-                    {% elseif  (user.follower.username == userConnected) == false %}
+                    {% elseif user.follower.username is not same as(userConnected)%}
                         <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                     {% endif %}
                         </li>
@@ -43,7 +43,7 @@
                         <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.followed.username}) }}">{{ user.followed.username }}</a></span>
                         {% if user.followed.id in followedsArray %}
                              <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
-                        {% elseif  (user.followed.username == userConnected) == false %}
+                        {% elseif  user.followed.username is not same as(userConnected) %}
                             <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                         {% endif %}
                     </li>
