@@ -60,7 +60,7 @@ class ProfileController extends AbstractController
             if ($user->getId() !== $this->getUser()->getId()){
 
                 $message = 'à commencer à vous suivre';
-                $url = $this->generateUrl('app_front_profile_show',['username' => $user->getUsername()]);
+                $url = $this->generateUrl('app_front_profile_show',['username' => $this->getUser()->getUsername()]);
                 $notificationService->sendNotification($user,$message,'FOLLOW',$url);
 
                 $em->persist($relation);
