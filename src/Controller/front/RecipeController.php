@@ -104,9 +104,8 @@ class RecipeController extends AbstractController
         $favorite = $em->getRepository(Favorite::class)->findOneBy(['userFavorite' => $this->getUser(),'recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
         $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
-        $form = $this->createForm(CommentType::class, $comment);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'form' => $form->createView(), 'comments'=> $comments]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'favorite' => $favorite, 'reposted' => $reposted, 'form' => $form->createView(), 'comments'=> $comments, 'nbRepost' => count($nbRepost)]);
     }
 
     /**
@@ -270,8 +269,6 @@ class RecipeController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-
-
     /**
      * @Route("/{id}/unfavorite", name="recipe_unfavorite", methods="GET")
      */
@@ -335,7 +332,6 @@ class RecipeController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-
     /**
      * @Route("/{id}/{idRepost}/unrepost", name="recipe_unrepost", methods="GET")
      */
@@ -351,7 +347,6 @@ class RecipeController extends AbstractController
 
         return $this->redirect($request->headers->get('referer'));
     }
-
 
     /**
      * @Route("/{id}/showRecipeRepost", name="recipe_repost_show", methods="GET")
