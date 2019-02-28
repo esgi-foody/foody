@@ -40,7 +40,6 @@ class ProfileController extends AbstractController
         }
         $reposts = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $user]);
 
-//        dump($reposts);die();
 
         return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn, 'reposts' => $reposts]);
     }
