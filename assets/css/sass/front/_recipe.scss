@@ -1,0 +1,23 @@
+#recipe {
+
+  .recipeImg {
+    text-align: center;
+  }
+
+  .container-btn {
+    display: flex;
+
+    a {
+      margin-right: 20px;
+    }
+  }
+
+  .btn-flat {
+    display: flex;
+    align-items: center;
+  }
+
+  #comment {
+    margin-top: 50px;
+  }
+}
