@@ -44,7 +44,7 @@ class ExplorerController extends AbstractController
             $results = ['users' => $users, 'recipes' => $recipes];
         } else {
             $data = [];
-            $results['recipes'] = $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20');
+            $results = ['recipes' => $recipeRepository->findByUserSuggestion($this->getUser()->getId(),'20'), 'users' => null];
         }
 
         return $this->render('front/explorer/index.html.twig', [

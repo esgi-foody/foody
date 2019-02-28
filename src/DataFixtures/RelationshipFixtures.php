@@ -15,8 +15,8 @@ class RelationshipFixtures extends Fixture
 
         for ($i = 0; $i < 200; $i++) {
             $relationship = new Relationship();
-            $relationship->setFollowed($manager->getRepository(User::class)->find(rand(1,30)));
-            $relationship->setFollower($manager->getRepository(User::class)->find(rand(1,30)));
+            $relationship->setFollowed($manager->getRepository(User::class)->find(rand(1,31)));
+            $relationship->setFollower($manager->getRepository(User::class)->find(rand(1,31)));
             $manager->persist($relationship);
 
             $manager->flush();

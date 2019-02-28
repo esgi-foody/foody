@@ -42,65 +42,68 @@
         </div>
     </div>
     <div class=" col s3 center-align"><p>{{ user.biography | raw }}</p></div>
-    <div class="valign-wrapper">
-        <div class="row center-align">
-            {% for recipe in user.recipes %}
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image">
-                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                                {% if recipe.imageName %}
-                                    <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
-                                {% else %}
-                                    <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="card-content">
-                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
-                                <span class="card-title">{{ recipe.title }}</span>
-                                <p> Catégorie(s) :
-                                    {% for category in recipe.categories %}
-                                        {{ category.name }}
-                                    {% endfor %}
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a href="#recipes">Mes recettes</a></li>
+                <li class="tab col s6"><a href="#repostedRecipes">Mes recettes repostés</a></li>
+            </ul>
         </div>
-    </div>
 
-    <h2>Mes recettes repostées</h2>
-
-    <div class="d-flex bd-highlight justify-content-center">
-        <div class="row">
-
-            {% if reposts %}
+        <div id="recipes" class="col s12">
+            <div class="row center-align">
+                {% for recipe in user.recipes %}
+                    <div class="col s4">
+                        <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                            <div class="card">
+                                <div class="card-image">
+                                        {% if recipe.imageName %}
+                                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
+                                        {% else %}
+                                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                                        {% endif %}
+                                </div>
+                                <div class="card-content">
+                                    <span class="card-title">{{ recipe.title }}</span>
+                                    <p> Catégorie(s) :
+                                        {% for category in recipe.categories %}
+                                            {{ category.name }}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="repostedRecipes" class="col s12">
+            <div class="row center-align">
                 {% for repost in reposts %}
-                    <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
-                        <a href="/recipe/{{ repost.recipe.id }}-{{ repost.recipe.slug }}">
-                            {% if repost.recipe.imageName %}
-                                <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~repost.recipe.imageName)}}">
-                            {% else %}
-                                <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ repost.recipe.title }}</h5>
+                <div class="col s4">
+                    <a href="/recipe/{{ repost.recipe.id }}-{{ repost.recipe.slug }}">
+                        <div class="card">
+                            <div class="card-image">
+                                    {% if repost.recipe.imageName %}
+                                        <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~repost.recipe.imageName)}}">
+                                    {% else %}
+                                        <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
+                                    {% endif %}
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title">{{ repost.recipe.title }}</span>
                                 <p> Catégorie(s) :
                                     {% for category in repost.recipe.categories %}
                                         {{ category.name }}
                                     {% endfor %}
                                 </p>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                </div>
                 {% endfor %}
-            {% else %}
-                Aucune recette repostées
-            {% endif %}
-
+            </div>
         </div>
     </div>
 {% endblock %}
