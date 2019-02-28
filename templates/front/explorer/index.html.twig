@@ -17,23 +17,23 @@
         <div id="recipes" class="col s12">
             <ul class="collection">
                 {% for recipe in results.recipes %}
-                    <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
-                        <li class="collection-item avatar">
+                    <li class="collection-item avatar">
+                        <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
                             {% if recipe.imageName %}
                                 <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="circle">
                             {% else %}
                                 <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
                             {% endif %}
-                                <span class="title">{{ recipe.title }}</span>
-                            <p>Catégorie(s) :
-                                {% for category in recipe.categories %}
-                                    {{ category.name }}
-                                {% endfor %}
-                            </p>
-                            <div>Temps - {{ recipe.time ? recipe.time|date('H:i') : '' }}</div>
-                            <p>Lipides : {{ recipe.fat }}g | Glucides : {{ recipe.carbohydrate }}g | Protéines : {{ recipe.protein }}g | {{ recipe.calory }}kcal</p>
-                        </li>
-                    </a>
+                            <span class="title red-text text-darken-2">{{ recipe.title }}</span>
+                        </a>
+                        <p>Catégorie(s) :
+                            {% for category in recipe.categories %}
+                                {{ category.name }}
+                            {% endfor %}
+                        </p>
+                        <div>Temps - {{ recipe.time ? recipe.time|date('H:i') : '' }}</div>
+                        <p>Lipides : {{ recipe.fat }}g | Glucides : {{ recipe.carbohydrate }}g | Protéines : {{ recipe.protein }}g | {{ recipe.calory }}kcal</p>
+                    </li>
                 {% else %}
                     <li class="collection-item center-align">Aucune recette trouvée</li>
                 {% endfor %}
