@@ -198,48 +198,6 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId(),'slug' => $recipe->getSlug()]);
     }
 
-    /**
-     * @Route("/{idRecipe}/comment", name="recipe_comment", methods="POST")
-     */
-    public function comment(Request $request, NotificationService $notificationService): Response
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $recipe = $em->getRepository(Recipe::class)->findOneBy(['id' => $request->get('idRecipe')]);
-
-        $comment = new Comment();
-        $comment->setRecipe($recipe);
-        $comment->setCommentator($this->getUser());
-        $comment->setData($request->get('comment')['data']);
-
-        $message = 'à commenté votre recette : ' . $recipe->getTitle();
-        $url = $this->generateUrl('recipe_show', ['id' => $recipe->getId(), 'slug' => $recipe->getSlug()]);
-        $notificationService->sendNotification($recipe->getUserRecipe(), $message, 'COMMENT', $url);
-
-        $em->persist($comment);
-        $em->flush();
-
-        return $this->redirect($request->headers->get('referer'));
-        }
-
-
-    /**
-     * @Route("/{id}//uncomment", name="recipe_uncomment", methods="DELETE")
-     */
-    public function uncomment(Request $request, Comment $comment): Response
-    {
-
-        $this->denyAccessUnlessGranted('delete', $comment);
-
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($comment);
-            $em->flush();
-        }
-
-        return $this->redirect($request->headers->get('referer'));
-
-    }
 
     /**
      * @Route("/{id}/favorite", name="recipe_favorite", methods="GET")
