@@ -78,7 +78,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->getRecipeFavorite([]);
 
             //RANDOM USER SELECTED
-            $user = $manager->getRepository(User::class)->find(rand(1,20));
+            $user = $manager->getRepository(User::class)->find(rand(1,31));
             $recipe->setUserRecipe($user);
 
             $manager->persist($recipe);

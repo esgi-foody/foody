@@ -73,9 +73,7 @@ class RecipeController extends AbstractController
             $em->persist($recipe);
             $em->flush();
 
-
-
-            return $this->redirectToRoute('recipe_index');
+            return $this->redirectToRoute('app_front_profile_show', ['username' => $this->getUser()->getUsername()]);
         }
 
         return $this->render('front/recipe/new.html.twig', [
