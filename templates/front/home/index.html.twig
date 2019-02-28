@@ -41,12 +41,17 @@
                                     {% else %}
                                         <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left"></i>{{ recipe.comments|length }}</a>
                                     {% endif %}
-                                    <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" class="left"></i>3</a>
+
+                                    {% if recipe.id in reposts_id|keys  %}
+                                        <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposts_id[recipe.id], "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="red"></i></a>
+                                    {% else %}
+                                        <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" ></i></a>
+                                    {% endif %}
 
                                     {% if recipe.id in likes_id|keys %}
-                                        <a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : likes_id[recipe.id] , "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}" class="black-text valign-wrapper"><i data-feather="heart" id="heart" stroke-width="1" fill="red" stroke="dark-red"></i>{{ recipe.likes|length }}</a>
+                                        <a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : likes_id[recipe.id] , "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}" class="grey-text text-darken-3 valign-wrapper"><i data-feather="heart" id="heart" stroke-width="1" fill="red" stroke="dark-red"></i>{{ recipe.likes|length }}</a>
                                     {% else %}
-                                        <a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"class="valign-wrapper"><i data-feather="heart" id="heart" stroke-width="2" stroke="black"></i></a>
+                                        <a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"class="valign-wrapper grey-text text-darken-3"><i data-feather="heart" id="heart" stroke-width="2"></i>{{ recipe.likes|length }}</a>
                                     {% endif %}
                             </div>
                                 <a class="btn-floating waves-effect halfway-fab waves-light amber darken-2 right"><i data-feather="arrow-right"></i></a>

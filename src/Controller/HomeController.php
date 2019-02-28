@@ -33,6 +33,13 @@ class HomeController extends AbstractController
                 $arrayLikesId[$like->getRecipe()->getId()]= $like->getId();
             }
 
+            $reposts = $this->getUser()->getRecipeReposts();
+//            dump($recipes);die();
+            $arrayRepostsId = array();
+            foreach($reposts as $repost){
+                $arrayRepostsId[$repost->getRecipe()->getId()]= $repost->getId();
+            }
+
             $comments = $this->getUser()->getComments();
             $arrayCommentsId = array();
             foreach ($comments as $comment){
@@ -43,9 +50,8 @@ class HomeController extends AbstractController
                 return strtotime($a->getUpdatedAt()->format('Y-m-d H:i:s')) - strtotime($b->getUpdatedAt()->format('Y-m-d H:i:s'));
             });
 
-
             return $this->render('front/home/index.html.twig', [
-                'controller_name' => 'HomeController', 'recipes' => $recipes, 'likes_id' => $arrayLikesId, 'commented_recipes' => $arrayCommentsId]);
+                'controller_name' => 'HomeController', 'recipes' => $recipes, 'likes_id' => $arrayLikesId, 'commented_recipes' => $arrayCommentsId, 'reposts_id' => $arrayRepostsId]);
 
 
     }
