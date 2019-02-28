@@ -14,7 +14,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        if ($this->getUser() != null){
             $relations = $this->getUser()->getFolloweds();
             $recipes = [];
 
@@ -48,9 +47,6 @@ class HomeController extends AbstractController
             return $this->render('front/home/index.html.twig', [
                 'controller_name' => 'HomeController', 'recipes' => $recipes, 'likes_id' => $arrayLikesId, 'commented_recipes' => $arrayCommentsId]);
 
-        } else {
-            return $this->redirectToRoute('app_front_auth_login');
-        }
 
     }
 }
