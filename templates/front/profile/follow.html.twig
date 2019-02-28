@@ -3,7 +3,7 @@
 {% block title %}Foody | Profil > {{ user.pseudo }}{% endblock %}
 {% block body %}
     {% set userConnected = app.user.username %}
-    {% if app.request.get('follower') == 'true'%}
+    {% if app.request.get('follower') is same as('true') %}
         {% if app.user == user %}
             <h1>Mes abonnés</h1>
         {% else %}
@@ -26,7 +26,7 @@
                         </li>
             {% endfor %}
         </ul>
-    {% elseif app.request.get('follower') == 'false'%}
+    {% elseif app.request.get('follower') is same as('false') %}
         {% if app.user == user %}
             <h1>Mes abonnements</h1>
         {% else %}
