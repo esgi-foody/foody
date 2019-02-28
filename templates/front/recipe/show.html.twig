@@ -37,6 +37,16 @@
                 {% else %}
                     <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
                 {% endif %}
+
+                <td>
+                    <a href="{{ path("recipe_repost_show", {"id" : recipe.id}) }}">{{ nbRepost ?  nbRepost}}</a>
+                    {% if reposted is defined and reposted is not null  %}
+
+                        <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposted.id, "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="green"></i></a>
+                    {% else %}
+                        <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="grey"></i></a>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Categories</th>

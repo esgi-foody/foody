@@ -19,32 +19,17 @@ class RecipeRepostRepository extends ServiceEntityRepository
         parent::__construct($registry, RecipeRepost::class);
     }
 
-    // /**
-    //  * @return RecipeRepost[] Returns an array of RecipeRepost objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findUserByRecipeRepost($idRecipe)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?RecipeRepost
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('
+           SELECT u
+           FROM App\Entity\User u,App\Entity\RecipeRepost r
+           WHERE r.reporter  = u.id
+           AND r.recipe  = :idRecipe
+           ')->setParameter('idRecipe', $idRecipe);
+
+        return $query->execute();
     }
-    */
 }

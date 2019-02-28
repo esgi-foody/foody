@@ -5,6 +5,7 @@ namespace App\Controller\front;
 use App\Entity\User;
 use App\Entity\Relationship;
 use App\Entity\Recipe;
+use App\Entity\RecipeRepost;
 use App\Entity\Favorite;
 use App\Repository\UserRepository;
 use App\Repository\RelationshipRepository;
@@ -37,7 +38,9 @@ class ProfileController extends AbstractController
         } else {
             $followBtn = ['title'=>'Suivre','path'=>'app_front_profile_follow'];
         }
-        return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn]);
+        $repost = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $user]);
+
+        return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn, 'repost' => $repost]);
     }
 
     /**
