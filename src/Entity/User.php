@@ -97,7 +97,7 @@ class User implements UserInterface, Serializable
     private $recipes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="likerUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="liker")
      */
     private $likes;
 
@@ -112,7 +112,7 @@ class User implements UserInterface, Serializable
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporterUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporter", fetch="EAGER")
      */
     private $recipeReposts;
 

@@ -77,7 +77,7 @@ class Recipe
      */
     private $images;
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\RecipeRepost", mappedBy="recipe", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="recipe", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $recipeRepost;
     /**

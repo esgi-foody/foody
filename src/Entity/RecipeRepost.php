@@ -25,8 +25,8 @@ class RecipeRepost
     private $reporter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeRepost")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="recipeRepost", fetch="EAGER")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     private $recipe;
 

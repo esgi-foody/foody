@@ -7,7 +7,7 @@
         <div class="col s12 right-align">
             {% if app.user == user %}
                 <a class="btn-floating btn-large grey lighten-2" href="{{ path('app_front_profile_edit', {'id': user.id}) }}"><i data-feather="edit" id="" stroke-width="2" stroke="white"></i></a>
-                <a class="btn-floating btn-large red lighten-1" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}"><i data-feather="star" id="" stroke-width="2" stroke="white"></i>Favoris</a>
+                <a class="btn-floating btn-large red lighten-1" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}"><i data-feather="star" id="" stroke-width="2" stroke="white"></i></a>
             {% endif %}
         </div>
     </div>
@@ -77,19 +77,19 @@
     <div class="d-flex bd-highlight justify-content-center">
         <div class="row">
 
-            {% if repost %}
-                {% for recipe in user.recipes %}
+            {% if reposts %}
+                {% for repost in reposts %}
                     <div class="d-flex justify-content-center col-lg-4" style="width: 15em;">
-                        <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                            {% if recipe.imageName %}
-                                <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                        <a href="/recipe/{{ repost.recipe.id }}-{{ repost.recipe.slug }}">
+                            {% if repost.recipe.imageName %}
+                                <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~repost.recipe.imageName)}}">
                             {% else %}
                                 <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
                             {% endif %}
                             <div class="card-body">
-                                <h5 class="card-title">{{ recipe.title }}</h5>
+                                <h5 class="card-title">{{ repost.recipe.title }}</h5>
                                 <p> Catégorie(s) :
-                                    {% for category in recipe.categories %}
+                                    {% for category in repost.recipe.categories %}
                                         {{ category.name }}
                                     {% endfor %}
                                 </p>
