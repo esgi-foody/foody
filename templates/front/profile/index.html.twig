@@ -72,6 +72,26 @@
         </div>
     </div>
 
+    <h3>{{ user.pseudo }}</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Biographie</th>
+            <td>{{ user.biography | raw }}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if not app.user is same as (user) %}
+    <a class="btn btn-primary" href="{{ path( follow.path , {'username': user.username , "csrf_token" : csrf_token('follow')}) }}">{{ follow.title }}</a>
+    {% endif %}
+
+    {% if app.user == user %}
+        <a href="{{ path('app_front_profile_edit', {'id': user.id}) }}">Modifier</a>
+
+        {{ include('front/profile/_delete_form.html.twig') }}
+    {% endif %}
+
     <h2>Recettes</h2>
     <div class="d-flex bd-highlight justify-content-center">
         <div class="row">
@@ -132,15 +152,4 @@
 
         </div>
     </div>
-
-<div class="row">
-    <div class="col s12">
-        {% for recipe in user.recipes %}
-            <ul class="tabs">
-                <li class="tab col s6"><a href="#recipes">{{ recipe| length }} Recettes</a></li>
-                <li class="tab col s6"><a href="#users">{{ repost| length }} Recettes Repostées</a></li>
-            </ul>
-        {% endfor %}
-    </div>
-</div>
 {% endblock %}

@@ -269,8 +269,6 @@ class RecipeController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-
-
     /**
      * @Route("/{id}/unfavorite", name="recipe_unfavorite", methods="GET")
      */

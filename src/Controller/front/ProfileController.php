@@ -38,7 +38,6 @@ class ProfileController extends AbstractController
         } else {
             $followBtn = ['title'=>'Suivre','path'=>'app_front_profile_follow'];
         }
-
         $repost = $em->getRepository(RecipeRepost::class)->findBy(['reporter' => $user]);
         
         return $this->render('front/profile/index.html.twig', ['user' => $user , 'follow' => $followBtn, 'repost' => $repost]);
