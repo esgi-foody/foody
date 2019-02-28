@@ -10,7 +10,7 @@
 
                     <div class="card hoverable">
                         <div class="card-image center-block" style="max-width: 300px;">
-                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                            <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
                                 {% if recipe.imageName %}
                                     <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
                                 {% else %}
@@ -21,7 +21,7 @@
                         </div>
                         <div class="card-content">
 
-                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                            <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
                                 <div class="row"><h5 class="card-title black-text">{{ recipe.title }}</h5></div>
                             </a>
                             {% for categorie in recipe.categories %}
