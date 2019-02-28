@@ -7,56 +7,56 @@
         {{ form_widget(form) }}
         <button class="btn-flat input-field right waves-effect"><i data-feather="search" class="center-block"></i></button>
     {{ form_end(form) }}
-    {% if app.request.method is same as("POST") %}
-        <div class="row">
-            <div class="col s12">
-                <ul class="tabs">
-                    <li class="tab col s6"><a href="#recipes">{{ results.recipes| length }} Recettes</a></li>
-                    <li class="tab col s6"><a href="#users">{{ results.users| length }} Utilisateurs</a></li>
-                </ul>
-            </div>
-            <div id="recipes" class="col s12">
-                <ul class="collection">
-                    {% for recipe in results.recipes %}
-                        <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
-                            <li class="collection-item avatar">
-                                {% if recipe.imageName %}
-                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="circle">
-                                {% else %}
-                                    <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
-                                {% endif %}
-                                    <span class="title">{{ recipe.title }}</span>
-                                <p>Catégorie(s) :
-                                    {% for category in recipe.categories %}
-                                        {{ category.name }}
-                                    {% endfor %}
-                                </p>
-                            </li>
-                        </a>
-                    {% else %}
-                        <li class="collection-item center-align">Aucune recette trouvée</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="users" class="col s12">
-                <ul class="collection">
-                    {% for user in results.users %}
-                        <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
-                            <li class="collection-item avatar">
-                                {% if user.imageName %}
-                                    <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="circle">
-                                {% else %}
-                                    <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
-                                {% endif %}
-                                    <span class="title">@{{ user.username }}</span>
-                                <p>{{ user.pseudo }}</p>
-                            </li>
-                        </a>
-                    {% else %}
-                        <li class="collection-item center-align">Aucun utilisateur trouvé</li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a href="#recipes">{{ results.recipes| length }} Recettes</a></li>
+                <li class="tab col s6"><a href="#users">{{ results.users| length }} Utilisateurs</a></li>
+            </ul>
         </div>
-    {% endif  %}
+        <div id="recipes" class="col s12">
+            <ul class="collection">
+                {% for recipe in results.recipes %}
+                    <a href="{{ path('recipe_show', {'id': recipe.id, 'slug':recipe.slug}) }}">
+                        <li class="collection-item avatar">
+                            {% if recipe.imageName %}
+                                <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="circle">
+                            {% else %}
+                                <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
+                            {% endif %}
+                                <span class="title">{{ recipe.title }}</span>
+                            <p>Catégorie(s) :
+                                {% for category in recipe.categories %}
+                                    {{ category.name }}
+                                {% endfor %}
+                            </p>
+                            <div>Temps - {{ recipe.time ? recipe.time|date('H:i') : '' }}</div>
+                            <p>Lipides : {{ recipe.fat }}g | Glucides : {{ recipe.carbohydrate }}g | Protéines : {{ recipe.protein }}g | {{ recipe.calory }}kcal</p>
+                        </li>
+                    </a>
+                {% else %}
+                    <li class="collection-item center-align">Aucune recette trouvée</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="users" class="col s12">
+            <ul class="collection">
+                {% for user in results.users %}
+                    <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
+                        <li class="collection-item avatar">
+                            {% if user.imageName %}
+                                <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="circle">
+                            {% else %}
+                                <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
+                            {% endif %}
+                                <span class="title">@{{ user.username }}</span>
+                            <p>{{ user.pseudo }}</p>
+                        </li>
+                    </a>
+                {% else %}
+                    <li class="collection-item center-align">Aucun utilisateur trouvé</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}
