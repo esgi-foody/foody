@@ -1,6 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Foody</h1>
-    <p>Fil d'actualité</p>
+    <div class="col 12  center-block  ">
+
+        {% if recipes %}
+            {% for recipe in recipes %}
+
+                <div class="row">
+
+                    <div class="card hoverable">
+                        <div class="card-image center-block" style="max-width: 300px;">
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                                {% if recipe.imageName %}
+                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                                {% else %}
+                                    <img src="{{ asset('build/images/defaultRecipe.png')}}">
+                                {% endif %}
+                            </a>
+
+                        </div>
+                        <div class="card-content">
+
+                            <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
+                                <div class="row"><h5 class="card-title black-text">{{ recipe.title }}</h5></div>
+                            </a>
+                            {% for categorie in recipe.categories %}
+                                <span class="badge white-text" style="background-color: {{ categorie.hexaColor }}">{{ categorie.name }}</span>
+                            {% endfor %}
+                            <a href="{{ path("app_front_profile_show",{"username" : recipe.userRecipe.username}) }}">
+                                <h6 class="red-text text-darken-1">{{ recipe.userRecipe.pseudo }}</h6>
+                                <p class="text-secondary grey-text">@{{ recipe.userRecipe.username }}</p>
+                            </a>
+                        </div>
+                        <div class="card-action center-block">
+                            <div class="action__buttons">
+
+                                <div class="valign-wrapper" style="display:flex;justify-content: space-around;">
+                                    {% if recipe.id in commented_recipes %}
+                                        <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left" fill="red" stroke="0"></i>{{ recipe.comments|length }}</a>
+                                    {% else %}
+                                        <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left"></i>{{ recipe.comments|length }}</a>
+                                    {% endif %}
+                                    <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" class="left"></i>3</a>
+
+                                    {% if recipe.id in likes_id|keys %}
+                                        <a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : likes_id[recipe.id] , "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}" class="black-text valign-wrapper"><i data-feather="heart" id="heart" stroke-width="1" fill="red" stroke="dark-red"></i>{{ recipe.likes|length }}</a>
+                                    {% else %}
+                                        <a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"class="valign-wrapper"><i data-feather="heart" id="heart" stroke-width="2" stroke="black"></i></a>
+                                    {% endif %}
+                            </div>
+                                <a class="btn-floating waves-effect halfway-fab waves-light amber darken-2 right"><i data-feather="arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% else %}
+            <h4>Aucune recette trouvée :(</h4>
+        {% endif %}
+    </div>
 {% endblock %}
