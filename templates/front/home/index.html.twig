@@ -9,7 +9,7 @@
                 <div class="row">
 
                     <div class="card hoverable">
-                        <div class="card-image center-block" style="max-width: 300px;">
+                        <div class="card-image center-block" style="max-width: 200px;">
                             <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
                                 {% if recipe.imageName %}
                                     <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
