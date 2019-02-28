@@ -3,19 +3,19 @@
 {{ form_row(form.title) }}
 <h3>Ingredients</h3>
 <ul id="ingredients" data-index="{{ form.ingredients|length }}" data-prototype="{{ form_widget(form.ingredients.vars.prototype)|e('html_attr') }}">
-    <button type="button" id="addIngredient">+   Ingredient</button>
+    <button type="button" id="addIngredient" class="btn">+   Ingredient</button>
     {% for ingredient in form.ingredients %}
-        <li>{{ form_row(ingredient) }}<button type="button" class="remove">Supprimer</button></li>
+        <li>{{ form_row(ingredient) }}<button type="button" class="btn remove">Supprimer</button></li>
     {% endfor %}
 </ul>
 <h3>Etapes</h3>
 
 <ul id="recipeSteps" data-index="{{ form.recipeSteps|length }}" data-prototype="{{ form_widget(form.recipeSteps.vars.prototype)|e('html_attr') }}">
-    <button type="button" id="addStep">+   Etapes</button>
+    <button type="button" id="addStep" class="btn">+   Etapes</button>
     {% for recipeStep in form.recipeSteps %}
         <li>
             {{ form_row(recipeStep) }}
-            <button type="button" class="remove">Supprimer</button>
+            <button type="button" class="btn remove">Supprimer</button>
         </li>
     {% endfor %}
 </ul>

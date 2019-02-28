@@ -61,7 +61,7 @@ function addPrototypeForm(collectionHolder) {
     let prototype = collectionHolder.data('prototype');
     const index = collectionHolder.data('index') ;
     let newForm = prototype.replace(/__name__/g, index);
-    let removeLink  = $('<button class="remove">Supprimer</button>');
+    let removeLink  = $('<button class="btn remove">Supprimer</button>');
 
 
     newForm = newForm.replace(/label__/g, '');
