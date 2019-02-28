@@ -112,7 +112,7 @@ class User implements UserInterface, Serializable
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporter")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporter", fetch="EAGER")
      */
     private $recipeReposts;
 

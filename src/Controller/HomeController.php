@@ -34,7 +34,6 @@ class HomeController extends AbstractController
             }
 
             $reposts = $this->getUser()->getRecipeReposts();
-//            dump($recipes);die();
             $arrayRepostsId = array();
             foreach($reposts as $repost){
                 $arrayRepostsId[$repost->getRecipe()->getId()]= $repost->getId();
