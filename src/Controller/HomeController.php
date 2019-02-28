@@ -27,6 +27,7 @@ class HomeController extends AbstractController
                 }
             }
 
+            $recipes = array_slice($recipes, 0, 50);
             $likes = $this->getUser()->getLikes();
             $arrayLikesId = array();
             foreach($likes as $like){
