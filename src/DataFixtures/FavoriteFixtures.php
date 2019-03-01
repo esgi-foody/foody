@@ -22,8 +22,9 @@ class FavoriteFixtures extends Fixture implements DependentFixtureInterface
             $favorite->setRecipe($manager->getRepository(Recipe::class)->find(rand(1,100)));
 
             $manager->persist($favorite);
-            $manager->flush();
         }
+        $manager->flush();
+
     }
     public function getDependencies()
     {

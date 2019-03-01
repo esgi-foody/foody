@@ -82,8 +82,9 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $recipe->setUserRecipe($user);
 
             $manager->persist($recipe);
-            $manager->flush();
         }
+        $manager->flush();
+
     }
 
     /**

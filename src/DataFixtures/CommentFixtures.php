@@ -24,9 +24,9 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             $comment->setCommentator($manager->getRepository(User::class)->find(rand(1,30)));
             $comment->setData($faker->sentence($nbWords = 6, $variableNbWords = true));
             $manager->persist($comment);
-
-            $manager->flush();
         }
+        $manager->flush();
+
     }
     public function getDependencies()
     {

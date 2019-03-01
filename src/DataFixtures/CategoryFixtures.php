@@ -21,8 +21,9 @@ class CategoryFixtures extends Fixture
             $category->setName($categories[$i]);
             $category->setHexaColor($faker->hexcolor);
             $manager->persist($category);
-
-            $manager->flush();
         }
+
+        $manager->flush();
+
     }
 }

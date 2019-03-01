@@ -18,8 +18,8 @@ class RelationshipFixtures extends Fixture
             $relationship->setFollowed($manager->getRepository(User::class)->find(rand(1,31)));
             $relationship->setFollower($manager->getRepository(User::class)->find(rand(1,31)));
             $manager->persist($relationship);
-
-            $manager->flush();
         }
+        $manager->flush();
+
     }
 }
