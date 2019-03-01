@@ -31,6 +31,7 @@ class RecipeStepType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RecipeStep::class,
+            'attr' =>['class' => 'recipe-step-form']
         ]);
     }
 }
