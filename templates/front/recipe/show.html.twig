@@ -91,7 +91,7 @@
     {% endif %}
         <a href="{{ path('recipe_index') }}"><div class="btn teal lighten-1">Retour</div></a>
 
-        {% if  app.user != recipe.userRecipe %}
+        {% if  app.user == recipe.userRecipe %}
             <a href="{{ path('recipe_edit', {'id': recipe.id}) }}"><div class="btn orange lighten-1">Modifier</div></a>
         {% endif %}
 
