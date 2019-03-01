@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if exception %}
+        <h1>{{ exception.message }}</h1>
+    {% else %}
+        <h1>Page introuvable</h1>
+        <p>
+            Vérifiez que vous n'avez pas effectué une erreur de frappe ou
+            <a href="/">retournez à la page d'accueil</a>.
+        </p>
+    {% endif %}
+
+{% endblock %}
