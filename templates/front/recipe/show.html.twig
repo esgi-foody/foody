@@ -2,43 +2,66 @@
 
 {% block title %}Recipe{% endblock %}
 {% block body %}
-    <h1>Recette {{ recipe.title }}</h1>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Calories</th>
-                <td>{{ recipe.calory }} kcal</td>
-            </tr>
-            <tr>
-                <th>Protéines</th>
-                <td>{{ recipe.protein }}g</td>
-            </tr>
-            <tr>
-                <th>Glucides</th>
-                <td>{{ recipe.carbohydrate }}g</td>
-            </tr>
-            <tr>
-                <th>Lipides</th>
-                <td>{{ recipe.fat }}g</td>
-            </tr>
-            <tr>
-                <th>Temps</th>
-                <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <td>
-                    {% if recipe.imageName %}
-                        <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}"></td>
-                    {% else %}
-                        <img src="{{ asset('build/images/defaultRecipe.png')}}"></td>
-                    {% endif %}
-                {% if liked is defined and liked is not null  %}
-                    <td><a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : liked.id, "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" fill="red"></i></a></td>
-                {% else %}
-                    <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
-                {% endif %}
+    <section id="recipe">
+        <h1>Recette {{ recipe.title }}</h1>
 
-                <td>
+            <div class="header-card"><a href="{{ path('app_front_profile_show', {'username': userRecipe}) }}"><p>@{{ userRecipe }}</p></a></div>
+
+            <div class="col l6">
+                <div class="card">
+                    <div class="card-image">
+                        {% if recipe.imageName %}
+                            <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}"></td>
+                        {% else %}
+                            <img src="{{ asset('build/images/defaultRecipe.png')}}">
+                        {% endif %}
+
+                        <table class="table">
+                            <tbody>
+
+                            <tr>
+                                <th>Calories</th>
+                                <td>{{ recipe.calory }} kcal</td>
+                            </tr>
+                            <tr>
+                                <th>Protéines</th>
+                                <td>{{ recipe.protein }}g</td>
+                            </tr>
+                            <tr>
+                                <th>Glucides</th>
+                                <td>{{ recipe.carbohydrate }}g</td>
+                            </tr>
+                            <tr>
+                                <th>Lipides</th>
+                                <td>{{ recipe.fat }}g</td>
+                            </tr>
+                            <tr>
+                                <th>Temps</th>
+                                <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Categories</th>
+                                {% for  category in recipe.categories  %}
+                                    <td>{{ category.name }}</td>
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-icon">
+                <div class="icon-favorite">
+                    {% if  app.user != recipe.userRecipe %}
+                        {% if favorite is defined and favorite is not null  %}
+                            <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" width="30" height="30" stroke="orange" fill="yellow"></i></a>
+                        {% else %}
+                            <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star" width="30" height="30" stroke-width="2" stroke="white"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="icon-repost">
                     <a href="{{ path("recipe_repost_show", {"id" : recipe.id}) }}">{{ nbRepost ?  nbRepost}}</a>
                     {% if reposted is defined and reposted is not null  %}
 
@@ -46,41 +69,39 @@
                     {% else %}
                         <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="grey"></i></a>
                     {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Categories</th>
-                {% for  category in recipe.categories  %}
-                    <td>{{ category.name }}</td>
-                {% endfor %}
-            </tr>
+                </div>
+                <div class="icon-like">
+                    {% if liked is defined and liked is not null  %}
+                        <td><a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : liked.id, "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="0" fill="red"></i></a></td>
+                    {% else %}
+                        <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
+                    {% endif %}
+                </div>
+            </div>
 
-        </tbody>
-    </table>
-    <h1>Etapes</h1>
-    {% for  step in recipe.recipeSteps  %}
-        <div>
-            <h2>Etape n°{{ step.stepNumber }} :  {{ step.title }}</h2>
+
+
+        <h2>Etapes</h2>
+
+        {% for  step in recipe.recipeSteps  %}
+        <div class="container-step">
+            <div class="step">Etape n°{{ step.stepNumber }} :  {{ step.title }}</div>
             <p>{{ step.content | raw }} </p>
         </div>
 
-    {% endfor %}
+        {% endfor %}
 
-    <h1>Ingredients</h1>
-    {% for  ingredient in recipe.ingredients  %}
-        <div>
-            <h2>{{ ingredient.name }}</h2>
-            <label>Quantités :</label> <span> {{ ingredient.quantity }} </span>
-        </div>
+        <h2>Ingredients</h2>
+        {% for  ingredient in recipe.ingredients  %}
+            <div class="container-ingredient">
+                <p>{{ ingredient.name }}</p>
 
-    {% endfor %}
-    <a href="{{ path('recipe_index') }}">Retour</a>
+                <div class="container-quantity">
+                    <label>Quantités :</label> <span> {{ ingredient.quantity }} </span>
+                </div>
+            </div>
+        {% endfor %}
 
-    {% if  app.user is same as (recipe.userRecipe) %}
-
-        <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
-
-    {% endif %}
     {% if  app.user != recipe.userRecipe %}
         {% if favorite is not empty %}
             <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" stroke="orange" fill="yellow"></i></a>
@@ -88,18 +109,25 @@
             <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star"  stroke-width="1" stroke="black"></i></a>
         {% endif %}
     {% endif %}
-    {{ include('front/comment/_form.html.twig') }}
-<ul class="collection">
-    {% for  comment in comments  %}
-    <li class="collection-item avatar">
-        <img src="{{ asset('build/images/defaultRecipe.png')}}" alt="" class="circle">
-        <h5 class="title">{{ comment.commentator.pseudo }}<span class="grey-text text-lighten-1">({{ comment.createdAt|date('H:i m.d.y') }})</span></h5>
-        <p>"{{ comment.data }}"</p>
-        {% if  app.user is same as (comment.commentator) %}
-            {{ include('front/comment/_delete_form.html.twig') }}
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+        <a href="{{ path('recipe_index') }}"><div class="btn teal lighten-1">Retour</div></a>
 
+        {% if  app.user == recipe.userRecipe %}
+            <a href="{{ path('recipe_edit', {'id': recipe.id}) }}"><div class="btn orange lighten-1">Modifier</div></a>
+        {% endif %}
+
+        <h2>Espace commentaires</h2>
+        {{ include('front/comment/_form.html.twig') }}
+        <ul class="collection">
+            {% for  comment in comments  %}
+                <li class="collection-item avatar">
+                    <img src="{{ asset('build/images/defaultRecipe.png')}}" alt="" class="circle">
+                    <h5 class="title">{{ comment.commentator.pseudo }}<span class="grey-text text-lighten-1">({{ comment.createdAt|date('H:i m.d.y') }})</span></h5>
+                    <p>"{{ comment.data }}"</p>
+                    {% if  app.user is same as (comment.commentator) %}
+                        {{ include('front/comment/_delete_form.html.twig') }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}

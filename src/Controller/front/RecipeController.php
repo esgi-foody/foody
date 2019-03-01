@@ -94,15 +94,17 @@ class RecipeController extends AbstractController
             return ($a->getStepNumber() < $b->getStepNumber()) ? -1 : 1;
         });
 
-        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator))) ;
+        $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator)));
+        $userRecipe = $recipe->setRecipeSteps(new \Doctrine\Common\Collections\ArrayCollection(iterator_to_array($iterator)))->getUserRecipe()->getUsername();
         $comments = $em->getRepository(Comment::class )->findBy(['recipe'=> $recipe], ['createdAt' => 'DESC']);
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
         $form = $this->createForm(CommentType::class, $comment);
+        $favorite = $em->getRepository(Favorite::class)->findBy(['recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
         $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findBy(['recipe' => $recipe , 'userFavorite' => $this->getUser()]);
 
-        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'form' => $form->createView(), 'comments'=> $comments, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'favorite' => $favorite]);
+        return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'form' => $form->createView(), 'comments'=> $comments, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'userRecipe' => $userRecipe, 'favorite' => $favorite]);
     }
 
     /**
@@ -276,6 +278,7 @@ class RecipeController extends AbstractController
             $repost = new RecipeRepost();
             $repost->setReporter($this->getUser());
             $repost->setRecipe($recipe);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($repost);
