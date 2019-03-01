@@ -45,17 +45,37 @@
                                     <td>{{ category.name }}</td>
                                 {% endfor %}
                             </tr>
-
                             </tbody>
                         </table>
-                        {% if  app.user != recipe.userRecipe %}
-                            {% if favorite is defined and favorite is not null  %}
-                                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" width="30" height="30" stroke="orange" fill="yellow"></i></a>
-                            {% else %}
-                                <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star" width="30" height="30" stroke-width="2" stroke="white"></i></a>
-                            {% endif %}
-                        {% endif %}
                     </div>
+                </div>
+            </div>
+
+            <div class="container-icon">
+                <div class="icon-favorite">
+                    {% if  app.user != recipe.userRecipe %}
+                        {% if favorite is defined and favorite is not null  %}
+                            <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" width="30" height="30" stroke="orange" fill="yellow"></i></a>
+                        {% else %}
+                            <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star" width="30" height="30" stroke-width="2" stroke="white"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="icon-repost">
+                    <a href="{{ path("recipe_repost_show", {"id" : recipe.id}) }}">{{ nbRepost ?  nbRepost}}</a>
+                    {% if reposted is defined and reposted is not null  %}
+
+                        <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposted.id, "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="green"></i></a>
+                    {% else %}
+                        <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="grey"></i></a>
+                    {% endif %}
+                </div>
+                <div class="icon-like">
+                    {% if liked is defined and liked is not null  %}
+                        <td><a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : liked.id, "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="0" fill="red"></i></a></td>
+                    {% else %}
+                        <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
+                    {% endif %}
                 </div>
             </div>
 

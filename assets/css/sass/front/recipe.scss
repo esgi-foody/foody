@@ -13,6 +13,38 @@
     }
   }
 
+  .container-icon {
+    display: flex;
+    justify-content: space-evenly;
+
+    .icon-favorite{
+      width: 70px;
+      background-color: white;
+      box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.14);
+      text-align: center;
+      padding: 7px;
+      border-radius: 15px;
+    }
+
+    .icon-repost{
+      width: 70px;
+      background-color: white;
+      box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.14);
+      text-align: center;
+      padding: 7px;
+      border-radius: 15px;
+    }
+
+    .icon-like{
+      width: 70px;
+      background-color: white;
+      box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.14);
+      text-align: center;
+      padding: 8px;
+      border-radius: 15px;
+    }
+  }
+
   .container-img {
     text-align: center;
   }
@@ -27,12 +59,6 @@
 
   .card {
     margin: 0.5rem 0 6rem 0;
-
-    a{
-      position: absolute;
-      right: 3%;
-      bottom: 35%;
-    }
   }
 
   h1{
