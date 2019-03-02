@@ -99,7 +99,6 @@ class RecipeController extends AbstractController
         $comments = $em->getRepository(Comment::class )->findBy(['recipe'=> $recipe], ['createdAt' => 'DESC']);
         $liked = $em->getRepository(Like::class)->findOneBy(['liker' => $this->getUser(),'recipe' => $recipe]);
         $form = $this->createForm(CommentType::class, $comment);
-        $favorite = $em->getRepository(Favorite::class)->findBy(['recipe' => $recipe]);
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
         $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findBy(['recipe' => $recipe , 'userFavorite' => $this->getUser()]);
