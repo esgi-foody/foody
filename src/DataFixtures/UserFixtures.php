@@ -40,8 +40,20 @@ class UserFixtures extends Fixture
         $password = $this->encoder->encodePassword($user, 'Chloe2019');
         $user->setPassword($password);
         $user->setDateOfBirth($faker->dateTime);
-        $user->setImageName('');
+        $user->setImageName('chloe.jpg');
         $user->setEmail('chloe@gmail.com');
+        $user->setStatus(1);
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('Theo');
+        $user->setPseudo('Coach Théo');
+        $password = $this->encoder->encodePassword($user, 'Theo2019');
+        $user->setPassword($password);
+        $user->setDateOfBirth($faker->dateTime);
+        $user->setImageName('theo.jpg');
+        $user->setEmail('theo@gmail.com');
         $user->setStatus(1);
         $user->setRoles(['ROLE_USER']);
         $manager->persist($user);
