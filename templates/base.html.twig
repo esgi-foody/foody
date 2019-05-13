@@ -8,8 +8,10 @@
         {% endblock %}
     </head>
     <body>
-        {{ include('front/nav.html.twig') }}
-        <div class="container">
+        {% if app.user %}
+            {{ include('front/nav.html.twig') }}
+        {% endif %}
+        <div class="{% if app.user %} container {% endif %}">
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}

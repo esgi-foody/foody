@@ -8,8 +8,10 @@
     {% endif %}
 
     <div class="row">
-        <h4 class="centger-align">Connexion</h4>
-        <form class="col s12" action="{{ path('app_front_auth_login') }}" method="post">
+        <div class="col s5"></div>
+        <form class="col s7" action="{{ path('app_front_auth_login') }}" method="post">
+            <p class="center-align foody">Foody.</p>
+            <h4 class="center-align color-primary bold">Connexion</h4>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" type="email" class="validate" name="_username">
