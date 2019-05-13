@@ -1,7 +1,7 @@
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/
-/public/uploads/images/recipes
+/public/uploads/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
