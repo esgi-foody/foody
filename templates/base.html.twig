@@ -8,9 +8,7 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.user %}
-            {{ include('front/nav.html.twig') }}
-        {% endif %}
+        {{ include('front/nav.html.twig') }}
         <div class="{% if app.user %} container {% endif %}">
             {% block body %}{% endblock %}
         </div>
