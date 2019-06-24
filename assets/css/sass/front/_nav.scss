@@ -19,3 +19,42 @@ nav {
         font-size: 25px;
     }
 }
+
+nav {
+    height: 9vh;
+    line-height: 9vh;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 9vh;
+    line-height: 9vh;
+}
+
+nav .button-collapse i {
+    height: 9vh;
+    line-height: 9vh;
+}
+
+nav .brand-logo {
+    font-size: 1.6rem;
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 9vh;
+        line-height: 9vh;
+    }
+}
+
+.nav-icon{
+    margin-right: 12px;
+}
+.logo{
+    max-height: 9vh;
+    margin-right: 30px;
+    &__img{
+        max-height: 6vh;
+        margin: 1vh 0 1vh 0;
+    }
+
+}

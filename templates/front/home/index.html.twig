@@ -8,55 +8,62 @@
 
                 <div class="row">
 
-                    <div class="card hoverable">
-                        <div class="card-image center-block" style="max-width: 200px;">
+                    <div class="custom-card">
+
+                        <div class="custom-card__background">
                             <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
                                 {% if recipe.imageName %}
-                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="custom-card__background--img">
                                 {% else %}
-                                    <img src="{{ asset('build/images/defaultRecipe.png')}}">
+                                    <img src="{{ asset('build/images/defaultRecipe2.jpg')}}" class="custom-card__background--img">
                                 {% endif %}
                             </a>
-
-                        </div>
-                        <div class="card-content">
-
-                            <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
-                                <div class="row"><h5 class="card-title black-text">{{ recipe.title }}</h5></div>
-                            </a>
-                            {% for categorie in recipe.categories %}
-                                <span class="badge white-text" style="background-color: {{ categorie.hexaColor }}">{{ categorie.name }}</span>
-                            {% endfor %}
-                            <a href="{{ path("app_front_profile_show",{"username" : recipe.userRecipe.username}) }}">
-                                <h6 class="red-text text-darken-1">{{ recipe.userRecipe.pseudo }}</h6>
-                                <p class="text-secondary grey-text">@{{ recipe.userRecipe.username }}</p>
-                            </a>
-                        </div>
-                        <div class="card-action center-block">
-                            <div class="action__buttons">
-
-                                <div class="valign-wrapper" style="display:flex;justify-content: space-around;">
-                                    {% if recipe.id in commented_recipes %}
-                                        <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left" fill="red" stroke="0"></i>{{ recipe.comments|length }}</a>
+                            <div class="custom-card__header">
+                                <div class="custom-card__user--img">
+                                    {% if recipe.userRecipe.imageName %}
+                                        <div class="">
+                                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:7rem;width: 7rem; height: 7rem;">
+                                        </div>
                                     {% else %}
-                                        <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left"></i>{{ recipe.comments|length }}</a>
+                                        <div class="">
+                                            <img src="{{ asset('build/images/defaultUser.png')}}" class="responsive-img circle z-depth-5 materialboxed " style="max-height:7rem;">
+                                        </div>
                                     {% endif %}
-
-                                    {% if recipe.id in reposts_id|keys  %}
-                                        <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposts_id[recipe.id], "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="red"></i></a>
-                                    {% else %}
-                                        <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" ></i></a>
-                                    {% endif %}
-
-                                    {% if recipe.id in likes_id|keys %}
-                                        <a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : likes_id[recipe.id] , "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}" class="grey-text text-darken-3 valign-wrapper"><i data-feather="heart" id="heart" stroke-width="1" fill="red" stroke="dark-red"></i>{{ recipe.likes|length }}</a>
-                                    {% else %}
-                                        <a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"class="valign-wrapper grey-text text-darken-3"><i data-feather="heart" id="heart" stroke-width="2"></i>{{ recipe.likes|length }}</a>
-                                    {% endif %}
+                                </div>
+                                <div class="custom-card__header--bloc">
+                                    <div class="">
+                                        <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}" class="custom-card__user--recipe--title">{{ recipe.title }}</a>
+                                    </div>
+                                    <div class="custom-card__user--name">
+                                        <a href="{{ path("app_front_profile_show",{"username" : recipe.userRecipe.username}) }}">
+                                            <p class="text-secondary grey-text">@{{ recipe.userRecipe.username }}</p>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                                <a class="btn-floating waves-effect halfway-fab waves-light amber darken-2 right"><i data-feather="arrow-right"></i></a>
+                            <div class="custom-card__actions">
+
+                                {% if recipe.id in commented_recipes %}
+                                    <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left" fill="red" stroke="0"></i>{{ recipe.comments|length }}</a>
+                                {% else %}
+                                    <a href="" class="valign-wrapper grey-text text-darken-3"><i data-feather="message-circle" class="left"></i>{{ recipe.comments|length }}</a>
+                                {% endif %}
+                                {% if recipe.id in reposts_id|keys  %}
+                                    <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposts_id[recipe.id], "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="red"></i></a>
+                                {% else %}
+                                    <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}" class="valign-wrapper grey-text text-darken-3"><i data-feather="repeat" id="repeat" stroke-width="2" ></i></a>
+                                {% endif %}
+
+                                {% if recipe.id in likes_id|keys %}
+                                    <a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : likes_id[recipe.id] , "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}" class="grey-text text-darken-3 valign-wrapper"><i data-feather="heart" id="heart" stroke-width="1" fill="red" stroke="dark-red"></i>{{ recipe.likes|length }}</a>
+                                {% else %}
+                                    <a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"class="valign-wrapper grey-text text-darken-3"><i data-feather="heart" id="heart" stroke-width="2"></i>{{ recipe.likes|length }}</a>
+                                {% endif %}
+
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             {% endfor %}

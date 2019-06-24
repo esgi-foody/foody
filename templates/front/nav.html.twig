@@ -1,23 +1,23 @@
 <div class="navbar-fixed">
-    <nav class="">
+    <nav class="navbar">
         <div class="nav-wrapper nav">
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
 
-                    <li><a href="{{ path('home') }}" class="logo">Foody</a></li>
+                    <li><a href="{{ path('home') }}" class="logo"><img class="logo__img" src="{{ asset('build/images/logo.svg')}}"></a></li>
 
                     <li><a href="{{ path('home') }}" class="valign-wrapper {{ app.request.get('_route') == 'home' ? 'active' }}">
-                            <i data-feather="home" id="home" stroke-width="2" width="24" height="24" ></i>
+                            <i data-feather="home" id="home"  class="nav-icon" stroke-width="2" width="24" height="24" ></i>
                             Accueil
                         </a>
                     </li>
                     <li><a href="{{ path('app_front_explorer_index') }}" class="valign-wrapper {{ app.request.get('_route') == 'app_front_explorer_index' ? 'active' }}">
-                            <i data-feather="search" id="explorer" stroke-width="2" width="24" height="24" ></i>
+                            <i data-feather="search" id="explorer" class="nav-icon" stroke-width="2" width="24" height="24" ></i>
                             Explorer
                         </a>
                     </li>
                     <li><a href="{{ path('recipe_new') }}" class="valign-wrapper {{ app.request.get('_route') == 'recipe_new' ? 'active' }}">
-                            <i data-feather="plus-square" id="add" stroke-width="2" width="24" height="24"></i>
+                            <i data-feather="plus-square" id="add" class="nav-icon" stroke-width="2" width="24" height="24"></i>
                             Ajouter
                         </a>
                     </li>
