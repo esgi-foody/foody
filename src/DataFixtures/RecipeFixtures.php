@@ -35,7 +35,6 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             for ($y = 0; $y < $nbIngredients; $y++){
                 $measuringUnit =  ['g','kg','piece','mL','cL','L'];
                 $keyMeasuringUnit = array_rand($measuringUnit);
-                $arrIngr=[];
                 $ingredient = new Ingredient();
                 $ingredient->setName($faker->ingredient);
                 $ingredient->setQuantity(rand(1,50));
@@ -44,11 +43,11 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                 $ingredient->setFat($fat);
                 $ingredient->setMeasuringUnit($measuringUnit[$keyMeasuringUnit]);
                 $ingredient->setRecipe($recipe);
-                $arrIngr[] = $ingredient;
+                $recipe->addIngredient($ingredient);
+
 
                 $manager->persist($ingredient);
             }
-            $recipe->getIngredients($arrIngr);
 
             //RECIPE_STEPS
             for ($y = 0; $y < rand(3,10); $y++){
@@ -83,8 +82,110 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($recipe);
         }
+
+        foreach ($this->getMockedRecipe() as $recipeMock) {
+            $recipe = new Recipe();
+            $recipe->setTitle($recipeMock['title']);
+
+            $date = date_create_from_format('H:i:s',$faker->time());
+
+            $recipe->setTime($date);
+            $category = $manager->getRepository(Category::class)->findOneBy(['name' => $recipeMock['category']]);
+
+            $category->setName($recipeMock['category']);
+            $recipe->addCategory($category);
+            $recipe->setCalory($recipeMock['calory']);
+            $recipe->setProtein($recipeMock['protein']);
+            $recipe->setCarbohydrate($recipeMock['carbohydrate']);
+            $recipe->setFat($recipeMock['fat']);
+            $recipe->setImageName('');
+
+            foreach ($recipeMock['ingredients'] as $ingredientMock){
+                $ingredient = new Ingredient();
+                $ingredient->setName($ingredientMock['title']);
+                $ingredient->setQuantity($ingredientMock['quantity']);
+                $ingredient->setProtein($ingredientMock['protein']);
+                $ingredient->setCarbohydrate($ingredientMock['carbohydrate']);
+                $ingredient->setFat($ingredientMock['fat']);
+                $ingredient->setMeasuringUnit($ingredientMock['measuringUnit']);
+                $ingredient->setRecipe($recipe);
+                $recipe->addIngredient($ingredient);
+                $manager->persist($ingredient);
+            }
+
+            //RECIPE_STEPS
+            foreach ($recipeMock['recipeSteps'] as $recipeStepMock) {
+                $recipeStep = new RecipeStep();
+                $recipeStep->setTitle($recipeStepMock['title']);
+                $recipeStep->setStepNumber($recipeStepMock['stepNumber']);
+                $recipeStep->setContent($recipeStepMock['content']);
+                $recipeStep->setRecipe($recipe);
+                $recipe->addRecipeStep($recipeStep);
+                $manager->persist($recipeStep);
+            }
+
+            //RANDOM USER SELECTED
+            $user = $manager->getRepository(User::class)->findOneBy(['email' => 'chloe@gmail.com']);
+            $recipe->setUserRecipe($user);
+
+
+        }
         $manager->flush();
 
+    }
+
+    private function getMockedRecipe(){
+        return [
+            [
+                'title' => 'GLACE PROTÉINÉE À LA FRAISE',
+                'category' => 'Protéiné',
+                'calory' => 96,
+                'protein' => 10,
+                'carbohydrate' => 4,
+                'fat' => 4,
+                'ingredients' => [
+                    [
+                        'title' => 'Lait demi-écrémé',
+                        'quantity' => 70,
+                        'protein' => 7,
+                        'carbohydrate' => 10,
+                        'fat' => 4,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Yaourt grecque',
+                        'quantity' => 150,
+                        'protein' => 12,
+                        'carbohydrate' => 17,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Dans un mixeur, placer tous les ingrédients à l\'exception des fruits rouges et mixer jusqu\'à obtention d\'une préparation crémeuse. '
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Mettre les fruits rouges dans un moule de votre choix puis verser la préparation par-dessus.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Conseil : vous avez le batonnet foodspring chez vous ? Super ! Il est parfait pour cette recette.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Placer minimum 8 heures au congélateur puis retirer du moule.'
+                        ],
+                    ]
+            ],
+        ];
     }
 
     /**
