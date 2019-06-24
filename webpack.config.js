@@ -1,5 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
 
+
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -54,5 +55,4 @@ Encore
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
 ;
-
 module.exports = Encore.getWebpackConfig();

@@ -13,6 +13,7 @@ a { color: inherit; }
     position:relative;
     width: 100%;
     height: 100%;
+
     &--img{
       width: 100%;
       height: 50vh;
@@ -23,7 +24,6 @@ a { color: inherit; }
       -moz-box-shadow: 1px 10px 37px 3px rgba(196,196,196,1);
       box-shadow: 1px 10px 37px 3px rgba(196,196,196,1);
     }
-
   }
 
   &__header{
