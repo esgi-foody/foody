@@ -95,4 +95,23 @@ class RecipeRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param $data
+     * @return \Doctrine\ORM\QueryBuilder|mixed
+     */
+    public function findWithFolloweds($userId, $limit)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('
+            SELECT DISTINCT r
+            FROM App\Entity\Recipe r, App\Entity\Relationship f
+            WHERE  f.follower = :userId
+            AND f.followed = r.userRecipe
+            AND  r.userRecipe != :userId
+            ORDER BY r.createdAt DESC
+            ')->setParameter('userId' , $userId )->setMaxResults($limit);
+
+        return $query->execute();
+    }
 }
