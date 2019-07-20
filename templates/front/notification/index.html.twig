@@ -5,13 +5,14 @@
 <ul class="collection">
     {% for notification in notifications %}
         <li class="collection-item avatar">
+
+            {% if notification.imageName %}
+                <img src="{{ asset('uploads/images/users/'~user.imageName)}}"alt="" class="circle">
+            {% else %}
+                <img src="{{ asset('build/images/defaultUser.png')}}" alt="" class="circle">
+            {% endif %}
+            <a class="title" href="{{ path('app_front_profile_show', {'username': notification.username}) }}">@{{ notification.username }}</a>
             <a href=" {{ notification.link }}" style="color: black">
-                {% if notification.imageName %}
-                    <img src="{{ asset('uploads/images/users/'~user.imageName)}}"alt="" class="circle">
-                {% else %}
-                    <img src="{{ asset('build/images/defaultUser.png')}}" alt="" class="circle">
-                {% endif %}
-                <span class="title"> @{{ notification.username }}</span>
                 <p>
                     {{ notification.message|truncate(150)  }}
                 </p>

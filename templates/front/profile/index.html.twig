@@ -6,15 +6,14 @@
     <div class="row valign-wrapper" style="margin-top:1em;">
         <div class="col s12 right-align">
             {% if app.user == user %}
-                <a class="btn-floating btn-large grey lighten-2" href="{{ path('app_front_profile_edit', {'id': user.id}) }}"><i data-feather="edit" id="" stroke-width="2" stroke="white"></i></a>
-                <a class="btn-floating btn-large red lighten-1" href="{{ path( 'app_front_favorite_show' , {'username': user.username}) }}"><i data-feather="star" id="" stroke-width="2" stroke="white"></i></a>
+                <a class="btn btn-primary red" href="{{ path('app_front_profile_edit', {'id': user.id}) }}">EDITER MON PROFIL</a>
             {% endif %}
         </div>
     </div>
     <div class="row valign-wrapper">
         {% if user.imageName %}
             <div class="col s7">
-                <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:10em;width: 10em; height: 10em;">
+                <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:12em;width: 12em; height: 12em;">
             </div>
         {% else %}
             <div class="col s7">
@@ -28,17 +27,18 @@
         {% endif %}
     </div>
     <div class="row valign-wrapper ">
-        <h5 class="center-align col s12">{{ user.pseudo }}</h5>
+        <h4 class="center-align col s12">{{ user.pseudo }}</h4>
+        <h5 class="center-align col s12">@{{ user.username }}</h5>
     </div>
     <div class="row valign-wrapper">
         <div class=" col s5 right-align">
-            <a class="btn btn-primary red lighten-1 ">{{ user.recipes | length }} recettes</a>
+            <a class="">{{ user.recipes | length }} recettes</a>
         </div>
         <div class=" col s3 center-align">
-            <a class="btn btn-primary red lighten-1" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'true'}) }}>{{ user.followers | length }} abonnés</a>
+            <a class="" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'true'}) }}>{{ user.followers | length }} abonnés</a>
         </div>
         <div class=" col s5 left-align">
-            <a class="btn btn-primary red lighten-1 center-align col s5" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'false'}) }}>{{ user.followeds | length }} abonnements</a>
+            <a class="" href={{ path('app_front_profile_show_follow', {'username': user.username, 'follower':'false'}) }}>{{ user.followeds | length }} abonnements</a>
         </div>
     </div>
     <div class=" col s3 center-align"><p>{{ user.biography | raw }}</p></div>
@@ -54,26 +54,16 @@
         <div id="recipes" class="col s12">
             <div class="row center-align">
                 {% for recipe in user.recipes %}
-                    <div class="col s4">
-                        <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}">
-                            <div class="card">
-                                <div class="card-image">
-                                        {% if recipe.imageName %}
-                                            <img class="card-img-top" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" height="300em;">
-                                        {% else %}
-                                            <img class="card-img-top" src="{{ asset('build/images/defaultRecipe.png')}}">
-                                        {% endif %}
-                                </div>
-                                <div class="card-content">
-                                    <span class="card-title">{{ recipe.title }}</span>
-                                    <p> Catégorie(s) :
-                                        {% for category in recipe.categories %}
-                                            {{ category.name }}
-                                        {% endfor %}
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="custom-card col s4">
+                        <div class="custom-card__background">
+                            <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}">
+                                {% if recipe.imageName %}
+                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="custom-card__background--img">
+                                {% else %}
+                                    <img src="{{ asset('build/images/defaultRecipe2.jpg')}}" class="custom-card__background--img">
+                                {% endif %}
+                            </a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
