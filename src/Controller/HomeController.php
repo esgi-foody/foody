@@ -18,14 +18,14 @@ class HomeController extends AbstractController
             $relations = $this->getUser()->getFolloweds();
             $recipes = [];
 
-            /*foreach ($relations as $relation){
+            foreach ($relations as $relation){
 
                 $userRecipes = $relation->getFollowed()->getRecipes();
 
                 foreach ($userRecipes as $userRecipe){
                     $recipes[] = $userRecipe ;
                 }
-            }*/
+            }
 
             $recipes = $recipeRepository->findWithFolloweds($this->getUser(), 50);
 

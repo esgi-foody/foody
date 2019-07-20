@@ -112,6 +112,22 @@ class RecipeRepository extends ServiceEntityRepository
             ORDER BY r.createdAt DESC
             ')->setParameter('userId' , $userId )->setMaxResults($limit);
 
+       /* '
+
+            SELECT r
+            FROM App\Entity\Recipe r,
+                 App\Entity\Relationship f
+            JOIN f.follower flr
+            WHERE r.userRecipe = flr
+            AND f.followed = :userId
+
+            SELECT DISTINCT r
+            FROM App\Entity\Recipe r, App\Entity\Relationship f
+            WHERE  f.follower = :userId
+            AND f.followed = r.userRecipe
+            AND  r.userRecipe != :userId
+            ORDER BY r.createdAt DESC
+            '*/
         return $query->execute();
     }
 }
