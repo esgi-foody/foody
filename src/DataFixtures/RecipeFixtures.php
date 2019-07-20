@@ -185,6 +185,71 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                         ],
                     ]
             ],
+            [
+                'title' => 'Chili végétarien',
+                'category' => 'végétarien',
+                'calory' => 230,
+                'protein' => 24,
+                'carbohydrate' => 8,
+                'fat' => 10,
+                'ingredients' => [
+                    [
+                        'title' => 'Cheddar Fermier',
+                        'quantity' => 100,
+                        'protein' => 20,
+                        'carbohydrate' => 10,
+                        'fat' => 70,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Maïs',
+                        'quantity' => 200,
+                        'protein' => 15,
+                        'carbohydrate' => 70,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Haricots rouges',
+                        'quantity' => 400,
+                        'protein' => 20,
+                        'carbohydrate' => 90,
+                        'fat' => 30,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Tomates',
+                        'quantity' => 800,
+                        'protein' => 5,
+                        'carbohydrate' => 100,
+                        'fat' => 0,
+                        'measuringUnit' => 'g',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Commencez par faire chauffer l\'huile d\'olive dans une sauteuse. Versez-y l\'oignon et l\'ail émincés, puis salez et poivrez. '
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Une fois que les courgettes et les carottes sont cuites, versez le sachet d\'épices à chili puis ajoutez les tomates pelées, le maïs égoutté et les haricots rouges rincés et égouttés.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Versez un petit verre d\'eau dans la sauteuse, mélangez et laissez cuire 10 minutes environ.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Une fois que votre chili végétarien est cuit, versez-le dans des assiettes creuses ou des grands bols et saupoudrez de cheddar fermier râpé.'
+                        ],
+                    ]
+            ]
         ];
     }
 
