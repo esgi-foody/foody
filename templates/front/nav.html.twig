@@ -29,11 +29,11 @@
                 </ul>
 
                 <ul id="dropdown1" class="dropdown-content">
-                    <li><a href="{{ path('app_front_profile_show', {'username' : app.user.username}) }}">Profil</a></li>
-                    <li><a href="{{ path( 'app_front_favorite_show' , {'username': app.user.username}) }}">Favoris</a></li>
-                    <li><a href="#!">Paramètres</a></li>
+                    <li><a class="red-text" href="{{ path('app_front_profile_show', {'username' : app.user.username}) }}">Profil</a></li>
+                    <li><a class="red-text" href="{{ path( 'app_front_favorite_show' , {'username': app.user.username}) }}">Favoris</a></li>
+                    <li><a class="red-text" href="#!">Paramètres</a></li>
                     <li class="divider"></li>
-                    <li><a href="{{ path('app_front_auth_logout') }}">Déconnexion</a></li>
+                    <li><a class="red-text" href="{{ path('app_front_auth_logout') }}">Déconnexion</a></li>
                 </ul>
 
             {% else %}
