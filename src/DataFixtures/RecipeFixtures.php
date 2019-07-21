@@ -249,7 +249,74 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'content' => 'Une fois que votre chili végétarien est cuit, versez-le dans des assiettes creuses ou des grands bols et saupoudrez de cheddar fermier râpé.'
                         ],
                     ]
-            ]
+            ],[
+                'title' => 'Velouté aux lentilles corail',
+                'category' => 'entrée',
+                'calory' => 120,
+                'protein' => 20,
+                'carbohydrate' => 8,
+                'fat' => 12,
+                'ingredients' => [
+                    [
+                        'title' => 'Bouillon de légume',
+                        'quantity' => 1,
+                        'protein' => 50,
+                        'carbohydrate' => 100,
+                        'fat' => 70,
+                        'measuringUnit' => 'l',
+                    ],
+                    [
+                        'title' => 'Lentilles corail',
+                        'quantity' => 200,
+                        'protein' => 15,
+                        'carbohydrate' => 70,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Carottes',
+                        'quantity' => 100,
+                        'protein' => 0,
+                        'carbohydrate' => 70,
+                        'fat' => 0,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Oignons',
+                        'quantity' => 100,
+                        'protein' => 0,
+                        'carbohydrate' => 40,
+                        'fat' => 0,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Huile végétale',
+                        'quantity' => 10,
+                        'protein' => 0,
+                        'carbohydrate' => 0,
+                        'fat' => 10,
+                        'measuringUnit' => 'cl',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Pelez l’oignon puis ciselez-le. Pelez les carottes puis coupez-les en dés.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Faites chauffer l’huile dans une cocotte ou dans une sauteuse. Ajoutez les oignons, les dés de carottes et faites-les revenir sur feu doux pendant 10 minutes. Ajoutez les épices et mélangez bien. Ajoutez les lentilles, mélangez, ajoutez le bouillon et portez à ébullition.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Baissez le feu et laissez mijoter pendant une vingtaine de minutes, jusqu’à ce que les lentilles soient tendres. Mixez, salez, poivrez, goûter et rectifiez éventuellement l\'assaisonnement. Servez avec le yaourt et la ciboulette.'
+                        ],
+                    ]
+            ],
         ];
     }
 
