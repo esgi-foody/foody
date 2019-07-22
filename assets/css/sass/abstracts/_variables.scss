@@ -1,3 +1,20 @@
-$primary-color: #E7484A;
+
+@import "./node_modules/materialize-css/sass/materialize";
+
+$foodyred: #E7484A;
+$primary-color: $foodyred;
 $basic-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
 
+$primary-color-light: false !default;
+$primary-color-dark: false !default;
+@if not $primary-color-light {
+  $primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+  $primary-color-dark: darken($primary-color, 15%);
+}
+$secondary-color: $primary-color;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+
+$link-color: $primary-color;
