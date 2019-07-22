@@ -159,7 +159,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                         'carbohydrate' => 17,
                         'fat' => 5,
                         'measuringUnit' => 'g',
-                    ],
+                    ]
                 ],
                 'recipeSteps' =>
                     [
@@ -182,7 +182,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'title'  => '',
                             'stepNumber' => '4',
                             'content' => 'Placer minimum 8 heures au congélateur puis retirer du moule.'
-                        ],
+                        ]
                     ]
             ],
             [
@@ -224,7 +224,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                         'carbohydrate' => 100,
                         'fat' => 0,
                         'measuringUnit' => 'g',
-                    ],
+                    ]
                 ],
                 'recipeSteps' =>
                     [
@@ -247,7 +247,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'title'  => '',
                             'stepNumber' => '4',
                             'content' => 'Une fois que votre chili végétarien est cuit, versez-le dans des assiettes creuses ou des grands bols et saupoudrez de cheddar fermier râpé.'
-                        ],
+                        ]
                     ]
             ],[
                 'title' => 'Velouté aux lentilles corail',
@@ -296,7 +296,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                         'carbohydrate' => 0,
                         'fat' => 10,
                         'measuringUnit' => 'cl',
-                    ],
+                    ]
                 ],
                 'recipeSteps' =>
                     [
@@ -314,11 +314,11 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'title'  => '',
                             'stepNumber' => '3',
                             'content' => 'Baissez le feu et laissez mijoter pendant une vingtaine de minutes, jusqu’à ce que les lentilles soient tendres. Mixez, salez, poivrez, goûter et rectifiez éventuellement l\'assaisonnement. Servez avec le yaourt et la ciboulette.'
-                        ],
+                        ]
                     ]
             ],[
                 'title' => 'Poulet mariné et grillé, sauce barbecue au soja',
-                'category' => 'Américaine',
+                'category' => 'Americaine',
                 'calory' => 500,
                 'protein' => 200,
                 'carbohydrate' => 9,
@@ -379,7 +379,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                         'carbohydrate' => 20,
                         'fat' => 10,
                         'measuringUnit' => 'cl',
-                    ],
+                    ]
                 ],
                 'recipeSteps' =>
                     [
@@ -417,7 +417,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'title'  => '',
                             'stepNumber' => '7',
                             'content' => 'Enrobez les pilons de poulet de sauce, mettez-les dans un plat à gratin et enfournez dans un four préchauffé à 200°C pendant 20 minutes.'
-                        ],
+                        ]
 
                     ]
             ],[
@@ -505,10 +505,10 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'title'  => '',
                             'stepNumber' => '7',
                             'content' => 'Lavez la ciboulette, ciselez-la et ajoutez-la à la préparation.'
-                        ],
+                        ]
 
                     ]
-            ],
+            ]
         ];
     }
 
