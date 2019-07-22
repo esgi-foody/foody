@@ -70,8 +70,10 @@
                             {% else %}
                                 <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
                             {% endif %}
+                            <div style="margin-left: 45px;">
                                 <span class="title">@{{ user.username }}</span>
-                            <p>{{ user.pseudo }}</p>
+                                <p>{{ user.pseudo }}</p>
+                            </div>
                         </li>
                     </a>
                 {% else %}
