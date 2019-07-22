@@ -187,7 +187,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             ],
             [
                 'title' => 'Chili végétarien',
-                'category' => 'végétarien',
+                'category' => 'Végétarien',
                 'calory' => 230,
                 'protein' => 24,
                 'carbohydrate' => 8,
@@ -251,7 +251,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                     ]
             ],[
                 'title' => 'Velouté aux lentilles corail',
-                'category' => 'entrée',
+                'category' => 'Soupe',
                 'calory' => 120,
                 'protein' => 20,
                 'carbohydrate' => 8,
@@ -315,6 +315,198 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'stepNumber' => '3',
                             'content' => 'Baissez le feu et laissez mijoter pendant une vingtaine de minutes, jusqu’à ce que les lentilles soient tendres. Mixez, salez, poivrez, goûter et rectifiez éventuellement l\'assaisonnement. Servez avec le yaourt et la ciboulette.'
                         ],
+                    ]
+            ],[
+                'title' => 'Poulet mariné et grillé, sauce barbecue au soja',
+                'category' => 'Américaine',
+                'calory' => 500,
+                'protein' => 200,
+                'carbohydrate' => 9,
+                'fat' => 20,
+                'ingredients' => [
+                    [
+                        'title' => 'Pilons de poulet',
+                        'quantity' => 1,
+                        'protein' => 500,
+                        'carbohydrate' => 0,
+                        'fat' => 10,
+                        'measuringUnit' => 'kg',
+                    ],
+                    [
+                        'title' => 'Coulis de tomate',
+                        'quantity' => 350,
+                        'protein' => 15,
+                        'carbohydrate' => 70,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Gousse d \'ail',
+                        'quantity' => 2,
+                        'protein' => 0,
+                        'carbohydrate' => 20,
+                        'fat' => 0,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Oignons',
+                        'quantity' => 1,
+                        'protein' => 0,
+                        'carbohydrate' => 40,
+                        'fat' => 0,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Sauce soja sucrée',
+                        'quantity' => 5,
+                        'protein' => 0,
+                        'carbohydrate' => 20,
+                        'fat' => 10,
+                        'measuringUnit' => 'cl',
+                    ],
+                    [
+                        'title' => 'Sauce soja salée',
+                        'quantity' => 5,
+                        'protein' => 0,
+                        'carbohydrate' => 10,
+                        'fat' => 8,
+                        'measuringUnit' => 'cl',
+                    ],
+                    [
+                        'title' => 'Sauce Worcestershire',
+                        'quantity' => 5,
+                        'protein' => 0,
+                        'carbohydrate' => 20,
+                        'fat' => 10,
+                        'measuringUnit' => 'cl',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Disposez tous les ingrédients sur un plateau.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Ciselez l\'oignon et l\'ail.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Dans une sauteuse, faites revenir l\'oignon ciselé dans 1 cuillère à soupe d\'huile. Ajoutez le coulis de tomates, le concentré de tomates et l’ail.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Ajoutez la sauce soja sucrée et salée.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '5',
+                            'content' => 'Ajoutez le piment de Cayenne.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '6',
+                            'content' => 'Ajoutez la sauce Worcestershire. Faites mijoter pendant 15 min environ puis laissez refroidir.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '7',
+                            'content' => 'Enrobez les pilons de poulet de sauce, mettez-les dans un plat à gratin et enfournez dans un four préchauffé à 200°C pendant 20 minutes.'
+                        ],
+
+                    ]
+            ],[
+                'title' => 'Rillettes de thon au fromage frais',
+                'category' => 'Entrée',
+                'calory' => 320,
+                'protein' => 70,
+                'carbohydrate' => 25,
+                'fat' => 20,
+                'ingredients' => [
+                    [
+                        'title' => 'Thon naturel',
+                        'quantity' => 280,
+                        'protein' => 50,
+                        'carbohydrate' => 30,
+                        'fat' => 10,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Rondelé',
+                        'quantity' => 125,
+                        'protein' => 15,
+                        'carbohydrate' => 7,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Pequillos grillés',
+                        'quantity' => 2,
+                        'protein' => 0,
+                        'carbohydrate' => 20,
+                        'fat' => 0,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Citron',
+                        'quantity' => 1,
+                        'protein' => 0,
+                        'carbohydrate' => 40,
+                        'fat' => 0,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Ciboulette',
+                        'quantity' => 5,
+                        'protein' => 0,
+                        'carbohydrate' => 20,
+                        'fat' => 10,
+                        'measuringUnit' => 'g',
+                    ]
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Placez le thon dans un saladier et émiettez-le à l\'aide d\'une fourchette.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Coupez les pequillos en dés.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Ajoutez les dés de piquillos au thon.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Versez un jus de citron dans la préparation.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '5',
+                            'content' => 'Mélangez le Rondelé Ail & fines herbes avec 2 c à s de crème fraîche liquide. '
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '6',
+                            'content' => 'Ajoutez cette préparation à la préparation au thon.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '7',
+                            'content' => 'Lavez la ciboulette, ciselez-la et ajoutez-la à la préparation.'
+                        ],
+
                     ]
             ],
         ];
