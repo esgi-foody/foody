@@ -102,7 +102,7 @@ class RecipeController extends AbstractController
         $reposted = $em->getRepository(RecipeRepost::class)->findOneBy(['reporter' => $this->getUser(),'recipe' => $recipe]);
         $nbRepost = $em->getRepository(RecipeRepost::class)->findBy(['recipe' => $recipe]);
         $favorite = $em->getRepository(Favorite::class)->findBy(['recipe' => $recipe , 'userFavorite' => $this->getUser()]);
-
+        
         return $this->render('front/recipe/show.html.twig', ['recipe' => $recipe ,'liked' => $liked, 'form' => $form->createView(), 'comments'=> $comments, 'reposted' => $reposted, 'nbRepost' => count($nbRepost), 'userRecipe' => $userRecipe, 'favorite' => $favorite]);
     }
 
