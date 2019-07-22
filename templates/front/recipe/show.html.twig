@@ -3,123 +3,256 @@
 {% block title %}Recipe{% endblock %}
 {% block body %}
     <section id="recipe">
-        <h1>Recette {{ recipe.title }}</h1>
+        <h1 style="color: #E7484A; margin-bottom: 5rem;">{{ recipe.title }}</h1>
+        
+        <div class="row">
+            <div class="col l5">
+                {% if recipe.imageName %}
+                    <img style="border-radius: 50%; max-width: 100%;" src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}">
+                {% else %}
+                    <img style="border-radius: 50%; max-width: 70%;" src="{{ asset('build/images/defaultRecipe.png')}}">
+                {% endif %}
+            </div>
 
-            <div class="header-card"><a href="{{ path('app_front_profile_show', {'username': userRecipe}) }}"><p>@{{ userRecipe }}</p></a></div>
+            <div class="col l2 offset-l1">
+                <div class="container-icon z-depth-1" 
+                style="border-radius: 10px;
+                        display: inline-grid;
+                        padding: 20px 20px 5px;
+                        margin-top: 2rem;
+                        text-align: center;">
 
-            <div class="col l6">
-                <div class="card">
-                    <div class="card-image">
-                        {% if recipe.imageName %}
-                            <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}"></td>
+                    <div class="icon-margin">    
+                        {% if liked is defined and liked is not null  %}
+                            <td><a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : liked.id, "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="0" fill="red"></i></a></td>
                         {% else %}
-                            <img src="{{ asset('build/images/defaultRecipe.png')}}">
+                            <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
                         {% endif %}
+                        {{ recipe.likes| length }}
+                    </div>
 
-                        <table class="table">
-                            <tbody>
-
-                            <tr>
-                                <th>Calories</th>
-                                <td>{{ recipe.calory }} kcal</td>
-                            </tr>
-                            <tr>
-                                <th>Protéines</th>
-                                <td>{{ recipe.protein }}g</td>
-                            </tr>
-                            <tr>
-                                <th>Glucides</th>
-                                <td>{{ recipe.carbohydrate }}g</td>
-                            </tr>
-                            <tr>
-                                <th>Lipides</th>
-                                <td>{{ recipe.fat }}g</td>
-                            </tr>
-                            <tr>
-                                <th>Temps</th>
-                                <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Categories</th>
-                                {% for  category in recipe.categories  %}
-                                    <td>{{ category.name }}</td>
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="icon-margin">  
+                        <a href="{{ path("recipe_repost_show", {"id" : recipe.id}) }}">{{ nbRepost ?  nbRepost}}</a>
+                        {% if reposted is defined and reposted is not null  %}
+                            <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposted.id, "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="green"></i></a>
+                        {% else %}
+                            <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="black"></i></a>
+                        {% endif %}
+                        20
+                    </div>
+                    
+                    <div class="icon-margin"> 
+                        {# {% if  app.user != recipe.userRecipe %} #}
+                            {% if favorite is not empty  %}
+                                <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" width="30" height="30" stroke="orange" fill="yellow"></i></a>
+                            {% else %}
+                                <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star" width="30" height="30" stroke-width="2" stroke="black"></i></a>
+                            {% endif %}
+                        {# {% endif %} #}
+                        10
                     </div>
                 </div>
             </div>
 
-            <div class="container-icon">
-                <div class="icon-favorite">
-                    {% if  app.user != recipe.userRecipe %}
-                        {% if favorite is not empty  %}
-                            <a href="{{ path('recipe_unfavorite', {'id': recipe.id, "csrf_token" : csrf_token('unfavorite')}) }}"><i data-feather="star" width="30" height="30" stroke="orange" fill="yellow"></i></a>
-                        {% else %}
-                            <a href="{{ path('recipe_favorite', {'id': recipe.id, "csrf_token" : csrf_token('favorite')})}}"><i data-feather="star" width="30" height="30" stroke-width="2" stroke="black"></i></a>
-                        {% endif %}
-                    {% endif %}
-                </div>
-                <div class="icon-repost">
-                    <a href="{{ path("recipe_repost_show", {"id" : recipe.id}) }}">{{ nbRepost ?  nbRepost}}</a>
-                    {% if reposted is defined and reposted is not null  %}
+            <div class="col l4">
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Apport</th>
+                            <th>Quantités</th>
+                        </tr>
+                    </thead>
 
-                        <a href="{{ path("recipe_unrepost", { "id" : recipe.id, "idRepost" : reposted.id, "csrf_token" : csrf_token('unrepost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="green"></i></a>
-                    {% else %}
-                        <a href="{{ path("recipe_repost", { "id" : recipe.id, "csrf_token" : csrf_token('repost' ~ recipe.id) }) }}"><i data-feather="repeat" id="repeat" stroke-width="2" stroke="grey"></i></a>
-                    {% endif %}
-                </div>
-                <div class="icon-like">
-                    {{ recipe.likes| length }}
-                    {% if liked is defined and liked is not null  %}
-                        <td><a href="{{ path("recipe_unlike", { "id" : recipe.id,"idLike" : liked.id, "csrf_token" : csrf_token('unlike' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="0" fill="red"></i></a></td>
-                    {% else %}
-                        <td><a href="{{ path("recipe_like", { "id" : recipe.id, "csrf_token" : csrf_token('like' ~ recipe.id) }) }}"><i data-feather="heart" id="heart" stroke-width="1" stroke="red"></i></a></td>
-                    {% endif %}
-                </div>
+                    <tbody>
+                        <tr>
+                            <td>Calories</td>
+                            <td>{{ recipe.calory }} kcal</td>
+                        </tr>
+                        <tr>
+                            <td>Protéines</td>
+                            <td>{{ recipe.protein }}g</td>
+                        </tr>
+                        <tr>
+                            <td>Glucides</td>
+                            <td>{{ recipe.carbohydrate }}g</td>
+                        </tr>
+                        <tr>
+                            <td>Lipides</td>
+                            <td>{{ recipe.fat }}g</td>
+                        </tr>
+                        <tr>
+                            <td>Temps</td>
+                            <td>{{ recipe.time ? recipe.time|date('H:i') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-
-
-        <h2>Etapes</h2>
-
-        {% for  step in recipe.recipeSteps  %}
-        <div class="container-step">
-            <div class="step">Etape n°{{ step.stepNumber }} :  {{ step.title }}</div>
-            <p>{{ step.content | raw }} </p>
         </div>
 
-        {% endfor %}
+        <div class="row" style="margin-bottom: 16rem;">
+            <div class="col l6">
+                {% for  category in recipe.categories  %}
+                    <div class="col l4">
+                        <div style="border: 1px solid {{ category.hexaColor }};
+                                    border-radius: 10px; 
+                                    padding: 5px 15px;
+                                    text-align: center;
+                                    color: {{ category.hexaColor }}">
+                            {{ category.name }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-        <h2>Ingredients</h2>
-        {% for  ingredient in recipe.ingredients  %}
-            <div class="container-ingredient">
-                <p>{{ ingredient.name }}</p>
+        {% if app.user == recipe.userRecipe  %}
+            <div class="row" style="margin-bottom: 5rem;">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s6"><a href="#ingredients">Ingredients</a></li>
+                        <li class="tab col s6"><a href="#step">Étapes</a></li>
+                    </ul>
+                </div>
+                <div id="ingredients" class="col s12">
+                    {% for  ingredient in recipe.ingredients  %}
+                        <div class="col s3">
+                            <div style="border: 1px solid #ABADB6;
+                                        border-radius: 50%;
+                                        height: 150px;
+                                        width: 150px;
+                                        text-align: center;
+                                        padding-top: 3.5rem;
+                                        font-size: 2rem;
+                                        margin-top: 2rem;
+                                        position: relative;
+                                        z-index: -1;">
+                                {{ ingredient.name }}
+                            </div>
+                            <div style="border-radius: 5px;
+                                        background-color: #E7484A;
+                                        padding: 6px;
+                                        text-align: center;
+                                        color: white;
+                                        font-size: 1.2rem;
+                                        width: 100px;
+                                        height: 40px;
+                                        margin: -33px 0 0 25px;">
+                                {{ ingredient.quantity }}g
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
-                <div class="container-quantity">
-                    <label>Quantités :</label> <span> {{ ingredient.quantity }} </span>
+                <div id="step" class="col s12">
+                    {% for  step in recipe.recipeSteps  %}
+                        <div class="col l4"><p style="font-weight: bold; font-size: 17px; color: #E7484A">Etape n°{{ step.stepNumber }} :  {{ step.title }}</p></div>
+                        <div class="col l7"  style="font-size: 17px;">{{ step.content | raw }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% else %}
+            <div class="row" style="margin-bottom: 27rem;">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s6"><a href="#ingredients">Ingredients</a></li>
+                        <li class="tab col s6"><a href="#step">Étapes</a></li>
+                    </ul>
+                </div>
+                <div id="ingredients" class="col s12">
+                    {% for  ingredient in recipe.ingredients  %}
+                        <div class="col s3">
+                            <div style="border: 1px solid #ABADB6;
+                                        border-radius: 50%;
+                                        height: 150px;
+                                        width: 150px;
+                                        text-align: center;
+                                        padding-top: 3.5rem;
+                                        font-size: 2rem;
+                                        margin-top: 2rem;
+                                        position: relative;
+                                        z-index: -1;">
+                                {{ ingredient.name }}
+                            </div>
+                            <div style="border-radius: 5px;
+                                        background-color: #E7484A;
+                                        padding: 6px;
+                                        text-align: center;
+                                        color: white;
+                                        font-size: 1.2rem;
+                                        width: 100px;
+                                        height: 40px;
+                                        margin: -33px 0 0 25px;">
+                                {{ ingredient.quantity }}g
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div id="step" class="col s12">
+                    {% for  step in recipe.recipeSteps  %}
+                        <div class="col l4"><p style="font-weight: bold; font-size: 17px; color: #E7484A">Etape n°{{ step.stepNumber }} :  {{ step.title }}</p></div>
+                        <div class="col l7"  style="font-size: 17px;"><p>{{ step.content | raw }}</p></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+            {% if app.user == recipe.userRecipe  %}
+                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}"><div class="btn orange lighten-1" style="border-radius: 15px; margin-bottom: 5rem;">Modifier</div></a>
+            {% else %}
+                <div style="margin-bottom: 4rem;"></div>
+            {% endif %}
+
+        {% if app.user == recipe.userRecipe  %}
+            <img src="{{ asset('build/images/Vector.png')}}" class="responsive-img" 
+            style="position: absolute;
+                    left: 0;
+                    z-index: -1;
+                    bottom: -200px;"/>
+        {% else %}
+            <img src="{{ asset('build/images/Vector.png')}}" class="responsive-img" 
+                        style="position: absolute;
+                                left: 0;
+                                z-index: -1;
+                                bottom: 0;"/>
+        {% endif %}
+
+
+        <h2 style="color: white; text-align: center;">Commentaires</h2>
+
+        {% for  comment in comments  %}
+            <div style="background-color: white;
+                        border-radius: 80px;
+                        display: flex;
+                        margin-bottom: 5rem;">
+                <div class="row">
+                    <div class="col s2">
+                        {% if recipe.userRecipe.imageName %}
+                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" alt="" class="circle" 
+                            style="max-width: 33%;
+                                margin-left: 2rem;
+                                margin-top: 35px;"/>
+                        {% else %}
+                            <img src="{{ asset('build/images/defaultUser.png')}}" alt="" class="circle" 
+                            style="max-width: 33%;
+                                margin-left: 2rem;
+                                margin-top: 35px;"/>
+                        {% endif %}
+                    </div>
+                    <div class="col s9">
+                        <h5 class="title">{{ comment.commentator.pseudo }}<span class="grey-text text-lighten-1">({{ comment.createdAt|date('H:i m.d.y') }})</span></h5>
+                        <p>"{{ comment.data }}"</p>
+                    </div>
+                    <div class="col s1">
+                        {% if  app.user is same as (comment.commentator) %}
+                            {{ include('front/comment/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         {% endfor %}
-        
-        {% if  app.user == recipe.userRecipe %}
-            <a href="{{ path('recipe_edit', {'id': recipe.id}) }}"><div class="btn orange lighten-1">Modifier</div></a>
-        {% endif %}
 
-        <h2>Espace commentaires</h2>
         {{ include('front/comment/_form.html.twig') }}
-        <ul class="collection">
-            {% for  comment in comments  %}
-                <li class="collection-item avatar">
-                    <img src="{{ asset('build/images/defaultRecipe.png')}}" alt="" class="circle">
-                    <h5 class="title">{{ comment.commentator.pseudo }}<span class="grey-text text-lighten-1">({{ comment.createdAt|date('H:i m.d.y') }})</span></h5>
-                    <p>"{{ comment.data }}"</p>
-                    {% if  app.user is same as (comment.commentator) %}
-                        {{ include('front/comment/_delete_form.html.twig') }}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    </section>
+     </section>
 {% endblock %}
