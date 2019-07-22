@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+{% block body %}
+<ul class="collection">
+    {% for notification in notifications %}
+        <li class="collection-item avatar">
+
+            {% if notification.imageName %}
+                <img src="{{ asset('uploads/images/users/'~user.imageName)}}"alt="" class="circle">
+            {% else %}
+                <img src="{{ asset('build/images/defaultUser.png')}}" alt="" class="circle">
+            {% endif %}
+            <a class="title" href="{{ path('app_front_profile_show', {'username': notification.username}) }}">@{{ notification.username }}</a>
+            <a href=" {{ notification.link }}" style="color: black">
+                <p>
+                    {{ notification.message|truncate(150)  }}
+                </p>
+                {% if notification.type == 'LIKE' %}
+                    <i data-feather="heart" id="heart" stroke-width="1" stroke="red" class="secondary-content"></i>
+                {% elseif  notification.type == 'REPOST'%}
+                    <i data-feather="repeat" id="heart" stroke-width="1" stroke="green" class="secondary-content"></i>
+                {% elseif  notification.type == 'FOLLOW'%}
+                    <i data-feather="arrow-right-circle" id="heart" stroke-width="1" stroke="green" class="secondary-content"></i>
+                {% else %}
+                    <i data-feather="message-circle" id="heart" stroke-width="1" stroke="grey" class="secondary-content"></i>
+                {% endif %}
+            </a>
+
+
+        </li>
+
+    {% endfor %}
+
+{% endblock %}

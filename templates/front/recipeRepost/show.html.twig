@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe Repost{% endblock %}
+{% block body %}
+    <ul class="collection">
+    {% for user in userRepost  %}
+        <li class="collection-item avatar">
+            <a href=" {{ path('app_front_profile_show', {'username' : user.username}) }}" style="color: black">
+                {% if user.imageName %}
+                    <img src="{{ asset('uploads/images/users/'~user.imageName)}}"alt="" class="circle">
+                {% else %}
+                    <img src="{{ asset('build/images/defaultUser.png')}}" alt="" class="circle">
+                {% endif %}
+                <span class="title"> @{{ user.username }}</span>
+            </a>
+        </li>
+
+    {% endfor %}
+{% endblock %}

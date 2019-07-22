@@ -1,0 +1,12 @@
+.btn-floating{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn{
+  &-flat{
+    display: flex;
+    align-items:center;
+  }
+}

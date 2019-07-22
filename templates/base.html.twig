@@ -2,13 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Foody{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {{ include('front/nav.html.twig') }}
+        <div class="{% if app.user %} container {% endif %}">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

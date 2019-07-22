@@ -6,13 +6,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Entity\Traits\UploadFileTrait;
+use Serializable;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_account")
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé")
+ * @UniqueEntity(fields={"username"}, message="Ce nom d'utilisateur est déjà utilisé")
+ * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface, Serializable
 {
     use TimestampableTrait;
+    use UploadFileTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -21,7 +34,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $username;
 
@@ -39,16 +52,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThanOrEqual("today")
      */
     private $dateOfBirth;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(maxSize="5M")
+     * @Assert\Image(
+     *     detectCorrupted = true,
+     *     corruptedMessage = "L'image est corrompu. Veuillez réssayer",
+     *     mimeTypesMessage = " Ce fichier n'est pas une image"
+     * )
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="imageName")
+     *
+     * @var File
      */
-    private $pathImg;
+    private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -58,22 +80,24 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followeds")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="follower", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
+     * @MaxDepth(1)
      */
     private $followeds;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followers")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relationship", mappedBy="followed", cascade={"persist", "remove"},orphanRemoval=true, fetch="EAGER")
+     * @MaxDepth(1)
      */
     private $followers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe")
+     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="userRecipe", cascade={"remove"})
      */
     private $recipes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="likerUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="liker")
      */
     private $likes;
 
@@ -88,7 +112,7 @@ class User implements UserInterface
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporterUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecipeRepost", mappedBy="reporter", fetch="EAGER")
      */
     private $recipeReposts;
 
@@ -96,6 +120,26 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Favorite", mappedBy="userFavorite")
      */
     private $userFavorite;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $biography;
+
+    /**
+     * @ORM\Column(type="integer", options={"default":0})
+     */
+    private $status = 0;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $lostPasswordToken;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $registerToken;
 
     public function __construct()
     {
@@ -107,7 +151,6 @@ class User implements UserInterface
         $this->reports = new ArrayCollection();
         $this->recipeReposts = new ArrayCollection();
         $this->userFavorite = new ArrayCollection();
-
     }
 
     public function getId(): ?int
@@ -159,18 +202,6 @@ class User implements UserInterface
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
-
-        return $this;
-    }
-
-    public function getPathImg(): ?string
-    {
-        return $this->pathImg;
-    }
-
-    public function setPathImg(?string $pathImg): self
-    {
-        $this->pathImg = $pathImg;
 
         return $this;
     }
@@ -456,6 +487,76 @@ class User implements UserInterface
                 $userFavorite->setUserFavorite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getLostPasswordToken(): ?string
+    {
+        return $this->lostPasswordToken;
+    }
+
+    public function setLostPasswordToken(?string $lostPasswordToken): self
+    {
+        $this->lostPasswordToken = $lostPasswordToken;
+
+        return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+        ));
+    }
+    
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            ) = unserialize($serialized);
+    }
+
+    public function getRegisterToken(): ?string
+    {
+        return $this->registerToken;
+    }
+
+    public function setRegisterToken(?string $registerToken): self
+    {
+        $this->registerToken = $registerToken;
 
         return $this;
     }

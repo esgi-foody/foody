@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">
+            Identifiants invalides
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <img class="col s5 responsive-img" style="padding: 0" src="{{ asset('build/images/left.png') }}">
+        <form class="col s7" action="{{ path('app_front_auth_login') }}" method="post">
+            <p class="center-align foody">Foody.</p>
+            <h4 class="center-align color-primary bold">Connexion</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" name="_username">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="_password">
+                    <label for="password">Mot de passe</label>
+                </div>
+                <a class="right" href="{{ path('app_front_auth_forgottenPassword') }}">Mot de passe oublié ?</a>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <button type="submit" class="waves-effect waves-light btn">Connexion</button>
+        </form>
+    </div>
+{% endblock %}

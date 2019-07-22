@@ -1,0 +1,17 @@
+* {
+  font-family: Nunito !important;
+}
+
+.foody {
+  font-family: Pacifico !important;
+  color: $primary-color;
+  font-size: 2em;
+}
+
+body{
+  background-image: url("../assets/images/background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}

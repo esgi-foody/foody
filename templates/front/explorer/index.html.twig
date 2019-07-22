@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Explorer{% endblock %}
+
+{% block body %}
+    <div class="row" style="margin-top: 2rem">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+    </div>
+        <button class="btn-flat input-field right waves-effect"><i data-feather="search" class="center-block"></i></button>
+    {{ form_end(form) }}
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a href="#recipes">{{ results.recipes| length }} Recettes</a></li>
+                <li class="tab col s6"><a href="#users">{{ results.users| length }} Utilisateurs</a></li>
+            </ul>
+        </div>
+        <div id="recipes" class="col s12">
+            <ul class="collection">
+                {% for recipe in results.recipes %}
+                    <div class="custom-card col s4">
+                        <div class="custom-card__background">
+                            <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}" style="">
+                                {% if recipe.imageName %}
+                                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" class="custom-card__background--img">
+                                {% else %}
+                                    <img src="{{ asset('build/images/defaultRecipe2.jpg')}}" class="custom-card__background--img">
+                                {% endif %}
+                            </a>
+                            <div class="custom-card__header">
+                                <div class="custom-card__user--img" style="max-width: 7rem;">
+                                    {% if recipe.userRecipe.imageName %}
+                                        <div class="">
+                                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:7rem;width: 7rem; height: 7rem;">
+                                        </div>
+                                    {% else %}
+                                        <div class="">
+                                            <img src="{{ asset('build/images/defaultUser.png')}}" class="responsive-img circle z-depth-5 materialboxed " style="max-height:7rem;width: 7rem;">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="custom-card__header--bloc">
+                                    <div class="">
+                                        <a href="{{ path('recipe_show',{'id' : recipe.id ,'slug' : recipe.slug}) }}" class="custom-card__user--recipe--title" style="font-size: 1.4rem">{{ recipe.title }}</a>
+                                    </div>
+                                    <div class="custom-card__user--name">
+                                        <a href="{{ path("app_front_profile_show",{"username" : recipe.userRecipe.username}) }}">
+                                            <p class="text-secondary grey-text">@{{ recipe.userRecipe.username }}</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <li class="collection-item center-align">Aucune recette trouvée</li>
+                {% endfor %}
+
+            </ul>
+        </div>
+        <div id="users" class="col s12">
+            <ul class="collection">
+                {% for user in results.users %}
+                    <a href="{{ path('app_front_profile_show', {'username': user.username}) }}">
+                        <li class="collection-item avatar">
+                            {% if user.imageName %}
+                                <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="circle">
+                            {% else %}
+                                <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
+                            {% endif %}
+                                <span class="title">@{{ user.username }}</span>
+                            <p>{{ user.pseudo }}</p>
+                        </li>
+                    </a>
+                {% else %}
+                    <li class="collection-item center-align">Aucun utilisateur trouvé</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
