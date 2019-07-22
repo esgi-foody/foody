@@ -53,6 +53,7 @@ class RecipeType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'Etapes',
+                'attr' => ['class' => 'red'],
                 'entry_options' => ['label' => false]
             ])
         ;

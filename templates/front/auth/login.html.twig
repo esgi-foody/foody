@@ -26,7 +26,7 @@
                 <a class="right" href="{{ path('app_front_auth_forgottenPassword') }}">Mot de passe oublié ?</a>
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-            <button type="submit" class="waves-effect waves-light btn">Connexion</button>
+            <button type="submit" class="waves-effect waves-light btn red lighten-1">Connexion</button>
         </form>
     </div>
 {% endblock %}

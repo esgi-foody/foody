@@ -6,14 +6,14 @@
     {% if recipes %}
     <ul class="collection">
         {% for recipe in recipes %}
-        <li class="collection-item avatar">
+        <li class="collection-item avatar favorite-card">
             <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
                 {% if recipe.imageName %}
-                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="circle">
+                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="preview">
                 {% else %}
-                    <img src="{{ asset('build/images/defaultRecipe.png')}}" class="circle">
+                    <img src="{{ asset('build/images/defaultRecipe2.jpg')}}" class="preview">
                 {% endif %}
-                <h4 class="title red-text text-darken-2">{{ recipe.title }}</h4>
+                <h3 class="title red-text text-lighten-1 bold">{{ recipe.title }}</h3>
             </a>
             <p>Catégorie(s) :
                 {% for category in recipe.categories %}
