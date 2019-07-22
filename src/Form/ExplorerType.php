@@ -27,42 +27,42 @@ class ExplorerType extends AbstractType
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('calorie_min', IntegerType::class, [
-                'label' => 'Nombre de calories minimum',
+                'label' => 'Calories minimum',
                 'required' => false,
                'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('calorie_max', IntegerType::class, [
-                'label' => 'Nombre de calories maximum',
+                'label' => 'Calories maximum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('protein_min', IntegerType::class, [
-                'label' => 'Nombre de protéines minimum',
+                'label' => 'Protéines minimum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('protein_max', IntegerType::class, [
-                'label' => 'Nombre de protéines maximum',
+                'label' => 'Protéines maximum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('carbohydrate_min', IntegerType::class, [
-                'label' => 'Nombre de glucides minimum',
+                'label' => 'Glucides minimum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('carbohydrate_max', IntegerType::class, [
-                'label' => 'Nombre de glucides maximum',
+                'label' => 'Glucides maximum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('fat_min', IntegerType::class, [
-                'label' => 'Nombre de lipides minimum',
+                'label' => 'Lipides minimum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ])
             ->add('fat_max', IntegerType::class, [
-                'label' => 'Nombre de lipides maximum',
+                'label' => 'Lipides maximum',
                 'required' => false,
                 'attr' => [ 'class' => 'input-field col s6']
             ]);

@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Foody{% endblock %}</title>
+        <link rel="shortcut icon" href="{{ asset('build/images/logo.png')}}" />
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
