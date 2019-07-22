@@ -83,7 +83,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($recipe);
         }
 
-        foreach ($this->getMockedRecipe() as $recipeMock) {
+        foreach ($this->getMockedRecipe2() as $recipeMock) {
             $recipe = new Recipe();
             $recipe->setTitle($recipeMock['title']);
 
@@ -125,7 +125,7 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
             }
 
             //RANDOM USER SELECTED
-            $user = $manager->getRepository(User::class)->findOneBy(['email' => 'chloe@gmail.com']);
+            $user = $manager->getRepository(User::class)->findOneBy(['email' => 'karim@gmail.com']);
             $recipe->setUserRecipe($user);
 
 
@@ -773,6 +773,558 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
                             'stepNumber' => '7',
                             'content' => 'Ensuite, saupoudrez le tout de poudre de cacao et de tranche de banane'
                         ],
+                    ]
+            ],
+        ];
+    }
+
+    private function getMockedRecipe2(){
+        return [
+            [
+                'title' => 'Cookies vegan chocolat et raisins secs',
+                'category' => 'Vegan',
+                'calory' => 150,
+                'protein' => 10,
+                'carbohydrate' => 3,
+                'fat' => 20,
+                'ingredients' => [
+                    [
+                        'title' => 'Farine',
+                        'quantity' => 175,
+                        'protein' => 3,
+                        'carbohydrate' => 7,
+                        'fat' => 2,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Margarine végétale ramollie',
+                        'quantity' => 100,
+                        'protein' => 8,
+                        'carbohydrate' => 10,
+                        'fat' => 15,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Sucre de canne non raffiné',
+                        'quantity' => 70,
+                        'protein' => 3,
+                        'carbohydrate' => 8,
+                        'fat' => 12,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Pépites de chocolat noir',
+                        'quantity' => 50,
+                        'protein' => 3,
+                        'carbohydrate' => 10,
+                        'fat' => 9,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Raisins secs',
+                        'quantity' => 50,
+                        'protein' => 6,
+                        'carbohydrate' => 8,
+                        'fat' => 5,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Sachet de levure',
+                        'quantity' => 1,
+                        'protein' => 2,
+                        'carbohydrate' => 4,
+                        'fat' => 3,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Lait végétal de votre choix',
+                        'quantity' => 20,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Sel',
+                        'quantity' => 5,
+                        'protein' => 1,
+                        'carbohydrate' => 3,
+                        'fat' => 8,
+                        'measuringUnit' => 'g',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Dans un saladier, ajoutez tous vos ingrédients. '
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Mélangez-les à l\'aide d’une cuillère en bois puis avec vos mains.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Recouvrez de film étirable puis placez votre pâte au réfrigérateur 30 minutes à une heure.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Préchauffez votre four à 180°C.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '5',
+                            'content' => 'A l\'aide d’une cuillère à soupe, formez une quinzaine de cookies.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '6',
+                            'content' => 'Enfournez 20 à 25 minutes suivant la puissance de votre four et le résultat souhaité (plus ou moins moelleux).'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '7',
+                            'content' => 'Laissez refroidir une dizaine de minutes avant de déguster vos cookies !'
+                        ],
+                    ]
+            ],
+            [
+                'title' => 'Pho',
+                'category' => 'Vietnamienne',
+                'calory' => 100,
+                'protein' => 50,
+                'carbohydrate' => 20,
+                'fat' => 10,
+                'ingredients' => [
+                    [
+                        'title' => 'Blanc de poireau émincé',
+                        'quantity' => 1,
+                        'protein' => 5,
+                        'carbohydrate' => 3,
+                        'fat' => 2,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Sauce soja',
+                        'quantity' => 20,
+                        'protein' => 3,
+                        'carbohydrate' => 4,
+                        'fat' => 10,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Petit bouquet de coriandre ciselée',
+                        'quantity' => 1,
+                        'protein' => 4,
+                        'carbohydrate' => 2,
+                        'fat' => 2,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Oignon en lamelle',
+                        'quantity' => 1,
+                        'protein' => 3,
+                        'carbohydrate' => 5,
+                        'fat' => 2,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Gingembre râpé',
+                        'quantity' => 20,
+                        'protein' => 2,
+                        'carbohydrate' => 3,
+                        'fat' => 2,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Anis étoilé',
+                        'quantity' => 1,
+                        'protein' => 2,
+                        'carbohydrate' => 4,
+                        'fat' => 3,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Nouilles plates de riz',
+                        'quantity' => 125,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Germes de soja',
+                        'quantity' => 125,
+                        'protein' => 5,
+                        'carbohydrate' => 3,
+                        'fat' => 3,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Canelle en poudre',
+                        'quantity' => 10,
+                        'protein' => 3,
+                        'carbohydrate' => 3,
+                        'fat' => 3,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Boeuf émincé finement',
+                        'quantity' => 600,
+                        'protein' => 30,
+                        'carbohydrate' => 3,
+                        'fat' => 15,
+                        'measuringUnit' => 'g',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Dans un faitout d\'eau bouillante, jetez la viande, les oignons en lamelles, les épices et le blanc de poireaux.Laissez mijoter à feu doux pendant 3 heures.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Dans un autre faitout, portez de l\'eau à ébullition et jetez les nouilles pour quelques minutes de cuisson.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Égouttez-les et placez les nouilles et les germes de soja rincés dans le bouillon du premier faitout. Laissez mijoter 5 min.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Servez bien chaud avec de la coriandre et de la sauce soja.'
+                        ],
+                    ]
+            ],
+            [
+                'title' => 'Poulet au curry et lait de coco',
+                'category' => 'Indienne',
+                'calory' => 150,
+                'protein' => 60,
+                'carbohydrate' => 15,
+                'fat' => 25,
+                'ingredients' => [
+                    [
+                        'title' => 'Filets de poulets',
+                        'quantity' => 4,
+                        'protein' => 50,
+                        'carbohydrate' => 15,
+                        'fat' => 15,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Echalotes',
+                        'quantity' => 4,
+                        'protein' => 3,
+                        'carbohydrate' => 4,
+                        'fat' => 4,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Lait de coco',
+                        'quantity' => 20,
+                        'protein' => 4,
+                        'carbohydrate' => 2,
+                        'fat' => 2,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Poudre de curry',
+                        'quantity' => 20,
+                        'protein' => 3,
+                        'carbohydrate' => 5,
+                        'fat' => 2,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Farine',
+                        'quantity' => 10,
+                        'protein' => 2,
+                        'carbohydrate' => 3,
+                        'fat' => 2,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Huile d\'olive',
+                        'quantity' => 15,
+                        'protein' => 2,
+                        'carbohydrate' => 4,
+                        'fat' => 3,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Piment',
+                        'quantity' => 1,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Faire revenir le poulet en petits morceaux environ 5 minutes, réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Dans le reste d\'huile, faire revenir les échalotes ciselées. Ajouter farine et poudre de curry, cuire 1 minute.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Ajouter petit à petit lait de coco en remuant, faire bouillir.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Remettre le poulet, ajouter piment et sel selon le goût. Mettre à feu doux/moyen pendant 20 minutes environ.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '5',
+                            'content' => 'Dégustez !'
+                        ],
+                    ]
+            ],
+            [
+                'title' => 'Paella Espagnole',
+                'category' => 'Espagnole',
+                'calory' => 155,
+                'protein' => 45,
+                'carbohydrate' => 20,
+                'fat' => 30,
+                'ingredients' => [
+                    [
+                        'title' => 'Langoustines',
+                        'quantity' => 12,
+                        'protein' => 50,
+                        'carbohydrate' => 15,
+                        'fat' => 15,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Cuisses de poulet',
+                        'quantity' => 4,
+                        'protein' => 20,
+                        'carbohydrate' => 4,
+                        'fat' => 15,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Chorizo',
+                        'quantity' => 1,
+                        'protein' => 10,
+                        'carbohydrate' => 2,
+                        'fat' => 15,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Poivron vert',
+                        'quantity' => 1,
+                        'protein' => 3,
+                        'carbohydrate' => 5,
+                        'fat' => 2,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Poivron rouge',
+                        'quantity' => 1,
+                        'protein' => 2,
+                        'carbohydrate' => 3,
+                        'fat' => 2,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Poivron jaune',
+                        'quantity' => 1,
+                        'protein' => 2,
+                        'carbohydrate' => 4,
+                        'fat' => 3,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Tomates',
+                        'quantity' => 4,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Moules',
+                        'quantity' => 700,
+                        'protein' => 10,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Encornets',
+                        'quantity' => 500,
+                        'protein' => 10,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Riz rond',
+                        'quantity' => 400,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Petit pois',
+                        'quantity' => 400,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Eau chaude',
+                        'quantity' => 1,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'L',
+                    ],
+                    [
+                        'title' => 'Gousses d\'ail',
+                        'quantity' => 4,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'pièce(s)',
+                    ],
+                    [
+                        'title' => 'Huile d\'olive',
+                        'quantity' => 15,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'mL',
+                    ],
+                    [
+                        'title' => 'Safran',
+                        'quantity' => 15,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Curry',
+                        'quantity' => 15,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Sel',
+                        'quantity' => 5,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                    [
+                        'title' => 'Poivre',
+                        'quantity' => 5,
+                        'protein' => 3,
+                        'carbohydrate' => 1,
+                        'fat' => 4,
+                        'measuringUnit' => 'g',
+                    ],
+                ],
+                'recipeSteps' =>
+                    [
+                        [
+                            'title'  => '',
+                            'stepNumber' => '1',
+                            'content' => 'Couper les cuisses de poulet en 2 morceaux. Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '2',
+                            'content' => 'Faire cuire les encornets dans l\'eau bouillante 6 minutes environ, piquer pour vérifier la cuisson (comme pour les patates). Réserver'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '3',
+                            'content' => 'Faire cuire les langoustines 5 minutes dans l\'eau bouillante. Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '4',
+                            'content' => 'Dans une casserole, faire bouillir de l\'eau y mettre les petits pois quand l\'eau reprend l\'ébullition, réduire à feu moyen 8-10 min. Egoutter. Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '5',
+                            'content' => 'Dans une cocotte, faire ouvrir les moules à feu vif (variante on peut y ajouter 1 verre de vin blanc) 5-6 minutes. Réserver les moules dans leur jus.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '6',
+                            'content' => 'Couper les encornets en rondelles. Réserver'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '7',
+                            'content' => 'Couper les tomates, les vider et les couper en morceaux (moyen). Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '8',
+                            'content' => 'Couper les poivrons comme les tomates (enlever les pépins). Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '9',
+                            'content' => 'Couper l\'ail finement. Réserver.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '10',
+                            'content' => 'Préparer sel, poivre, huile d\'olive, safran et curry. Dans une poêle à paella (ou un wok fera l\'affaire) verser l\'huile d\'olive. Quand l\'huile frémit, y mettre les morceaux de poulet et les faire bien dorer de tout les côtés.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '11',
+                            'content' => 'Une fois bien dorés, ajouter les encornets, le chorizo, l\'ail, les poivrons et les tomates.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '12',
+                            'content' => 'Ajouter le litre d\'eau chaude (variante : on peut y mettre un bouillon de poule avant). Filtrer le jus des moules et ajouter au plat 2 à 3 verres de ce jus (selon le goût). Saler, poivrer, saupoudrer le curry sur toute la surface du plat. Mélanger. Laissez cuire 15 minutes à feux moyen.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '13',
+                            'content' => 'Ajouter le riz, le safran, les moules, les langoustine. Cuire encore 20-25 minutes.'
+                        ],
+                        [
+                            'title'  => '',
+                            'stepNumber' => '14',
+                            'content' => 'Ajouter les petits pois chauds. Laisser reposer 5 minutes ou servir chaud.'
+                        ],
+
                     ]
             ],
         ];

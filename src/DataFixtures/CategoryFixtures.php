@@ -13,7 +13,7 @@ class CategoryFixtures extends Fixture
     {
         $faker = Faker\Factory::create();
         $categories = [ 'Italienne','Americaine','Française','Indienne','Chinoise',
-                        'Thailandaise','Vitenamienne','Epicée','Japonaise','Protéiné',
+                        'Thailandaise','Vietnamienne','Epicée','Japonaise','Protéiné',
                         'Végétarien','Léger','Vegan','Gastronomique','Poisson',
                         'Légumes','Espagnole','Soupe','Entrée','Plat'];
         for ($i = 0; $i < 20; $i++) {
