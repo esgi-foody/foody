@@ -47,6 +47,18 @@ class UserFixtures extends Fixture
         $manager->persist($user);
 
         $user = new User();
+        $user->setUsername('dyfit');
+        $user->setPseudo('Dy fit');
+        $password = $this->encoder->encodePassword($user, 'Root2019');
+        $user->setPassword($password);
+        $user->setDateOfBirth($faker->dateTime);
+        $user->setImageName('');
+        $user->setEmail('dylan.correia@hotmail.com');
+        $user->setStatus(1);
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
+        $user = new User();
         $user->setUsername('root');
         $user->setPseudo('admin foody');
         $password = $this->encoder->encodePassword($user, 'Root2019');
