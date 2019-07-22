@@ -5,9 +5,9 @@
     {% set userConnected = app.user.username %}
     {% if app.request.get('follower') is same as('true') %}
         {% if app.user == user %}
-            <h1>Mes abonnés</h1>
+            <h1 class="text-darken-1 grey-text">Mes abonnés</h1>
         {% else %}
-            <h1>Abonnés</h1>
+            <h1 class="text-darken-1 grey-text">Abonnés</h1>
         {% endif %}
         <ul class="collection">
             {% for user in user.followers %}
@@ -17,11 +17,11 @@
                     {% else %}
                         <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
                     {% endif %}
-                    <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.follower.username}) }}">{{ user.follower.username }}</a></span>
+                    <span class="title username-follow"><a href="{{ path('app_front_profile_show', {'username': user.follower.username}) }}">{{ user.follower.username }}</a></span>
                     {% if user.follower.id in followedsArray %}
-                        <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
+                        <a class="btn btn-primary secondary-content red lighten-1" href="{{ path('app_front_profile_unfollow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
                     {% elseif user.follower.username is not same as(userConnected)%}
-                        <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
+                        <a class="btn btn-primary secondary-content red lighten-1" href="{{ path('app_front_profile_follow' , {'username': user.follower.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                     {% endif %}
                         </li>
             {% endfor %}
@@ -40,11 +40,11 @@
                         {% else %}
                             <img src="{{ asset('build/images/defaultUser.png')}}" class="circle">
                         {% endif %}
-                        <span class="title"><a href="{{ path('app_front_profile_show', {'username': user.followed.username}) }}">{{ user.followed.username }}</a></span>
+                        <span class="title username-follow"><a href="{{ path('app_front_profile_show', {'username': user.followed.username}) }}">{{ user.followed.username }}</a></span>
                         {% if user.followed.id in followedsArray %}
-                             <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_unfollow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
+                             <a class="btn btn-primary secondary-content red lighten-1" href="{{ path('app_front_profile_unfollow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Ne plus suivre</a>
                         {% elseif  user.followed.username is not same as(userConnected) %}
-                            <a class="btn btn-primary secondary-content" href="{{ path('app_front_profile_follow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
+                            <a class="btn btn-primary secondary-content red lighten-1" href="{{ path('app_front_profile_follow' , {'username': user.followed.username , "csrf_token" : csrf_token('follow')}) }}">Suivre</a>
                         {% endif %}
                     </li>
                 {% endfor %}

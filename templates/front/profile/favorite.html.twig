@@ -8,11 +8,7 @@
         {% for recipe in recipes %}
         <li class="collection-item avatar favorite-card">
             <a href="/recipe/{{ recipe.id }}-{{ recipe.slug }}" class="">
-                {% if recipe.imageName %}
-                    <img src="{{ asset('uploads/images/recipes/'~recipe.imageName)}}" alt="Recipe pic" class="preview">
-                {% else %}
-                    <img src="{{ asset('build/images/defaultRecipe2.jpg')}}" class="preview">
-                {% endif %}
+
                 <h3 class="title red-text text-lighten-1 bold">{{ recipe.title }}</h3>
             </a>
             <p>Catégorie(s) :

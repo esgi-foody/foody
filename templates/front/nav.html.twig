@@ -24,8 +24,15 @@
                 </ul>
 
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ path('app_front_notifications_index') }}"  class=" {{  notificationsNumber() ? 'valign-wrapper '}}{{ app.request.get('_route') == 'app_notifications_index' ? 'active' }}"><i data-feather="bell"></i><span class="notification-badge">{{ notificationsNumber() ?notificationsNumber() }}</span></a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1" style="padding-right: 60px;">@{{ app.user.username }}</a></li>
+                    <li><a href="{{ path('app_front_notifications_index') }}"  class=" {{  notificationsNumber() ? 'valign-wrapper '}}{{ app.request.get('_route') == 'app_notifications_index' ? 'active' }}" style="padding-top:10px;"><i data-feather="bell"></i><span class="notification-badge">{{ notificationsNumber() ?notificationsNumber() }}</span></a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1" style="padding-right: 40px;display: flex;align-items: center;">@{{ app.user.username }}
+                            {% if app.user.imageName %}
+                                <img src="{{ asset('uploads/images/users/'~app.user.imageName)}}" class="responsive-img circle z-depth-5 " style="max-height:3em;width: 3em; height: 3em;margin-left: 10px;">
+                            {% else %}
+                                <img src="{{ asset('build/images/defaultUser.png')}}" class="responsive-img circle z-depth-5  " style="max-height:3em;margin-left: 10px;">
+                            {% endif %}
+                        </a>
+                    </li>
                 </ul>
 
                 <ul id="dropdown1" class="dropdown-content">
