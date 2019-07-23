@@ -50,7 +50,7 @@ class HomeController extends AbstractController
             });
 
             return $this->render('front/home/index.html.twig', [
-                'controller_name' => 'HomeController', 'recipes' => $recipes, 'likes_id' => $arrayLikesId, 'commented_recipes' => $arrayCommentsId, 'reposts_id' => $arrayRepostsId]);
+                'controller_name' => 'HomeController', 'recipes' => array_reverse($recipes, true), 'likes_id' => $arrayLikesId, 'commented_recipes' => $arrayCommentsId, 'reposts_id' => $arrayRepostsId]);
 
 
     }

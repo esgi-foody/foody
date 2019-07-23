@@ -22,7 +22,7 @@
                                 <div class="custom-card__user--img">
                                     {% if recipe.userRecipe.imageName %}
                                         <div class="">
-                                            <img src="{{ asset('uploads/images/users/'~user.imageName)}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:7rem;width: 7rem; height: 7rem;">
+                                            <img src="{{ asset('uploads/images/users/'~recipe.userRecipe.imageName )}}" class="responsive-img circle z-depth-5 materialboxed" style="max-height:7rem;width: 7rem; height: 7rem;">
                                         </div>
                                     {% else %}
                                         <div class="">

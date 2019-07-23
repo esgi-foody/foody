@@ -14,6 +14,11 @@
         <div class="{% if app.user %} container {% endif %}">
             {% block body %}{% endblock %}
         </div>
+            <img src="{{ asset('build/images/Vector.png')}}" class="responsive-img"
+            style="
+                    left: 0;
+                    z-index: -1;
+                    bottom: -105px;"/>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
